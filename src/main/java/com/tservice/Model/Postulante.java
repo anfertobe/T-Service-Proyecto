@@ -213,7 +213,7 @@ public class Postulante  implements java.io.Serializable {
         this.ofertas_1 = ofertas_1;
     }
 
-@OneToMany(fetch=FetchType.LAZY)
+@OneToMany(fetch=FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name="Identificacion", nullable=false)
     public Set<Interes> getIntereses() {
         return this.intereses;
@@ -223,7 +223,7 @@ public class Postulante  implements java.io.Serializable {
         this.intereses = intereses;
     }
 
-@OneToMany(fetch=FetchType.LAZY, cascade = CascadeType.ALL)
+@OneToMany(fetch=FetchType.LAZY, cascade = CascadeType.MERGE)
 @JoinColumn(name="Postulante_Identificacion", nullable=false)
     public Set<ExperienciaLaboral> getExperienciaLaborals() {
         return this.experienciaLaborals;

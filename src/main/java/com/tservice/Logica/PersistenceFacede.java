@@ -43,30 +43,33 @@ public class PersistenceFacede {
         HojaDeVida hv = new HojaDeVida("HojaDeVidaPrueba", "FechaActualizacionPrueba", "FotoPrueba");
         hvc.save(hv);
         
-        Postulante post = new Postulante(734567890, hv, 23456789, "NombrePrueba", new Date(1,1,1), "CorreoPrueba", "DireccionPrueba", "123456789", "PaisPrueba", "regionPrueba", "CiudadPrueba");      
-          
+        Postulante post = new Postulante(14, hv, 23456789, "NombrePrueba", new Date(1,1,1), "CorreoPrueba", "DireccionPrueba", "123456789", "PaisPrueba", "regionPrueba", "CiudadPrueba");      
+                 
         ExperienciaLaboral expe = new ExperienciaLaboral("EntidaPrueba", new Date(1,1,1), "CometarioPrueba");
+        expe.setComentario(this.toString().substring(0,45));
+ 
         
-        Set<ExperienciaLaboral> experi = post.getExperienciaLaborals();
-        experi.add(expe);
-        post.setExperienciaLaborals(experi);
         
-        //postCru.SetExpe(experi, post.getIdentificacion());
+        post.getExperienciaLaborals().add(expe);
+        
+        //Set<ExperienciaLaboral> experi = post.getExperienciaLaborals();
+    
+        //experi.add(expe);
+        
+        //post.setExperienciaLaborals(experi);
+        
         postCru.save(post);
-        expeCrud.save(expe);
         
-        
-        
+        //expeCrud.save(expe);
 
-
-
+        //System.out.println("Experiencia****** "+ postCru.findOne(post.getIdentificacion()).getExperienciaLaborals().size()); 
         
         Interes interes = new Interes("ExperienciaPrueba");
         
         Set<Interes> inter = post.getIntereses();
         inter.add(interes);
         
-        interCrud.save(interes);       
+        post.setIntereses(inter);
         
         postCru.save(post);
     }
