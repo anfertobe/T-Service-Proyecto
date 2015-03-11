@@ -131,11 +131,15 @@ public class TestOferta {
         pur.save(pu);
         por.save(po2);
         or.save(o);
-        //lo.addOferta(pu, o);
-        //lo.addEmpleadoOferta(po, o);
+        if(lo.addOferta(pu, o)){
+            if(lo.addEmpleadoOferta(po, o)){
+                assertEquals(po.getIdentificacion(), o.getPostulante().getIdentificacion());
+            }
+        }else{
+            assertEquals(true,false);
         
-        assertEquals(po.getIdentificacion(), o.getPostulante().getIdentificacion());
-        
+        }
+                
     }
     
     
