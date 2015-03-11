@@ -14,4 +14,6 @@ import org.springframework.data.repository.CrudRepository;
  */
 public interface OfertaCrudRepository extends CrudRepository<Oferta, Integer>{
     
+    
+    
 }

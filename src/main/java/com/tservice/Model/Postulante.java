@@ -5,6 +5,7 @@ package com.tservice.Model;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -222,7 +223,7 @@ public class Postulante  implements java.io.Serializable {
         this.intereses = intereses;
     }
 
-@OneToMany(fetch=FetchType.LAZY)
+@OneToMany(fetch=FetchType.LAZY, cascade = CascadeType.ALL)
 @JoinColumn(name="Postulante_Identificacion", nullable=false)
     public Set<ExperienciaLaboral> getExperienciaLaborals() {
         return this.experienciaLaborals;

@@ -123,6 +123,18 @@ public class PersistenceFacede {
     {
         return false;
     }  
+
+        /*
+    *@obj: agregar empleado oferta
+    *@param: postulante , oferta
+    *@pre: El postulante ya existe , la oferta ya existe
+    *@return: si aplico oferta o no
+    */
+    public boolean addEmpleadoOferta(Postulante po,Oferta of)
+    {
+        return false;
+    }  
+
     
     
 }
