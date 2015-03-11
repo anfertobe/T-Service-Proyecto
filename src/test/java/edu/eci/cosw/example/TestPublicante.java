@@ -5,6 +5,7 @@
  */
 package edu.eci.cosw.testLogic;
 
+import com.tservice.Logica.PersistenceFacede;
 import com.tservice.Model.Publicante;
 import com.tservice.Persistencia.PublicanteCrudRepository;
 import java.util.Date;
@@ -20,6 +21,10 @@ public class TestPublicante {
     @Autowired
     PublicanteCrudRepository pur;
     
+    @Autowired
+    PersistenceFacede lp;
+    
+    
     @Test
     public void testAgregarPublicante(){
         
@@ -27,22 +32,33 @@ public class TestPublicante {
         
         Publicante pu = new Publicante(23, "experiencia en mecanica", new Date(System.currentTimeMillis()), "Andres", new Date(System.currentTimeMillis()), "dir", "2345678", "Colombia", "bbbb", "Bogota");      
         pur.save(pu);
-        //lp.addPublicante(pu);
         
-        num = pu.getIdentificacion();
-        assertEquals(num,pu.getIdentificacion());
+        if(lp.addPublicante(pu)){
+            num = pu.getIdentificacion();
+            assertEquals(num,pu.getIdentificacion());
+        
+        }else{
+                assertEquals(true,false);
+        }
+        
+        
     }
     
     public void testModificarPublicante(){
         
         Publicante pu = new Publicante(23, "experiencia en mecanica", new Date(System.currentTimeMillis()), "Andres", new Date(System.currentTimeMillis()), "dir", "2345678", "Colombia", "bbbb", "Bogota");      
         pur.save(pu);
-        //lp.addPublicante(pu);
         
-        pu.setNombre("Andrea");
-        pur.save(pu);
         
-        assertEquals("Andrea", pur.findOne(pu.getIdentificacion()).getNombre());
+        if(lp.addPublicante(pu)){
+            pu.setNombre("Andrea");
+            pur.save(pu);
+            assertEquals("Andrea", pur.findOne(pu.getIdentificacion()).getNombre());
+        
+        }else{
+                assertEquals(true,false);
+        }
+        
         
     
     }

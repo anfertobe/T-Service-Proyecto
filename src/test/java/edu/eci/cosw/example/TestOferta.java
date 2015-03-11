@@ -5,6 +5,7 @@
  */
 package edu.eci.cosw.Example;
 
+import com.tservice.Logica.PersistenceFacede;
 import com.tservice.Model.Oferta;
 import com.tservice.Model.*;
 import com.tservice.Model.Publicante;
@@ -33,6 +34,9 @@ public class TestOferta {
     PostulanteCrudRepository por;
     @Autowired
     HojaDeVidaCrudRepository hr;
+    @Autowired
+    PersistenceFacede lo;
+    
     
     
     
@@ -50,8 +54,12 @@ public class TestOferta {
         pur.save(pu);
         or.save(o);
         
-        //lo.addOferta(pu, o);
-        assertEquals(po.getIdentificacion(),o.getPostulante().getIdentificacion());
+        if(lo.addOferta(pu, o)){
+            assertEquals(po.getIdentificacion(),o.getPostulante().getIdentificacion());
+        }else{
+            assertEquals(false,true);
+        }
+        
     }
     
     @Test
@@ -68,11 +76,14 @@ public class TestOferta {
         pur.save(pu);
         or.save(o);
      
-        //lo.addOferta(pu, o);
+        if(lo.addOferta(pu, o)){
+            o.setDescripcion("cuidar motos");
+            or.save(o);
+            assertEquals("cuidar motos", or.findOne(o.getId()).getDescripcion());
+        }else{
+                assertEquals(false,true);
+        }
         
-        o.setDescripcion("cuidar motos");
-        or.save(o);
-        assertEquals("cuidar motos", or.findOne(o.getId()).getDescripcion());
         
     }
     
@@ -92,11 +103,17 @@ public class TestOferta {
         pur.save(pu);
         or.save(o);
         
-        //lo.addOferta(pu, o);
-        //lo.aplicarOferta(po, o);
+        if(lo.addOferta(pu, o)){
+            if(lo.aplicarOferta(po, o)){
+                num = po.getIdentificacion();
+                assertEquals(num, o.getPostulante().getIdentificacion());
+            }else{
+                assertEquals(true,false);
+            }
+        }else{
+            assertEquals(true,false);
+        }
         
-        num = po.getIdentificacion();
-        assertEquals(num, o.getPostulante().getIdentificacion());
         
     }
     
