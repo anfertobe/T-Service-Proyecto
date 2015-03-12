@@ -58,6 +58,10 @@ public class PersistenceFacede {
         
         //post.setExperienciaLaborals(experi);
         
+        //PARA  EVITAR EL PROBLEMA DE LA EXPERIENCIA LABORAL DUPLICADA, DEBERÍAN HACER PERSISTENTE AL
+        //POSTULANTE SÓLO UNA VEZ (SI COMENTAN ESTE PRIMER 'SAVE' Y DEJAN SÓLO EL DEL FINAL LES DEBERÍA CORREGIR EL 
+        //PROBLEMA DE LOS DUPLICADOS
+        
         postCru.save(post);
         
         //expeCrud.save(expe);
