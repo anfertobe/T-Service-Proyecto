@@ -24,6 +24,7 @@ public class Licencias  implements java.io.Serializable {
      private int idLicencias;
      private String descripcion;
      private Integer vigenciaDias;
+     private double Valor;
 
     public Licencias() {
     }
@@ -68,6 +69,15 @@ public class Licencias  implements java.io.Serializable {
     
     public void setVigenciaDias(Integer vigenciaDias) {
         this.vigenciaDias = vigenciaDias;
+    }
+    
+    @Column(name="Valor")
+        public double getValor() {
+        return Valor;
+    }
+
+    public void setValor(double Valor) {
+        this.Valor = Valor;
     }
 }
 

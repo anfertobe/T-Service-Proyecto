@@ -223,7 +223,7 @@ public class Postulante  implements java.io.Serializable {
         this.intereses = intereses;
     }
 
-@OneToMany(fetch=FetchType.LAZY, cascade = CascadeType.MERGE)
+@OneToMany(fetch=FetchType.LAZY, cascade = CascadeType.ALL)
 @JoinColumn(name="Postulante_Identificacion", nullable=false)
     public Set<ExperienciaLaboral> getExperienciaLaborals() {
         return this.experienciaLaborals;

@@ -2,7 +2,7 @@ package com.tservice.Model;
 // Generated 9/03/2015 11:00:56 PM by Hibernate Tools 4.3.1
 
 
-import java.util.Date;
+import java.sql.Date;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.Column;

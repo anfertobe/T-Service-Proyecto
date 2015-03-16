@@ -2,9 +2,7 @@ package com.tservice.Model;
 // Generated 9/03/2015 11:00:56 PM by Hibernate Tools 4.3.1
 
 
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -34,7 +32,8 @@ public class Publicante  implements java.io.Serializable {
      private String pais;
      private String ragion;
      private String ciudad;
-     private Set<Factura> facturas = new HashSet(0);
+     private String correo;
+     private List<Factura> facturas = new LinkedList();
      private Set<Oferta> ofertas = new HashSet(0);
 
     public Publicante() {
@@ -53,7 +52,7 @@ public class Publicante  implements java.io.Serializable {
         this.ragion = ragion;
         this.ciudad = ciudad;
     }
-    public Publicante(int identificacion, String experiencia, Date fechaUltimaLicecia, String nombre, Date fechaNacimiento, String direccion, String telefono, String pais, String ragion, String ciudad, Set<Factura> facturas, Set<Oferta> ofertas) {
+    public Publicante(int identificacion, String experiencia, Date fechaUltimaLicecia, String nombre, Date fechaNacimiento, String direccion, String telefono, String pais, String ragion, String ciudad, List<Factura> facturas, Set<Oferta> ofertas) {
        this.identificacion = identificacion;
        this.experiencia = experiencia;
        this.fechaUltimaLicecia = fechaUltimaLicecia;
@@ -169,13 +168,22 @@ public class Publicante  implements java.io.Serializable {
     public void setCiudad(String ciudad) {
         this.ciudad = ciudad;
     }
+    
+    @Column(name="correo", nullable=false, length=45)
+    public String getCorreo() {
+        return correo;
+    }
+
+    public void setCorreo(String correo) {
+        this.correo = correo;
+    }
 
 @OneToMany(fetch=FetchType.LAZY, mappedBy="publicante")
-    public Set<Factura> getFacturas() {
+    public List<Factura> getFacturas() {
         return this.facturas;
     }
     
-    public void setFacturas(Set<Factura> facturas) {
+    public void setFacturas(List<Factura> facturas) {
         this.facturas = facturas;
     }
 

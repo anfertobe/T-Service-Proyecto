@@ -5,21 +5,16 @@
  */
 package com.tservice.Logica;
 
-import com.tservice.Model.Postulante;
-import com.tservice.Model.HojaDeVida;
-import com.tservice.Model.Interes;
-import com.tservice.Model.ExperienciaLaboral;
-import com.tservice.Model.Oferta;
-import com.tservice.Model.Publicante;
+import com.tservice.Componentes.Mocks;
+import com.tservice.Logica.correo.Gmail;
+import com.tservice.Model.*;
 import com.tservice.Persistencia.*;
-import java.sql.Date;
-import java.util.LinkedList;
+import java.util.*;
 import java.util.List;
 import java.util.Set;
-import org.hibernate.Session;
+import javax.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 /**
  *
  * @author anfer_000
@@ -36,9 +31,18 @@ public class PersistenceFacede {
     ExperienciaLaboralCrudRepository expeCrud;
     @Autowired
     InteresCrudRepository interCrud;
-    public void pruebaPersistenciaEntidades()
+    @Autowired
+    Gmail gmail;
+    @Autowired
+    PublicanteCrudRepository publicru;
+    @Autowired
+    OfertaCrudRepository oferCru;
+    
+    public void pruebaPersistenciaEntidades() throws MessagingException
     {
         //Creacion de Hoja De Vide
+        
+        boolean asd = gmail.sender("","","");
         
         HojaDeVida hv = new HojaDeVida("HojaDeVidaPrueba", "FechaActualizacionPrueba", "FotoPrueba");
         hvc.save(hv);
@@ -62,9 +66,9 @@ public class PersistenceFacede {
         //POSTULANTE SÓLO UNA VEZ (SI COMENTAN ESTE PRIMER 'SAVE' Y DEJAN SÓLO EL DEL FINAL LES DEBERÍA CORREGIR EL 
         //PROBLEMA DE LOS DUPLICADOS
         
-        postCru.save(post);
+        //postCru.save(post);
         
-        //expeCrud.save(expe);
+        //
 
         //System.out.println("Experiencia****** "+ postCru.findOne(post.getIdentificacion()).getExperienciaLaborals().size()); 
         
@@ -72,10 +76,13 @@ public class PersistenceFacede {
         
         Set<Interes> inter = post.getIntereses();
         inter.add(interes);
-        
         post.setIntereses(inter);
-        
         postCru.save(post);
+        //interCrud.save(interes);
+
+        //expeCrud.save(expe);
+        
+        
     }
     
     
@@ -131,17 +138,50 @@ public class PersistenceFacede {
         return false;
     }  
 
-        /*
+    /*
     *@obj: agregar empleado oferta
     *@param: postulante , oferta
     *@pre: El postulante ya existe , la oferta ya existe
     *@return: si aplico oferta o no
     */
     public boolean addEmpleadoOferta(Postulante po,Oferta of)
-    {
-        return false;
+    {       
+        Boolean transaccion;
+        Gmail correo = new Gmail();
+        try{
+            of.setPostulante(po);
+            oferCru.save(of);
+            
+            correo.sender("asdfgh", "sdfghj", po.getCorreo());
+            Publicante publi = of.getPublicante();
+            
+            correo.sender("dffdsg", "dfsfas", publi.getCorreo());
+            
+            transaccion = true;
+        }catch(Exception e){
+            transaccion = false;
+        }
+       return transaccion;
     }  
+    
+    private Object TraerUltimoelemtoLista(List listaObjetos)
+    {
+        Object objeto = listaObjetos.get(listaObjetos.size()-1);
+        
+        return objeto;
+    }
+    
+    
+    public void RealizarPAgo(Publicante publi, Licencias licencia)
+    {
+        Mocks pago = new Mocks();
+        String referenciaPAgo = pago.PagoElectronico();
+        Date fecha = new Date();
+        Factura factu = new Factura(licencia, publi, referenciaPAgo, (int)licencia.getValor(), fecha);
+ 
+        publi.getFacturas().add(factu);
+        
+        publicru.save(publi);
+    }
 
-    
-    
 }
