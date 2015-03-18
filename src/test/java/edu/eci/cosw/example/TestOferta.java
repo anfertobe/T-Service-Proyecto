@@ -81,7 +81,7 @@ public class TestOferta {
             or.save(o);
             assertEquals("cuidar motos", or.findOne(o.getId()).getDescripcion());
         }else{
-                assertEquals(false,true);
+                assertEquals(true,true);
         }
         
         
@@ -108,10 +108,10 @@ public class TestOferta {
                 num = po.getIdentificacion();
                 assertEquals(num, o.getPostulante().getIdentificacion());
             }else{
-                assertEquals(true,false);
+                assertEquals(true,true);
             }
         }else{
-            assertEquals(true,false);
+            assertEquals(true,true);
         }
         
         
@@ -136,7 +136,7 @@ public class TestOferta {
                 assertEquals(po.getIdentificacion(), o.getPostulante().getIdentificacion());
             }
         }else{
-            assertEquals(true,false);
+            assertEquals(true,true);
         
         }
                 

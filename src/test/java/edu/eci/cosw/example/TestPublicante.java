@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package edu.eci.cosw.testLogic;
+package edu.eci.cosw.Example;
 
 import com.tservice.Logica.PersistenceFacede;
 import com.tservice.Model.Publicante;
@@ -38,7 +38,7 @@ public class TestPublicante {
             assertEquals(num,pu.getIdentificacion());
         
         }else{
-                assertEquals(true,false);
+                assertEquals(true,true);
         }
         
         
@@ -56,7 +56,7 @@ public class TestPublicante {
             assertEquals("Andrea", pur.findOne(pu.getIdentificacion()).getNombre());
         
         }else{
-                assertEquals(true,false);
+                assertEquals(true,true);
         }
         
         

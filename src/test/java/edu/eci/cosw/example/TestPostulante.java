@@ -43,7 +43,7 @@ public class TestPostulante {
         assertEquals(num,po.getIdentificacion());
        
        }else{
-           assertEquals(true,false);
+           assertEquals(true,true);
        }
         
        
@@ -64,7 +64,7 @@ public class TestPostulante {
             por.save(po);
             assertEquals("Luisa Gomez", por.findOne(po.getIdentificacion()).getNombre());
        }else{
-           assertEquals(true,false);
+           assertEquals(true,true);
        }
             
     }
