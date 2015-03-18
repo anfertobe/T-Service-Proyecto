@@ -7,7 +7,7 @@ test:
     - find . -type f -regex ".*/target/surefire-reports/.*xml" -exec cp {} $CIRCLE_TEST_REPORTS/junit/ \;
     
 deployment:
-    prod:
+    master:
     branch: master
     heroku:
         appname: proyecto-tservise-cosw
