@@ -85,7 +85,7 @@ public class TestOferta {
         }else{
                 assertEquals(true,true);
         }
-        
+        assertEquals(true,true);
         
     }
     
