@@ -147,6 +147,12 @@ public class TestOferta {
                 
     }
     
+    @Test
+    public void TestRapido()
+    {
+        assertEquals(1, 1);
+    }
+    
     
     
     
