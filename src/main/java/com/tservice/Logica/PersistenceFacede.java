@@ -305,7 +305,7 @@ public class PersistenceFacede {
                         texto = "Se le informa que se el señor "+ po.getNombre() +" identificado con la cédula de ciudadanía/n";
                         texto += po.getIdentificacion() + " aplicó a la oferta " + of.getDescripcion() +"("+ of.getId() +")/n";
                         
-                        correo.sender(texto, ConstantesCorreo.correoAdmin, po.getCorreo());
+                        correo.sender(texto, ConstantesCorreo.correoAdmin, puBD.getCorreo());
                     }catch(Exception e){
                     
                     }
