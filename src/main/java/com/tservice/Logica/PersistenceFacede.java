@@ -126,6 +126,7 @@ public class PersistenceFacede {
                 if(fechaVencimiento.before(new Date()) || fechaVencimiento.equals(new Date()) ){
                
                     //Salvar oferta
+                    of.setPublicante(puBD);
                     this.oferCru.save(of);
                     
                     //Asociar oferta
