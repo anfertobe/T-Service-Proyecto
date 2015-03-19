@@ -5,7 +5,7 @@
  */
 package com.tservice.Logica;
 
-import com.tservice.Componentes.Mocks;
+import com.tservice.Componentes.MockPago;
 import com.tservice.Logica.correo.Gmail;
 import com.tservice.Model.*;
 import com.tservice.Persistencia.*;
@@ -151,11 +151,22 @@ public class PersistenceFacede {
         try{
             of.setPostulante(po);
             oferCru.save(of);
+            String texto="";
             
-            correo.sender("asdfgh", "sdfghj", po.getCorreo());
+          
+            texto = "Se le informa que se ha sido escogido como empleado en la/n";
+            texto += "oferta " + of.getDescripcion() +"("+ of.getId() +")/n";
+                            
+            
+            correo.sender(texto, ConstantesCorreo.correoAdmin, po.getCorreo());
             Publicante publi = of.getPublicante();
             
-            correo.sender("dffdsg", "dfsfas", publi.getCorreo());
+            texto = "Se le informa que se ha asociado el empleado "+ po.getNombre() + "/n";
+            texto += "identificado con la cédula de ciudadanía" + po.getIdentificacion() +"/n";
+            texto += "a la oferta " + of.getDescripcion() +"("+ of.getId() +")/n";
+            
+            
+            correo.sender(texto, ConstantesCorreo.correoAdmin, publi.getCorreo());
             
             transaccion = true;
         }catch(Exception e){
@@ -174,7 +185,7 @@ public class PersistenceFacede {
     
     public void RealizarPAgo(Publicante publi, Licencias licencia)
     {
-        Mocks pago = new Mocks();
+        MockPago pago = new MockPago();
         String referenciaPAgo = pago.PagoElectronico();
         Date fecha = new Date();
         Factura factu = new Factura(licencia, publi, referenciaPAgo, (int)licencia.getValor(), fecha);

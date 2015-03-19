@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
  * @author anfer_000
  */
 @Service
-public class Mocks implements IMocks {
+public class MockPago implements IMockPagos {
 
     @Autowired
     FacturaCrudRepository FactuCrud;

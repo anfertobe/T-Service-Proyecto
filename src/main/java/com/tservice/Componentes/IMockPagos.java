@@ -9,7 +9,7 @@ package com.tservice.Componentes;
  *
  * @author anfer_000
  */
-public interface IMocks {
+public interface IMockPagos {
     
     public String PagoElectronico();
     
