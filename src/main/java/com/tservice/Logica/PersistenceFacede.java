@@ -297,6 +297,19 @@ public class PersistenceFacede {
                     //Salvar oferta
                     this.oferCru.save(ofBD);
                     
+                    //Notificar correo 
+                    Gmail correo = new Gmail();
+                    String texto;
+                    
+                    try{
+                        texto = "Se le informa que se el señor "+ po.getNombre() +" identificado con la cédula de ciudadanía/n";
+                        texto += po.getIdentificacion() + " aplicó a la oferta " + of.getDescripcion() +"("+ of.getId() +")/n";
+                        
+                        correo.sender(texto, ConstantesCorreo.correoAdmin, po.getCorreo());
+                    }catch(Exception e){
+                    
+                    }
+                    
                 }else{
                     //El publicante de la oferta no existe
                     comentario="La oferta expiró";

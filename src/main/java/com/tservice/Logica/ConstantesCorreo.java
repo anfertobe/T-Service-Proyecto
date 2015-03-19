@@ -11,6 +11,6 @@ package com.tservice.Logica;
  */
 public class ConstantesCorreo {
     
-    public static String correoAdmin="administracion@tservice.com";
+    public static String correoAdmin="Administracion TService";
     
 }
