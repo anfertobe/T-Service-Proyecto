@@ -41,12 +41,33 @@ public class TestPostulante {
        HojaDeVida hdj = new HojaDeVida("HojaDeVidaPrueba", "FechaActualizacionPrueba", "FotoPrueba");
        hr.save(hdj);
          
-       Postulante po = new Postulante(31, hdj, 2000000, "Abdamir Saab", new Date(System.currentTimeMillis()), "spikoable@gmail.com", "dir", "1234567", "Colombia", "aaa", "Bogota");
+       Postulante po = new Postulante(22, hdj, 2000000, "Abdamir Saab", new Date(System.currentTimeMillis()), "spikoable@gmail.com", "dir", "1234567", "Colombia", "aaa", "Bogota");
        po.setCorreo("a");
-       por.save(po);
        
       assertTrue(lpo.addPostulante(po).trim().equals("OK"));
        
+    }
+    
+    @Test
+    public void testModificarPostulante(){
+       
+        HojaDeVida hdj = new HojaDeVida("HojaDeVidaPrueba", "FechaActualizacionPrueba", "FotoPrueba");
+       hr.save(hdj);
+       
+        
+        Postulante po = new Postulante(29, hdj, 2000000, "Luis Gomez", new Date(System.currentTimeMillis()), "lagcoronell@gmail.com", "dir", "1234467", "Colombia", "aaa", "Bogota");
+        po.setCorreo("a");
+        
+        
+       if(lpo.addPostulante(po).trim().equals("OK")){
+        
+            po.setNombre("Luisa Gomez");
+            por.save(po);
+            assertEquals("Luisa Gomez", por.findOne(po.getIdentificacion()).getNombre());
+       }else{
+           assertEquals(true,false);
+       }
+            
     }
     
 }
