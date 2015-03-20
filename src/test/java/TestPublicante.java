@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package edu.eci.cosw.Example;
+
 
 import com.tservice.Logica.PersistenceFacede;
 import com.tservice.Model.Publicante;
@@ -11,12 +11,17 @@ import com.tservice.Persistencia.PublicanteCrudRepository;
 import java.util.Date;
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 /**
  *
  * @author 2078373
  */
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = {"classpath:applicationContextH2.xml"})
 public class TestPublicante {
     @Autowired
     PublicanteCrudRepository pur;
@@ -44,7 +49,7 @@ public class TestPublicante {
         
         
     }
-    
+    @Test
     public void testModificarPublicante(){
         
         Publicante pu = new Publicante(23, "experiencia en mecanica", new Date(System.currentTimeMillis()), "Andres", new Date(System.currentTimeMillis()), "dir", "2345678", "Colombia", "bbbb", "Bogota");      

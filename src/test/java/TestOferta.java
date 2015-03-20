@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package edu.eci.cosw.Example;
+
 
 import com.tservice.Logica.PersistenceFacede;
 import com.tservice.Model.Oferta;
@@ -11,7 +11,16 @@ import com.tservice.Model.*;
 import com.tservice.Model.Publicante;
 import com.tservice.Persistencia.*;
 import java.util.Date;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.service.ServiceRegistry;
+import org.hibernate.service.ServiceRegistryBuilder;
+import org.junit.After;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,25 +46,27 @@ public class TestOferta {
     @Autowired
     PersistenceFacede lo;
     
-    
-    
-    
-    
+     
+     
    @Test
     public void testAgregarOferta(){
         
         HojaDeVida hdj = new HojaDeVida("HojaDeVidaPrueba", "FechaActualizacionPrueba", "FotoPrueba");
+        
         hr.save(hdj);
         
         Postulante po = new Postulante(22, hdj, 2000000, "Abdamir Saab", new Date(System.currentTimeMillis()), "spikoable@gmail.com", "dir", "1234567", "Colombia", "aaa", "Bogota");
         Publicante pu = new Publicante(23, "experiencia en mecanica", new Date(System.currentTimeMillis()), "Andres", new Date(System.currentTimeMillis()), "dir", "2345678", "Colombia", "bbbb", "Bogota");      
+        pu.setCorreo("aa");
+        po.setCorreo("aa");
+        
         Oferta o= new Oferta(po, pu, new Date(System.currentTimeMillis()), new Date(System.currentTimeMillis()), 2000, "cuidar perro", "Disponible");
         por.save(po);
         pur.save(pu);
         or.save(o);
         
-        //if(lo.addOferta(pu, o)){
-        if(false){
+        if(lo.addOferta(pu, o).trim().equals("OK")){
+        //if(false){
             assertEquals(po.getIdentificacion(),o.getPostulante().getIdentificacion());
         }else{
             assertEquals(false,true);
@@ -135,8 +146,8 @@ public class TestOferta {
         pur.save(pu);
         por.save(po2);
         or.save(o);
-        //if(lo.addOferta(pu, o)){
-        if(false){
+        if(lo.addOferta(pu, o).trim().equals("OK")){
+        //if(false){
             if(lo.addEmpleadoOferta(po, o)){
                 assertEquals(po.getIdentificacion(), o.getPostulante().getIdentificacion());
             }
