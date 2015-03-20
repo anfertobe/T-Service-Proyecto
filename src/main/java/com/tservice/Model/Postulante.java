@@ -199,8 +199,8 @@ public class Postulante  implements java.io.Serializable {
         this.ofertas = ofertas;
     }
 
-@ManyToMany(fetch=FetchType.LAZY)
-    @JoinTable(name="Oferta_has_Postulante", catalog="coswg2", joinColumns = { 
+@ManyToMany(fetch=FetchType.EAGER)
+    @JoinTable(name="Oferta_has_Postulante", joinColumns = { 
         @JoinColumn(name="Identificacion", nullable=false, updatable=false) }, inverseJoinColumns = { 
         @JoinColumn(name="Oferta_id", nullable=false, updatable=false) })
     public Set<Oferta> getOfertas_1() {

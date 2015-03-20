@@ -75,8 +75,8 @@ public class Categoria  implements java.io.Serializable {
         this.nombre = nombre;
     }
 
-@ManyToMany(fetch=FetchType.LAZY)
-    @JoinTable(name="Oferta_has_Categoria", catalog="coswg2", joinColumns = { 
+@ManyToMany(fetch=FetchType.EAGER)
+    @JoinTable(name="Oferta_has_Categoria", joinColumns = { 
         @JoinColumn(name="Categoria_id", nullable=false, updatable=false) }, inverseJoinColumns = { 
         @JoinColumn(name="Oferta_id", nullable=false, updatable=false) })
     public Set<Oferta> getOfertas() {

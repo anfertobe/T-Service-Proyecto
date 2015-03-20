@@ -3,6 +3,7 @@ package com.tservice.Model;
 
 
 import java.util.*;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -176,7 +177,7 @@ public class Publicante  implements java.io.Serializable {
         this.correo = correo;
     }
 
-@OneToMany(fetch=FetchType.LAZY, mappedBy="publicante")
+@OneToMany(fetch=FetchType.EAGER,cascade = CascadeType.ALL, mappedBy="publicante")
     public List<Factura> getFacturas() {
         return this.facturas;
     }

@@ -10,6 +10,7 @@ import com.tservice.Model.Oferta;
 import com.tservice.Model.*;
 import com.tservice.Model.Publicante;
 import com.tservice.Persistencia.*;
+import java.util.ArrayList;
 import java.util.Date;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -44,6 +45,10 @@ public class TestOferta {
     @Autowired
     HojaDeVidaCrudRepository hr;
     @Autowired
+    FacturaCrudRepository fr;
+    @Autowired
+    LicenciasCrudRepository lr;
+    @Autowired
     PersistenceFacede lo;
     
      
@@ -52,7 +57,6 @@ public class TestOferta {
     public void testAgregarOferta(){
         
         HojaDeVida hdj = new HojaDeVida("HojaDeVidaPrueba", "FechaActualizacionPrueba", "FotoPrueba");
-        
         hr.save(hdj);
         
         Postulante po = new Postulante(22, hdj, 2000000, "Abdamir Saab", new Date(System.currentTimeMillis()), "spikoable@gmail.com", "dir", "1234567", "Colombia", "aaa", "Bogota");
@@ -60,43 +64,74 @@ public class TestOferta {
         pu.setCorreo("aa");
         po.setCorreo("aa");
         
+        ArrayList<Factura> facs = new ArrayList<Factura>();
+        
+        Licencias lic=new Licencias(1,"30 Días",30);
+            
+        lr.save(lic);
+        
+        Factura fac=new Factura(lic,pu,"ref1",1000,new Date());
+                   
+        facs.add(fac);
+        
+        pu.setFacturas(facs);
+        
         Oferta o= new Oferta(po, pu, new Date(System.currentTimeMillis()), new Date(System.currentTimeMillis()), 2000, "cuidar perro", "Disponible");
+        
         por.save(po);
+        
         pur.save(pu);
+        
         or.save(o);
         
-        if(lo.addOferta(pu, o).trim().equals("OK")){
-        //if(false){
-            assertEquals(po.getIdentificacion(),o.getPostulante().getIdentificacion());
-        }else{
-            assertEquals(false,true);
-        }
+        String resultado=lo.addOferta(pu, o).trim();
         
+        System.out.println("Resultado "+resultado);
+        
+        assertTrue(resultado.equals("OK"));
     }
     
     @Test
     public void testModificarOferta(){
-        
         HojaDeVida hdj = new HojaDeVida("HojaDeVidaPrueba", "FechaActualizacionPrueba", "FotoPrueba");
         hr.save(hdj);
         
+        Postulante po = new Postulante(26, hdj, 2000000, "Abdamir Saab", new Date(System.currentTimeMillis()), "spikoable@gmail.com", "dir", "1234567", "Colombia", "aaa", "Bogota");
+        Publicante pu = new Publicante(27, "experiencia en mecanica", new Date(System.currentTimeMillis()), "Andres", new Date(System.currentTimeMillis()), "dir", "2345678", "Colombia", "bbbb", "Bogota");      
+        pu.setCorreo("aa");
+        po.setCorreo("aa");
         
-        Postulante po = new Postulante(24, hdj, 2000000, "Abdamir Saab", new Date(System.currentTimeMillis()), "spikoable@gmail.com", "dir", "1234567", "Colombia", "aaa", "Bogota");
-        Publicante pu = new Publicante(25, "experiencia en mecanica", new Date(System.currentTimeMillis()), "Andres", new Date(System.currentTimeMillis()), "dir", "2345678", "Colombia", "bbbb", "Bogota");      
-        Oferta o= new Oferta(po, pu, new Date(System.currentTimeMillis()), new Date(System.currentTimeMillis()), 40000, "cuidar carro", "Disponible");
+        ArrayList<Factura> facs = new ArrayList<Factura>();
+        
+        Licencias lic=new Licencias(2,"30 Días",30);
+            
+        lr.save(lic);
+        
+        Factura fac=new Factura(lic,pu,"ref1",1000,new Date());
+                   
+        facs.add(fac);
+        
+        pu.setFacturas(facs);
+        
+        Oferta o= new Oferta(po, pu, new Date(System.currentTimeMillis()), new Date(System.currentTimeMillis()), 2000, "cuidar perro", "Disponible");
+        
         por.save(po);
+        
         pur.save(pu);
+        
         or.save(o);
-     
-        //if(lo.addOferta(pu, o)){
-        if(false){
+        
+        String resultado=lo.addOferta(pu, o).trim();
+        
+        System.out.println("Resultado "+resultado);
+      
+        if(resultado.equals("OK")){
             o.setDescripcion("cuidar motos");
             or.save(o);
             assertEquals("cuidar motos", or.findOne(o.getId()).getDescripcion());
         }else{
-                assertEquals(true,true);
+            assertTrue(false);
         }
-        assertEquals(true,true);
         
     }
     
@@ -104,29 +139,47 @@ public class TestOferta {
     public void testAplicarAUnaOferta(){
         
         int num;
-        
         HojaDeVida hdj = new HojaDeVida("HojaDeVidaPrueba", "FechaActualizacionPrueba", "FotoPrueba");
         hr.save(hdj);
         
+        Postulante po = new Postulante(28, hdj, 2000000, "Abdamir Saab", new Date(System.currentTimeMillis()), "spikoable@gmail.com", "dir", "1234567", "Colombia", "aaa", "Bogota");
+        Publicante pu = new Publicante(29, "experiencia en mecanica", new Date(System.currentTimeMillis()), "Andres", new Date(System.currentTimeMillis()), "dir", "2345678", "Colombia", "bbbb", "Bogota");      
+        pu.setCorreo("aa");
+        po.setCorreo("aa");
         
-        Postulante po = new Postulante(27, hdj, 2000000, "Abda", new Date(System.currentTimeMillis()), "spikoablssse@gmail.com", "dir", "1235467", "Colombia", "aaa", "Bogota");
-        Publicante pu = new Publicante(26, "experiencia en cuidar perros", new Date(System.currentTimeMillis()), "Luis", new Date(System.currentTimeMillis()), "dir", "2345778", "Colombia", "bbbb", "Bogota");      
-        Oferta o= new Oferta(po, pu, new Date(System.currentTimeMillis()), new Date(System.currentTimeMillis()), 40000, "cuidar carro", "Disponible");
+        ArrayList<Factura> facs = new ArrayList<Factura>();
+        
+        Licencias lic=new Licencias(3,"30 Días",30);
+            
+        lr.save(lic);
+        
+        Factura fac=new Factura(lic,pu,"ref1",1000,new Date());
+                   
+        facs.add(fac);
+        
+        pu.setFacturas(facs);
+        
+        Oferta o= new Oferta(po, pu, new Date(System.currentTimeMillis()), new Date(System.currentTimeMillis()), 2000, "cuidar perro", "Disponible");
+        
         por.save(po);
+        
         pur.save(pu);
+        
         or.save(o);
         
-//        if(lo.addOferta(pu, o)){
-//            if(lo.aplicarOferta(po, o)){
-        if(false){
-            if(false){
+        String resultado=lo.addOferta(pu, o).trim();
+        
+        System.out.println("Resultado "+resultado);
+      
+        if(resultado.equals("OK")){
+            if(lo.aplicarOferta(po, o).trim().equals("OK")){
                 num = po.getIdentificacion();
                 assertEquals(num, o.getPostulante().getIdentificacion());
             }else{
-                assertEquals(true,true);
+                assertEquals(false,true);
             }
         }else{
-            assertEquals(true,true);
+            assertEquals(false,true);
         }
         
         
@@ -137,22 +190,43 @@ public class TestOferta {
         
         HojaDeVida hdj = new HojaDeVida("HojaDeVidaPrueba", "FechaActualizacionPrueba", "FotoPrueba");
         hr.save(hdj);
-               
-        Postulante po = new Postulante(27, hdj, 2000000, "Abda", new Date(System.currentTimeMillis()), "spikoable@gmail.com", "dir", "1235467", "Colombia", "aaa", "Bogota");
-        Postulante po2 = new Postulante(28, hdj, 2000000, "Alejandro", new Date(System.currentTimeMillis()), "spikoablssse@gmail.com", "dir", "1235667", "Colombia", "bbb", "Bogota");
-        Publicante pu = new Publicante(31, "experiencia en cuidar perros", new Date(System.currentTimeMillis()), "Luis", new Date(System.currentTimeMillis()), "dir", "2345778", "Colombia", "bbbb", "Bogota");            
-        Oferta o= new Oferta(po, pu, new Date(System.currentTimeMillis()), new Date(System.currentTimeMillis()), 40000, "cuidar carro", "Disponible");
+        
+        Postulante po = new Postulante(30, hdj, 2000000, "Abdamir Saab", new Date(System.currentTimeMillis()), "spikoable@gmail.com", "dir", "1234567", "Colombia", "aaa", "Bogota");
+        Publicante pu = new Publicante(31, "experiencia en mecanica", new Date(System.currentTimeMillis()), "Andres", new Date(System.currentTimeMillis()), "dir", "2345678", "Colombia", "bbbb", "Bogota");      
+        pu.setCorreo("aa");
+        po.setCorreo("aa");
+        
+        ArrayList<Factura> facs = new ArrayList<Factura>();
+        
+        Licencias lic=new Licencias(4,"30 Días",30);
+            
+        lr.save(lic);
+        
+        Factura fac=new Factura(lic,pu,"ref1",1000,new Date());
+                   
+        facs.add(fac);
+        
+        pu.setFacturas(facs);
+        
+        Oferta o= new Oferta(po, pu, new Date(System.currentTimeMillis()), new Date(System.currentTimeMillis()), 2000, "cuidar perro", "Disponible");
+        
         por.save(po);
+        
         pur.save(pu);
-        por.save(po2);
+        
         or.save(o);
-        if(lo.addOferta(pu, o).trim().equals("OK")){
-        //if(false){
+        
+        String resultado=lo.addOferta(pu, o).trim();
+        
+        System.out.println("Resultado "+resultado);
+      
+        if(resultado.equals("OK")){
+        
             if(lo.addEmpleadoOferta(po, o)){
                 assertEquals(po.getIdentificacion(), o.getPostulante().getIdentificacion());
             }
         }else{
-            assertEquals(true,true);
+            assertEquals(true,false);
         
         }
                 

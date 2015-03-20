@@ -10,6 +10,7 @@ import com.tservice.Persistencia.*;
 import com.tservice.Model.*;
 import java.util.Date;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,42 +41,12 @@ public class TestPostulante {
        HojaDeVida hdj = new HojaDeVida("HojaDeVidaPrueba", "FechaActualizacionPrueba", "FotoPrueba");
        hr.save(hdj);
          
-       int num;
-       Postulante po = new Postulante(22, hdj, 2000000, "Abdamir Saab", new Date(System.currentTimeMillis()), "spikoable@gmail.com", "dir", "1234567", "Colombia", "aaa", "Bogota");
+       Postulante po = new Postulante(31, hdj, 2000000, "Abdamir Saab", new Date(System.currentTimeMillis()), "spikoable@gmail.com", "dir", "1234567", "Colombia", "aaa", "Bogota");
+       po.setCorreo("a");
        por.save(po);
        
-       //if(lpo.addPostulante(po)){
-       if(false){
-            num = po.getIdentificacion();
-        assertEquals(num,po.getIdentificacion());
+      assertTrue(lpo.addPostulante(po).trim().equals("OK"));
        
-       }else{
-           assertEquals(true,true);
-       }
-        
-       
-    }
-    
-    @Test
-    public void testModificarPostulante(){
-       
-        HojaDeVida hdj = new HojaDeVida("HojaDeVidaPrueba", "FechaActualizacionPrueba", "FotoPrueba");
-       hr.save(hdj);
-       
-        
-        Postulante po = new Postulante(23, hdj, 2000000, "Luis Gomez", new Date(System.currentTimeMillis()), "lagcoronell@gmail.com", "dir", "1234467", "Colombia", "aaa", "Bogota");
-        por.save(po);
-        
-        
-       //if(lpo.addPostulante(po)){
-        if(false){
-            po.setNombre("Luisa Gomez");
-            por.save(po);
-            assertEquals("Luisa Gomez", por.findOne(po.getIdentificacion()).getNombre());
-       }else{
-           assertEquals(true,true);
-       }
-            
     }
     
 }

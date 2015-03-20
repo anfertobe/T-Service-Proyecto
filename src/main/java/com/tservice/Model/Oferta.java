@@ -75,7 +75,7 @@ public class Oferta  implements java.io.Serializable {
         this.id = id;
     }
 
-@ManyToOne(fetch=FetchType.LAZY)
+@ManyToOne(fetch=FetchType.EAGER)
     @JoinColumn(name="Calificacion_Id")
     public Calificacion getCalificacion() {
         return this.calificacion;
@@ -85,7 +85,7 @@ public class Oferta  implements java.io.Serializable {
         this.calificacion = calificacion;
     }
 
-@ManyToOne(fetch=FetchType.LAZY)
+@ManyToOne(fetch=FetchType.EAGER)
     @JoinColumn(name="Trabajador_Identificacion", nullable=false)
     public Postulante getPostulante() {
         return this.postulante;
@@ -95,7 +95,7 @@ public class Oferta  implements java.io.Serializable {
         this.postulante = postulante;
     }
 
-@ManyToOne(fetch=FetchType.LAZY)
+@ManyToOne(fetch=FetchType.EAGER)
     @JoinColumn(name="Publicante_Identificacion", nullable=false)
     public Publicante getPublicante() {
         return this.publicante;
@@ -155,8 +155,8 @@ public class Oferta  implements java.io.Serializable {
         this.estado = estado;
     }
 
-@ManyToMany(fetch=FetchType.LAZY)
-    @JoinTable(name="Oferta_has_Categoria", catalog="coswg2", joinColumns = { 
+@ManyToMany(fetch=FetchType.EAGER)
+    @JoinTable(name="Oferta_has_Categoria", joinColumns = { 
         @JoinColumn(name="Oferta_id", nullable=false, updatable=false) }, inverseJoinColumns = { 
         @JoinColumn(name="Categoria_id", nullable=false, updatable=false) })
     public Set<Categoria> getCategorias() {
@@ -167,8 +167,8 @@ public class Oferta  implements java.io.Serializable {
         this.categorias = categorias;
     }
 
-@ManyToMany(fetch=FetchType.LAZY)
-    @JoinTable(name="Oferta_has_Postulante", catalog="coswg2", joinColumns = { 
+@ManyToMany(fetch=FetchType.EAGER)
+    @JoinTable(name="Oferta_has_Postulante", joinColumns = { 
         @JoinColumn(name="Oferta_id", nullable=false, updatable=false) }, inverseJoinColumns = { 
         @JoinColumn(name="Identificacion", nullable=false, updatable=false) })
     public Set<Postulante> getPostulantes() {

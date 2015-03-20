@@ -113,7 +113,12 @@ public class PersistenceFacede {
                     this.oferCru.save(of);
                     
                     //Asociar oferta
-                    Set<Oferta> ofertas = puBD.getOfertas();
+                    
+                    HashSet<Oferta> ofertas=new  HashSet<Oferta>();
+                    
+                    ofertas.addAll(ofertas);
+                    
+                    
                     ofertas.add(of);
                     puBD.setOfertas(ofertas);
                     
@@ -139,7 +144,17 @@ public class PersistenceFacede {
         
             boolean vigente=false;
             //Traer factura actual
-            Factura facturaActual=getFacturaActual((ArrayList<Factura>) pu.getFacturas());
+            ArrayList<Factura> facturas = new ArrayList<Factura>();
+            
+            System.out.println("Tamano "+pu.getFacturas().size());
+            
+            if(pu.getFacturas().size()>0){
+            for(Factura fac:pu.getFacturas()){
+                facturas.add(fac);
+            }
+            
+                       
+            Factura facturaActual=getFacturaActual(facturas);
             
             //Si tiene factura actual
             if(facturaActual!=null){
@@ -148,17 +163,20 @@ public class PersistenceFacede {
                 int vigenciaDias=facturaActual.getLicencias().getVigenciaDias();
                 Date fechaVencimiento;
                 
-                
+                System.out.println("Dias vigencia "+vigenciaDias);
                 //Sumar dias a fecha
                 Calendar calendar = Calendar.getInstance();
                 calendar.setTime(fechaActual);
                 calendar.add(Calendar.DAY_OF_YEAR, vigenciaDias);
                 fechaVencimiento=calendar.getTime();
 
+                System.out.println("Fecha "+vigenciaDias);
+                
                 //Si la fecha de vencimiento es menor o igual a la fecha actual
-                vigente=fechaVencimiento.before(new Date()) || fechaVencimiento.equals(new Date());
+                vigente=fechaVencimiento.after(new Date()) || fechaVencimiento.equals(new Date());
                         
                
+            }
             }
         return vigente;
     }
