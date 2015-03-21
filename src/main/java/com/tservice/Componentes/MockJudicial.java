@@ -21,14 +21,13 @@ public class MockJudicial implements IMockJudicial {
     
         PasadoJudicial pasado;
         //Traer valor al azar
-        int valor=(int) (Math.random()*10);
         String descripcion;
         Date fecha=new Date();
         
         
         
         //Si el valor es par no agrega pasado judicial se encuentra bien
-        if (valor % 2 == 0){
+        if (identificacion % 2 == 0){
             descripcion="La persona identificada con cédula de ciudadanía "+identificacion+"/n";
             descripcion+="se encuentra libre de antecedentes penales/n";
             pasado=new PasadoJudicial(descripcion, fecha);
@@ -38,7 +37,7 @@ public class MockJudicial implements IMockJudicial {
             descripcion="La persona identificada con cédula de ciudadanía "+identificacion+"/n";
             descripcion+="se encuentra reportada con antecedentes penales/n";
             pasado=new PasadoJudicial(descripcion, fecha);
-            
+            int valor=(int) (Math.random()*10);
 
             ArrayList<Antecedente> antecedentes=new ArrayList<Antecedente>();
             

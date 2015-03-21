@@ -34,7 +34,7 @@ public class TestPublicante {
     @Test
     public void testAgregarPublicante(){
         
-        Publicante pu = new Publicante(23, "experiencia en mecanica", new Date(System.currentTimeMillis()), "Andres", new Date(System.currentTimeMillis()), "dir", "2345678", "Colombia", "bbbb", "Bogota");      
+        Publicante pu = new Publicante(22, "experiencia en mecanica", new Date(System.currentTimeMillis()), "Andres", new Date(System.currentTimeMillis()), "dir", "2345678", "Colombia", "bbbb", "Bogota");      
         pu.setCorreo("a");
         
        

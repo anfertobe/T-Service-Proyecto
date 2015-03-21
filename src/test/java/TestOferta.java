@@ -114,7 +114,9 @@ public class TestOferta {
         
         System.out.println("Resultado "+resultado);
         
-        assertTrue(!resultado.equals("OK"));
+        Boolean LicenciaValida = !resultado.equals("OK");
+        
+        assertTrue(!resultado.equals(LicenciaValida));
     }
    
     

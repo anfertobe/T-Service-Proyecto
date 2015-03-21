@@ -55,7 +55,7 @@ public class TestPostulante {
        hr.save(hdj);
        
         
-        Postulante po = new Postulante(29, hdj, 2000000, "Luis Gomez", new Date(System.currentTimeMillis()), "lagcoronell@gmail.com", "dir", "1234467", "Colombia", "aaa", "Bogota");
+        Postulante po = new Postulante(28, hdj, 2000000, "Luis Gomez", new Date(System.currentTimeMillis()), "lagcoronell@gmail.com", "dir", "1234467", "Colombia", "aaa", "Bogota");
         po.setCorreo("a");
         
         
