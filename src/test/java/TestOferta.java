@@ -92,6 +92,34 @@ public class TestOferta {
     }
     
     @Test
+    public void testAgregarSinLicenciaOferta(){
+        
+        HojaDeVida hdj = new HojaDeVida("HojaDeVidaPrueba", "FechaActualizacionPrueba", "FotoPrueba");
+        hr.save(hdj);
+        
+        Postulante po = new Postulante(22, hdj, 2000000, "Abdamir Saab", new Date(System.currentTimeMillis()), "spikoable@gmail.com", "dir", "1234567", "Colombia", "aaa", "Bogota");
+        Publicante pu = new Publicante(23, "experiencia en mecanica", new Date(System.currentTimeMillis()), "Andres", new Date(System.currentTimeMillis()), "dir", "2345678", "Colombia", "bbbb", "Bogota");      
+        pu.setCorreo("aa");
+        po.setCorreo("aa");
+        
+               Oferta o= new Oferta(po, pu, new Date(System.currentTimeMillis()), new Date(System.currentTimeMillis()), 2000, "cuidar perro", "Disponible");
+        
+        por.save(po);
+        
+        pur.save(pu);
+        
+        or.save(o);
+        
+        String resultado=lo.addOferta(pu, o).trim();
+        
+        System.out.println("Resultado "+resultado);
+        
+        assertTrue(!resultado.equals("OK"));
+    }
+   
+    
+    
+    @Test
     public void testModificarOferta(){
         HojaDeVida hdj = new HojaDeVida("HojaDeVidaPrueba", "FechaActualizacionPrueba", "FotoPrueba");
         hr.save(hdj);
