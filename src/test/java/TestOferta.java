@@ -108,7 +108,7 @@ public class TestOferta {
         pu.setCorreo("aa");
         po.setCorreo("aa");
         
-               Oferta o= new Oferta(po, pu, new Date(System.currentTimeMillis()), new Date(System.currentTimeMillis()), 2000, "cuidar perro", "Disponible");
+        Oferta o= new Oferta(po, pu, new Date(System.currentTimeMillis()), new Date(System.currentTimeMillis()), 2000, "cuidar perro", "Disponible");
         
         por.save(po);
         
