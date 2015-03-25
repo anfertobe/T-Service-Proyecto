@@ -89,6 +89,8 @@ public class PersistenceFacede {
         
     }
     
+    
+    
      /*
     @obj: agregar oferta a categoria
     *@param: publicante, oferta
@@ -266,7 +268,7 @@ public class PersistenceFacede {
     *@pre: El postulante no existe
     *@return: Comentario para agregar postulante
     */
-    public String addPostulante(Postulante po)
+    public String addPostulante(Postulante po) 
     {
         //Intanciar mock judicial
         MockJudicial judicial = new MockJudicial();
@@ -448,17 +450,63 @@ public class PersistenceFacede {
         publicru.save(publi);
     }
     
-    public Postulante traerPostulante()
+    /*
+    *@obj: traer todos los postulantes
+    *@param: 
+    *@pre: Hay postulantes en BD
+    *@return: lista de postulante
+    */
+    public List<Postulante> traerPostulantes()
     {
         List<Postulante> postulantes = new LinkedList<Postulante>();
                 
-        for(Postulante pos : postCru.findAll())
-            postulantes.add(pos);
+        for(Postulante post : postCru.findAll())
+            postulantes.add(post);
                 
-        return postCru.findOne(14);
+        return postulantes;
     }
     
-        public List<Publicante> traerPublicante()
+    /*
+    *@obj: traer postulante especifico
+    *@param: 
+    *@pre: el postulante existe en BD
+    *@return: postulante
+    */
+    public Postulante consultarPostulante(int identificacion)
+    {
+        return postCru.findOne(identificacion);
+    }
+    
+    /*
+    *@obj: traer publicante especifico
+    *@param: 
+    *@pre: el publicante existe en BD
+    *@return: publicante
+    */
+    public Publicante consultarPublicante(int identificacion)
+    {
+        return publicru.findOne(identificacion);
+    }
+    
+    /*
+    *@obj: traer oferta especifica
+    *@param: 
+    *@pre: el oferta existe en BD
+    *@return: oferta
+    */
+    public Oferta consultarOferta(int identificacion)
+    {
+        return oferCru.findOne(identificacion);
+    }
+    
+    
+    /*
+    *@obj: traer todos los publicantes
+    *@param: 
+    *@pre: Hay publicantes en BD
+    *@return: lista de publicantes
+    */
+    public List<Publicante> traerPublicantes()
     {
         List<Publicante> publicante = new LinkedList<Publicante>();
                 
@@ -467,7 +515,13 @@ public class PersistenceFacede {
                 
         return publicante;
     }
-        
+    
+    /*
+    *@obj: traer todas las ofertas
+    *@param: 
+    *@pre: Hay ofertas en BD
+    *@return: lista de ofertas
+    */
     public List<Oferta> traerOfertas()
     {
         List<Oferta> ofertas = new LinkedList<Oferta>();
