@@ -60,7 +60,7 @@ public class Interes  implements java.io.Serializable {
         this.experiencia = experiencia;
     }
 
-@OneToMany(fetch=FetchType.LAZY, mappedBy="interes")
+@OneToMany(fetch=FetchType.EAGER, mappedBy="interes")
     public Set<Categoria> getCategorias() {
         return this.categorias;
     }

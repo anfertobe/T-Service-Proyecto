@@ -447,5 +447,35 @@ public class PersistenceFacede {
         
         publicru.save(publi);
     }
+    
+    public Postulante traerPostulante()
+    {
+        List<Postulante> postulantes = new LinkedList<Postulante>();
+                
+        for(Postulante pos : postCru.findAll())
+            postulantes.add(pos);
+                
+        return postCru.findOne(14);
+    }
+    
+        public List<Publicante> traerPublicante()
+    {
+        List<Publicante> publicante = new LinkedList<Publicante>();
+                
+        for(Publicante pub : publicru.findAll())
+            publicante.add(pub);
+                
+        return publicante;
+    }
+        
+    public List<Oferta> traerOfertas()
+    {
+        List<Oferta> ofertas = new LinkedList<Oferta>();
+                
+        for(Oferta ofer : oferCru.findAll())
+            ofertas.add(ofer);
+                
+        return ofertas;
+    }
 
 }

@@ -1,6 +1,9 @@
 
 package com.tservice.restcontrollers;
 
+import com.tservice.Logica.PersistenceFacede;
+import com.tservice.Model.Postulante;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,15 +16,16 @@ import org.springframework.web.bind.annotation.RestController;
  * @author hcadavid
  */
 @RestController
-@RequestMapping("/test")
-public class TestRestController {
+@RequestMapping("/tservice")
+public class RestControllerTservice {
     
-    @RequestMapping(value="/echo/{input}",method = RequestMethod.GET)        
-    public ResponseEntity<?> consultaX(@PathVariable String input) { 
-        
-        
-
-        return new ResponseEntity<>("REST API working. Echo:"+input,HttpStatus.ACCEPTED);
+    @Autowired
+    PersistenceFacede persistenci;
+    
+    @RequestMapping(value="/Postulante",method = RequestMethod.GET)        
+    public Postulante traerPostulante() { 
+            
+        return persistenci.traerPostulante();
     }
     
 }
