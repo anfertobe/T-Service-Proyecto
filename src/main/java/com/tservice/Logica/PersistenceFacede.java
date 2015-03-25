@@ -39,6 +39,8 @@ public class PersistenceFacede {
     PublicanteCrudRepository publicru;
     @Autowired
     OfertaCrudRepository oferCru;
+    @Autowired
+    CategoriaCrudRepository cateCru;
     
     public void pruebaPersistenciaEntidades() throws MessagingException
     {
@@ -87,7 +89,52 @@ public class PersistenceFacede {
         
     }
     
+     /*
+    @obj: agregar oferta a categoria
+    *@param: publicante, oferta
+    *@pre: El publicante debe existir, La oferta debe existir, la categoria debe existir
+    *@return: comentario al agregar categoria
+    */
+    public String agregarOfertaACategoria(Oferta of, Categoria ca)
+    {
+        String comentario = "OK";
+        //Validar que la categoria existe
+        if(this.cateCru.exists(ca.getId())){
+            Categoria caBD=this.cateCru.findOne(ca.getId());
+        
+            //Validar que la oferta existe
+            if(this.oferCru.exists(of.getId())){
+                Oferta ofBD=this.oferCru.findOne(of.getId());
+
+                //Asociar Oferta
+                
+                HashSet<Oferta> ofertas=new  HashSet<Oferta>();     
+                ofertas.addAll(ofertas);
+                ofertas.add(of);
+            
+                caBD.setOfertas(ofertas);
+            
+                //Actualizar categoria
+                this.cateCru.save(caBD);
+                return comentario;
+            }else{
+                return "La oferta no existe";
+            }
+        }else{
+            return "La categoria no existe";
+        }
+    }
     
+    /*
+    *@obj: agregar categoria
+    *@param: categoria
+    *@pre: 
+    *@return: comentario al agregar categoria
+    */
+    public void addCategoria(Categoria ca)
+    {
+        cateCru.save(ca);        
+    }
        
     /*
     *@obj: agregar oferta a publicante
