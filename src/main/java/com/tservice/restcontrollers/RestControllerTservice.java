@@ -9,6 +9,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -51,6 +52,12 @@ public class RestControllerTservice {
     public List<Publicante> consultarPublicantes()  throws ResourceNotFoundException { 
           return persistenci.traerPublicantes();
     }
+    
+    @ExceptionHandler(Exception.class)
+    public void handleError(Exception e){
+        e.printStackTrace();
+    }
+    
     
     @RequestMapping(value="Publicantes/{idPublicante}",method = RequestMethod.GET)
     public Publicante consultarPublicante(@PathVariable("idPublicante") int idPublicante) throws ResourceNotFoundException {
