@@ -6,7 +6,6 @@ import com.tservice.Model.Oferta;
 import com.tservice.Model.Postulante;
 import com.tservice.Model.Publicante;
 import java.util.List;
-import javax.ws.rs.Consumes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,8 +37,7 @@ public class RestControllerTservice {
         return persistenci.consultarPostulante(idPosultante);
     }
     
-    @RequestMapping(value="/Postulantes/",method = RequestMethod.PUT) 
-    @Consumes("application/json")
+    @RequestMapping(value="/Postulantes/",method = RequestMethod.PUT)        
     public ResponseEntity<?> agregarPostulante(@RequestBody Postulante postulante)  throws ResourceNotFoundException{ 
        String sRpta = persistenci.addPostulante(postulante);
        
@@ -54,7 +52,13 @@ public class RestControllerTservice {
     public List<Publicante> consultarPublicantes()  throws ResourceNotFoundException { 
           return persistenci.traerPublicantes();
     }
-        
+    
+    @ExceptionHandler(Exception.class)
+    public void handleError(Exception e){
+        e.printStackTrace();
+    }
+    
+    
     @RequestMapping(value="Publicantes/{idPublicante}",method = RequestMethod.GET)
     public Publicante consultarPublicante(@PathVariable("idPublicante") int idPublicante) throws ResourceNotFoundException {
         return persistenci.consultarPublicante(idPublicante);
