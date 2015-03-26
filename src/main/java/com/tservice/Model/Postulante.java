@@ -90,7 +90,7 @@ public class Postulante  implements java.io.Serializable {
         this.identificacion = identificacion;
     }
 
-@ManyToOne(fetch=FetchType.LAZY)
+@ManyToOne(fetch=FetchType.EAGER)
     @JoinColumn(name="HojaDeVida_Id", nullable=false)
     public HojaDeVida getHojaDeVida() {
         return this.hojaDeVida;
@@ -190,7 +190,7 @@ public class Postulante  implements java.io.Serializable {
         this.ciudad = ciudad;
     }
 
-@OneToMany(fetch=FetchType.LAZY, mappedBy="postulante")
+@OneToMany(fetch=FetchType.EAGER, mappedBy="postulante")
     public Set<Oferta> getOfertas() {
         return this.ofertas;
     }
@@ -211,7 +211,7 @@ public class Postulante  implements java.io.Serializable {
         this.ofertas_1 = ofertas_1;
     }
 
-@OneToMany(fetch=FetchType.LAZY, cascade = CascadeType.ALL)
+@OneToMany(fetch=FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name="Identificacion", nullable=false)
     public Set<Interes> getIntereses() {
         return this.intereses;
@@ -221,7 +221,7 @@ public class Postulante  implements java.io.Serializable {
         this.intereses = intereses;
     }
 
-@OneToMany(fetch=FetchType.LAZY, cascade = CascadeType.ALL)
+@OneToMany(fetch=FetchType.EAGER, cascade = CascadeType.ALL)
 @JoinColumn(name="Postulante_Identificacion", nullable=false)
     public Set<ExperienciaLaboral> getExperienciaLaborals() {
         return this.experienciaLaborals;
