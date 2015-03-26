@@ -42,7 +42,7 @@ public class RestControllerTservice {
        String sRpta = persistenci.addPostulante(postulante);
        
        if (sRpta.trim().equals("OK")){
-            return new ResponseEntity<>(HttpStatus.OK);
+            return new ResponseEntity<>(HttpStatus.ACCEPTED);
        }else{
            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
        }
