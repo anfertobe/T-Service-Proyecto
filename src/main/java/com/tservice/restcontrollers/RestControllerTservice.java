@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -37,7 +38,7 @@ public class RestControllerTservice {
     }
     
     @RequestMapping(value="/Postulantes/",method = RequestMethod.PUT)        
-    public ResponseEntity<?> agregarPostulante(@PathVariable Postulante postulante)  throws ResourceNotFoundException{ 
+    public ResponseEntity<?> agregarPostulante(@RequestBody Postulante postulante)  throws ResourceNotFoundException{ 
      
        String sRpta = persistenci.addPostulante(postulante);
        
@@ -65,7 +66,7 @@ public class RestControllerTservice {
     }
     
     @RequestMapping(value="/Publicantes/",method = RequestMethod.PUT)        
-    public ResponseEntity<?> agregarPublicante(@PathVariable Publicante publicante)  throws ResourceNotFoundException{ 
+    public ResponseEntity<?> agregarPublicante(@RequestBody Publicante publicante)  throws ResourceNotFoundException{ 
      
        String sRpta = persistenci.addPublicante(publicante);
        
@@ -88,7 +89,7 @@ public class RestControllerTservice {
     }
     
     @RequestMapping(value="/Ofertas/",method = RequestMethod.PUT)        
-    public ResponseEntity<?> agregarOferta(@PathVariable Publicante publicante,@PathVariable Oferta oferta)  throws ResourceNotFoundException{ 
+    public ResponseEntity<?> agregarOferta(@RequestBody Publicante publicante,@PathVariable Oferta oferta)  throws ResourceNotFoundException{ 
      
        String sRpta = persistenci.addOferta(publicante,oferta);
        
