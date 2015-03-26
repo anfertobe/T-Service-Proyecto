@@ -186,7 +186,7 @@ public class Publicante  implements java.io.Serializable {
         this.facturas = facturas;
     }
 
-@OneToMany(fetch=FetchType.LAZY, mappedBy="publicante")
+@OneToMany(fetch=FetchType.EAGER, mappedBy="publicante")
     public Set<Oferta> getOfertas() {
         return this.ofertas;
     }
