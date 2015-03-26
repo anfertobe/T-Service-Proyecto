@@ -52,13 +52,7 @@ public class RestControllerTservice {
     public List<Publicante> consultarPublicantes()  throws ResourceNotFoundException { 
           return persistenci.traerPublicantes();
     }
-    
-    @ExceptionHandler(Exception.class)
-    public void handleError(Exception e){
-        e.printStackTrace();
-    }
-    
-    
+        
     @RequestMapping(value="Publicantes/{idPublicante}",method = RequestMethod.GET)
     public Publicante consultarPublicante(@PathVariable("idPublicante") int idPublicante) throws ResourceNotFoundException {
         return persistenci.consultarPublicante(idPublicante);
