@@ -52,15 +52,7 @@ public class RestControllerTservice {
            return new ResponseEntity<>(sRpta, HttpStatus.INTERNAL_SERVER_ERROR);
        }
     }
-    
-        @RequestMapping(value="/echo/",method = RequestMethod.PUT)        
-    public ResponseEntity<?> consultaX(@RequestBody Postulante input) { 
-     
-        String hola = input.getNombre();
-        
-        return new ResponseEntity<>("REST API working. Echo:" + hola,HttpStatus.ACCEPTED);
-    }
-          
+       
         @RequestMapping(value="/Publicantes",method = RequestMethod.GET)        
     public List<Publicante> consultarPublicantes()  throws ResourceNotFoundException { 
           return persistenci.traerPublicantes();
