@@ -46,7 +46,12 @@ public class Postulante  implements java.io.Serializable {
     public Postulante() {
     }
 
-	
+    public Postulante(int identificacion, HojaDeVida hojaDeVida, int aspiracionSalarial){
+        this.identificacion = identificacion;
+        this.hojaDeVida = hojaDeVida;
+        this.aspiracionSalarial = aspiracionSalarial;
+    }
+    
     public Postulante(int identificacion, HojaDeVida hojaDeVida, int aspiracionSalarial, String nombre, Date fechaNacimiento, String correo, String direccion, String telefono, String pais, String region, String ciudad) {
         this.identificacion = identificacion;
         this.hojaDeVida = hojaDeVida;
@@ -190,7 +195,7 @@ public class Postulante  implements java.io.Serializable {
         this.ciudad = ciudad;
     }
 
-@OneToMany(fetch=FetchType.EAGER, mappedBy="postulante")
+@OneToMany(fetch=FetchType.LAZY, mappedBy="postulante")
     public Set<Oferta> getOfertas() {
         return this.ofertas;
     }
@@ -199,7 +204,7 @@ public class Postulante  implements java.io.Serializable {
         this.ofertas = ofertas;
     }
 
-@ManyToMany(fetch=FetchType.EAGER)
+@ManyToMany(fetch=FetchType.LAZY)
     @JoinTable(name="Oferta_has_Postulante", joinColumns = { 
         @JoinColumn(name="Identificacion", nullable=false, updatable=false) }, inverseJoinColumns = { 
         @JoinColumn(name="Oferta_id", nullable=false, updatable=false) })

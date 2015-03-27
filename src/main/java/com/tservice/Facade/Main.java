@@ -29,17 +29,12 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        try {
+        
+        
             // TODO code application logic here
             ApplicationContext ap = new ClassPathXmlApplicationContext("/applicationContext.xml");
             PersistenceFacede l = (PersistenceFacede) ap.getBean(PersistenceFacede.class);
-            
-            l.pruebaPersistenciaEntidades();
-        } catch (MessagingException ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-        }
 
-        
     }
     
 }

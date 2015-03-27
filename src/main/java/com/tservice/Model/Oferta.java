@@ -3,6 +3,7 @@ package com.tservice.Model;
 
 
 import java.util.*;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -85,8 +86,8 @@ public class Oferta  implements java.io.Serializable {
         this.calificacion = calificacion;
     }
 
-@ManyToOne(fetch=FetchType.EAGER)
-    @JoinColumn(name="Trabajador_Identificacion", nullable=false)
+@ManyToOne(fetch=FetchType.LAZY, cascade = CascadeType.MERGE)
+    @JoinColumn(name="Trabajador_Identificacion")
     public Postulante getPostulante() {
         return this.postulante;
     }
@@ -95,8 +96,8 @@ public class Oferta  implements java.io.Serializable {
         this.postulante = postulante;
     }
 
-@ManyToOne(fetch=FetchType.EAGER)
-    @JoinColumn(name="Publicante_Identificacion", nullable=false)
+@ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="Publicante_Identificacion")
     public Publicante getPublicante() {
         return this.publicante;
     }
@@ -155,7 +156,7 @@ public class Oferta  implements java.io.Serializable {
         this.estado = estado;
     }
 
-@ManyToMany(fetch=FetchType.EAGER)
+@ManyToMany(fetch=FetchType.LAZY)
     @JoinTable(name="Oferta_has_Categoria", joinColumns = { 
         @JoinColumn(name="Oferta_id", nullable=false, updatable=false) }, inverseJoinColumns = { 
         @JoinColumn(name="Categoria_id", nullable=false, updatable=false) })

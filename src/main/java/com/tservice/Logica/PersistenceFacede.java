@@ -14,6 +14,8 @@ import com.tservice.Persistencia.*;
 import java.util.*;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -41,6 +43,8 @@ public class PersistenceFacede {
     OfertaCrudRepository oferCru;
     @Autowired
     CategoriaCrudRepository cateCru;
+    @Autowired
+    LicenciasCrudRepository licenCru;
     
     public void pruebaPersistenciaEntidades() throws MessagingException
     {
@@ -401,42 +405,35 @@ public class PersistenceFacede {
     */
     public boolean addEmpleadoOferta(Postulante po,Oferta of)
     {       
-        Boolean transaccion;
-        Gmail correo = new Gmail();
-        try{
+        Boolean transaccion = true;
+//        Gmail correo = new Gmail();
             of.setPostulante(po);
             oferCru.save(of);
-            String texto="";
-            
+//            String texto="";
+//            
           
-            texto = "Se le informa que se ha sido escogido como empleado en la/n";
-            texto += "oferta " + of.getDescripcion() +"("+ of.getId() +")/n";
-                            
+//            texto = "Se le informa que se ha sido escogido como empleado en la/n";
+//            texto += "oferta " + of.getDescripcion() +"("+ of.getId() +")/n";
+//                            
+//            
+//        try {
+//            correo.sender(texto, ConstantesCorreo.correoAdmin, po.getCorreo());
+
+//            Publicante publi = of.getPublicante();
             
-            correo.sender(texto, ConstantesCorreo.correoAdmin, po.getCorreo());
-            Publicante publi = of.getPublicante();
+//            texto = "Se le informa que se ha asociado el empleado "+ po.getNombre() + "/n";
+//            texto += "identificado con la cédula de ciudadanía" + po.getIdentificacion()+"/n";
+//            texto += "a la oferta " + of.getDescripcion() +"("+ of.getId() +")/n";
+////            
+//            
+//            correo.sender(texto, ConstantesCorreo.correoAdmin, publi.getCorreo());
+//        } catch (MessagingException ex) {
+//            Logger.getLogger(PersistenceFacede.class.getName()).log(Level.SEVERE, null, ex);
+//        }
             
-            texto = "Se le informa que se ha asociado el empleado "+ po.getNombre() + "/n";
-            texto += "identificado con la cédula de ciudadanía" + po.getIdentificacion()+"/n";
-            texto += "a la oferta " + of.getDescripcion() +"("+ of.getId() +")/n";
-            
-            
-            correo.sender(texto, ConstantesCorreo.correoAdmin, publi.getCorreo());
-            
-            transaccion = true;
-        }catch(Exception e){
-            transaccion = false;
-        }
+
        return transaccion;
     }  
-    
-    private Object TraerUltimoelemtoLista(List listaObjetos)
-    {
-        Object objeto = listaObjetos.get(listaObjetos.size()-1);
-        
-        return objeto;
-    }
-    
     
     public void RealizarPAgo(Publicante publi, Licencias licencia)
     {
@@ -531,5 +528,5 @@ public class PersistenceFacede {
                 
         return ofertas;
     }
-
+    
 }
