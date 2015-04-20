@@ -8,7 +8,10 @@
 import com.tservice.Logica.PersistenceFacede;
 import com.tservice.Persistencia.*;
 import com.tservice.Model.*;
+import com.tservice.exceptions.tserviceExceptions;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import org.junit.Test;
@@ -44,7 +47,11 @@ public class TestPostulante {
        Postulante po = new Postulante(22, hdj, 2000000, "Abdamir Saab", new Date(System.currentTimeMillis()), "spikoable@gmail.com", "dir", "1234567", "Colombia", "aaa", "Bogota");
        po.setCorreo("a");
        
-      assertTrue(lpo.addPostulante(po).trim().equals("OK"));
+          try {
+              lpo.addPostulante(po);
+          } catch (tserviceExceptions ex) {
+              Logger.getLogger(TestPostulante.class.getName()).log(Level.SEVERE, null, ex);
+          }
        
     }
     
@@ -58,15 +65,16 @@ public class TestPostulante {
         Postulante po = new Postulante(28, hdj, 2000000, "Luis Gomez", new Date(System.currentTimeMillis()), "lagcoronell@gmail.com", "dir", "1234467", "Colombia", "aaa", "Bogota");
         po.setCorreo("a");
         
-        
-       if(lpo.addPostulante(po).trim().equals("OK")){
-        
-            po.setNombre("Luisa Gomez");
-            por.save(po);
-            assertEquals("Luisa Gomez", por.findOne(po.getIdentificacion()).getNombre());
-       }else{
-           assertEquals(true,false);
-       }
+          try {
+              lpo.addPostulante(po);
+          } catch (tserviceExceptions ex) {
+              Logger.getLogger(TestPostulante.class.getName()).log(Level.SEVERE, null, ex);
+          }
+
+        po.setNombre("Luisa Gomez");
+        por.save(po);
+        assertEquals("Luisa Gomez", por.findOne(po.getIdentificacion()).getNombre());
+
             
     }
     

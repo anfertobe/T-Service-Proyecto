@@ -11,12 +11,10 @@ import com.tservice.Logica.correo.Gmail;
 import com.tservice.Logica.pasadoJudicial.PasadoJudicial;
 import com.tservice.Model.*;
 import com.tservice.Persistencia.*;
+import com.tservice.exceptions.tserviceExceptions;
 import java.util.*;
 import java.util.List;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 /**
@@ -45,55 +43,10 @@ public class PersistenceFacede {
     CategoriaCrudRepository cateCru;
     @Autowired
     LicenciasCrudRepository licenCru;
-    
-    public void pruebaPersistenciaEntidades() throws MessagingException
-    {
-        //Creacion de Hoja De Vide
-        
-        boolean asd = gmail.sender("","","");
-        
-        HojaDeVida hv = new HojaDeVida("HojaDeVidaPrueba", "FechaActualizacionPrueba", "FotoPrueba");
-        hvc.save(hv);
-        
-        Postulante post = new Postulante(14, hv, 23456789, "NombrePrueba", new Date(1,1,1), "CorreoPrueba", "DireccionPrueba", "123456789", "PaisPrueba", "regionPrueba", "CiudadPrueba");      
-                 
-        ExperienciaLaboral expe = new ExperienciaLaboral("EntidaPrueba", new Date(1,1,1), "CometarioPrueba");
-        expe.setComentario(this.toString().substring(0,45));
- 
-        
-        
-        post.getExperienciaLaborals().add(expe);
-        
-        //Set<ExperienciaLaboral> experi = post.getExperienciaLaborals();
-    
-        //experi.add(expe);
-        
-        //post.setExperienciaLaborals(experi);
-        
-        //PARA  EVITAR EL PROBLEMA DE LA EXPERIENCIA LABORAL DUPLICADA, DEBERÍAN HACER PERSISTENTE AL
-        //POSTULANTE SÓLO UNA VEZ (SI COMENTAN ESTE PRIMER 'SAVE' Y DEJAN SÓLO EL DEL FINAL LES DEBERÍA CORREGIR EL 
-        //PROBLEMA DE LOS DUPLICADOS
-        
-        //postCru.save(post);
-        
-        //
-
-        //System.out.println("Experiencia****** "+ postCru.findOne(post.getIdentificacion()).getExperienciaLaborals().size()); 
-        
-        Interes interes = new Interes("ExperienciaPrueba");
-        
-        Set<Interes> inter = post.getIntereses();
-        inter.add(interes);
-        post.setIntereses(inter);
-        postCru.save(post);
-        //interCrud.save(interes);
-
-        //expeCrud.save(expe);
-        
-        
-    }
-    
-    
+    @Autowired
+    MockPago pago;
+    @Autowired
+    InteresCrudRepository interCru;
     
      /*
     @obj: agregar oferta a categoria
@@ -101,34 +54,31 @@ public class PersistenceFacede {
     *@pre: El publicante debe existir, La oferta debe existir, la categoria debe existir
     *@return: comentario al agregar categoria
     */
-    public String agregarOfertaACategoria(Oferta of, Categoria ca)
+    public void agregarOfertaACategoria(Oferta of, Categoria ca) throws tserviceExceptions
     {
-        String comentario = "OK";
         //Validar que la categoria existe
-        if(this.cateCru.exists(ca.getId())){
-            Categoria caBD=this.cateCru.findOne(ca.getId());
+        if(!this.cateCru.exists(ca.getId()))
+            throw new tserviceExceptions("La categoria relacionada a esta oferta no exite, por favor verifique");
         
-            //Validar que la oferta existe
-            if(this.oferCru.exists(of.getId())){
-                Oferta ofBD=this.oferCru.findOne(of.getId());
+        Categoria caBD=this.cateCru.findOne(ca.getId());
+        
+        //Validar que la oferta existe
+        if(!this.oferCru.exists(of.getId()))
+            throw new tserviceExceptions("La oferta a la cual se esta haciendo referencia no existe, por favor verifique.");
 
-                //Asociar Oferta
-                
-                HashSet<Oferta> ofertas=new  HashSet<Oferta>();     
-                ofertas.addAll(ofertas);
-                ofertas.add(of);
-            
-                caBD.setOfertas(ofertas);
-            
-                //Actualizar categoria
-                this.cateCru.save(caBD);
-                return comentario;
-            }else{
-                return "La oferta no existe";
-            }
-        }else{
-            return "La categoria no existe";
-        }
+        Oferta ofBD=this.oferCru.findOne(of.getId());
+
+        //Asociar Oferta
+
+        Set<Oferta> ofertas=new  HashSet<>();     
+        ofertas.addAll(ofertas);
+        ofertas.add(ofBD);
+
+        caBD.setOfertas(ofertas);
+
+        //Actualizar categoria
+        this.cateCru.save(caBD);
+
     }
     
     /*
@@ -141,6 +91,17 @@ public class PersistenceFacede {
     {
         cateCru.save(ca);        
     }
+    
+        /*
+    *@obj: agregar Interes
+    *@param: Interes
+    *@pre: 
+    *@return:
+    */
+    public void addCategoria(Interes interes)
+    {
+        interCru.save(interes);        
+    }
        
     /*
     *@obj: agregar oferta a publicante
@@ -148,18 +109,17 @@ public class PersistenceFacede {
     *@pre: El publicante ya existe , el publicante debe tener una licencia vigente
     *@return: comentario al agregar oferta
     */
-    public String addOferta(Publicante pu,Oferta of)
-    {
-        boolean add = false;
-        String comentario = "OK";
-        
-        
+    public void addOferta(Publicante pu,Oferta of) throws tserviceExceptions
+    {      
         //Si el publicante existe se valida la vigencia de la licencia 
-        if(this.publicru.exists(pu.getIdentificacion())){
-            Publicante puBD=this.publicru.findOne(pu.getIdentificacion());
+        if(!this.publicru.exists(pu.getIdentificacion()))
+            throw new tserviceExceptions("El publicante al cual se hace referencia noexiste por favor verifique.");
+        
+        Publicante puBD=this.publicru.findOne(pu.getIdentificacion());
             
                 //Validar vigencia
-                if(licenciaVigente(puBD)){
+                if(!licenciaVigente(puBD))
+                    throw new tserviceExceptions("Actual menten no tiene una licencia o esta vencida, por favor adquiera una nueva.");
                
                     //Salvar oferta
                     of.setPublicante(puBD);
@@ -167,7 +127,7 @@ public class PersistenceFacede {
                     
                     //Asociar oferta
                     
-                    HashSet<Oferta> ofertas=new  HashSet<Oferta>();
+                    Set<Oferta> ofertas=new  HashSet<>();
                     
                     ofertas.addAll(ofertas);
                     
@@ -178,36 +138,19 @@ public class PersistenceFacede {
                     
                     //Actualizar publicante
                     this.publicru.save(puBD);
-                                       
-                    add=true;
-                }else{
-                    //La licencia actual del publicante ya no tiene vigencia
-                    comentario="La licencia actual del publicante ya no tiene vigencia";
-                }
-        }else{
-            //El publicante no existe en el sistema
-            comentario="El publicante no existe en el sistema";
-        }
-               
-        return comentario;
     }
     
     
     private boolean licenciaVigente(Publicante pu){
         
-            boolean vigente=false;
-            //Traer factura actual
-            ArrayList<Factura> facturas = new ArrayList<Factura>();
+            boolean vigente = false;
+            List<Factura> facturas = new LinkedList<>();
             
-            System.out.println("Tamano "+pu.getFacturas().size());
-            
-            if(pu.getFacturas().size()>0){
             for(Factura fac:pu.getFacturas()){
                 facturas.add(fac);
-            }
             
                        
-            Factura facturaActual=getFacturaActual(facturas);
+            Factura facturaActual = getFacturaActual(facturas);
             
             //Si tiene factura actual
             if(facturaActual!=null){
@@ -236,7 +179,7 @@ public class PersistenceFacede {
     
     
     
-    private Factura getFacturaActual(ArrayList<Factura> facturas){
+    private Factura getFacturaActual(List<Factura> facturas){
         
         Factura fac=null;
         
@@ -272,27 +215,18 @@ public class PersistenceFacede {
     *@pre: El postulante no existe
     *@return: Comentario para agregar postulante
     */
-    public String addPostulante(Postulante po) 
+    public void addPostulante(Postulante po) throws tserviceExceptions 
     {
         //Intanciar mock judicial
         MockJudicial judicial = new MockJudicial();
         PasadoJudicial pasadoJudicial=judicial.getAntecedentes(po.getIdentificacion());
-        boolean add = true;
-        String comentario="OK";
         
         //Si la persona tiene antecedentes se válida que sean menores a 1 para pasar el primer filtro
-        if(pasadoJudicial.getAntecedentes()!=null){
-            if(pasadoJudicial.getAntecedentes().size()>1){
-                add=false;
-                comentario="La persona tiene antecedentes penales bastante graves /n";
-                comentario+="por lo tanto no se agregara al sistema";
-            }
-        }
+        if(pasadoJudicial.getAntecedentes()!= null && pasadoJudicial.getAntecedentes().size()>1)
+                throw new tserviceExceptions("Usted actualmente tiene asuntos pendientes con la justicia por lo tento no tiene permiso de inscribirse en el sistema.");
         
         //Si no tiene problemas penales se agrega al sistema
-        if(add) postCru.save(po);
-        
-        return comentario;
+        postCru.save(po);
     }  
     
   
@@ -303,29 +237,19 @@ public class PersistenceFacede {
     *@pre: El publicante no existe
     *@return: si agrego publicante o no
     */
-    public String addPublicante(Publicante po)
+    public void addPublicante(Publicante po) throws tserviceExceptions
     {
         //Intanciar mock judicial
         MockJudicial judicial = new MockJudicial();
         PasadoJudicial pasadoJudicial=judicial.getAntecedentes(po.getIdentificacion());
-        boolean add = true;
-        String comentario="OK";
-        
-        
         
         //Si la persona tiene antecedentes se válida que sean menores a 1 para pasar el primer filtro
-        if(pasadoJudicial.getAntecedentes()!=null){
-            if(pasadoJudicial.getAntecedentes().size()>1){
-                comentario="La persona tiene antecedentes penales bastante graves /n";
-                comentario+="por lo tanto no se agregara al sistema";
-                add=false;
-            }
-        }
+        if(pasadoJudicial.getAntecedentes()!= null && pasadoJudicial.getAntecedentes().size()>1)
+            throw new tserviceExceptions("Usted actualmente tiene asuntos pendientes con la justicia por lo tento no tiene permiso de inscribirse en el sistema.");
         
         //Si no tiene problemas penales se agrega al sistema
-        if(add) publicru.save(po);
+        publicru.save(po);
         
-        return comentario;
     }  
     
   
@@ -336,66 +260,60 @@ public class PersistenceFacede {
     *@pre: El postulante ya existe , la oferta ya existe
     *@return: Comentario
     */
-    public String aplicarOferta(Postulante po,Oferta of)
-    {
-        String comentario="OK";
-        
+    public void aplicarOferta(Postulante po,Oferta of) throws tserviceExceptions
+    {        
         //Si el postulante y ademas la oferta existe
-        if(this.postCru.exists(po.getIdentificacion()) &&  this.oferCru.exists(of.getId()) ){
-            //Trae oferta de BD
-            Oferta ofBD=this.oferCru.findOne(of.getId());
-            
-            //Si el publicante existe
-            if(this.publicru.exists(ofBD.getPublicante().getIdentificacion())){
-                //Traer publicante de BD
-                Publicante puBD=this.publicru.findOne(ofBD.getPublicante().getIdentificacion());
-                
-                if(licenciaVigente(puBD)){
-                    
-                    //Trae postulande de BD
-                    Postulante poBD=this.postCru.findOne(po.getIdentificacion());
-                    
-                    //Si tiene una licencia vigente se asocia a la oferta
-                    Set<Postulante> postulantes=ofBD.getPostulantes();
-                    
-                    //Agregar a postulantes
-                    postulantes.add(poBD);
-                    
-                    
-                    //Asociar postulantes
-                    ofBD.setPostulantes(postulantes);
-                    
-                    //Salvar oferta
-                    this.oferCru.save(ofBD);
-                    
-                    //Notificar correo 
-                    Gmail correo = new Gmail();
-                    String texto;
-                    
-                    try{
-                        texto = "Se le informa que se el señor "+ po.getNombre() +" identificado con la cédula de ciudadanía/n";
-                        texto += po.getIdentificacion() + " aplicó a la oferta " + of.getDescripcion() +"("+ of.getId() +")/n";
-                        
-                        correo.sender(texto, ConstantesCorreo.correoAdmin, puBD.getCorreo());
-                    }catch(Exception e){
-                    
-                    }
-                    
-                }else{
-                    //El publicante de la oferta no existe
-                    comentario="La oferta expiró";
-                }
-            }else{
-                //El publicante de la oferta no existe
-                comentario="El publicante de la oferta no existe";
-            }
-        }else{
-            //El publicante de la oferta no existe
-            comentario="El postulante o la oferta no existen";
-        }
+        if(!this.postCru.exists(po.getIdentificacion()))
+            throw new tserviceExceptions("Usted actualmente no esta regitrado en nuestro sistema por vafor verifique.");
         
-        return comentario;
-    }  
+        if(!this.oferCru.exists(of.getId()))
+            throw new tserviceExceptions("La oferta actual no esta regitrada en nuestro sistema por vafor verifique.");
+            //Trae oferta de BD
+        
+        Oferta ofBD=this.oferCru.findOne(of.getId());
+
+        //Si el publicante existe
+        if(this.publicru.exists(ofBD.getPublicante().getIdentificacion()))
+            throw new tserviceExceptions("no existe el publicante de la oferta por favor verifique");
+
+        //Traer publicante de BD
+        Publicante puBD=this.publicru.findOne(ofBD.getPublicante().getIdentificacion());
+                
+        if(licenciaVigente(puBD))
+            throw new tserviceExceptions("Actualmente la oferta es invalida debido a problemas de licenciamiento.");
+
+
+        //Trae postulande de BD
+        Postulante poBD=this.postCru.findOne(po.getIdentificacion());
+
+        //Si tiene una licencia vigente se asocia a la oferta
+        Set<Postulante> postulantes=ofBD.getPostulantes();
+
+        //Agregar a postulantes
+        postulantes.add(poBD);
+
+
+        //Asociar postulantes
+        ofBD.setPostulantes(postulantes);
+
+        //Salvar oferta
+        this.oferCru.save(ofBD);
+
+        //Notificar correo 
+        Gmail correo = new Gmail();
+        String texto;
+
+        try{
+            texto = "Se le informa que se el señor "+ po.getNombre() +" identificado con la cédula de ciudadanía/n";
+            texto += po.getIdentificacion() + " aplicó a la oferta " + of.getDescripcion() +"("+ of.getId() +")/n";
+
+            correo.sender(texto, "Aplicacion a oferta", puBD.getCorreo());
+        }catch(Exception e){
+            throw new tserviceExceptions(String.format("El correo %s no es valido por favor verifique.", puBD.getCorreo()));
+
+        }
+}
+
 
     /*
     *@obj: agregar empleado oferta
@@ -403,41 +321,36 @@ public class PersistenceFacede {
     *@pre: El postulante ya existe , la oferta ya existe
     *@return: si aplico oferta o no
     */
-    public boolean addEmpleadoOferta(Postulante po,Oferta of)
-    {       
-        Boolean transaccion = true;
-//        Gmail correo = new Gmail();
-            of.setPostulante(po);
-            oferCru.save(of);
-//            String texto="";
-//            
-          
-//            texto = "Se le informa que se ha sido escogido como empleado en la/n";
-//            texto += "oferta " + of.getDescripcion() +"("+ of.getId() +")/n";
-//                            
-//            
-//        try {
-//            correo.sender(texto, ConstantesCorreo.correoAdmin, po.getCorreo());
+    public void addEmpleadoOferta(Postulante po,Oferta of) throws tserviceExceptions
+    {
+        Gmail correo = new Gmail();
+        of.setPostulante(po);
+        oferCru.save(of);
+        String texto="";
 
-//            Publicante publi = of.getPublicante();
-            
-//            texto = "Se le informa que se ha asociado el empleado "+ po.getNombre() + "/n";
-//            texto += "identificado con la cédula de ciudadanía" + po.getIdentificacion()+"/n";
-//            texto += "a la oferta " + of.getDescripcion() +"("+ of.getId() +")/n";
-////            
-//            
-//            correo.sender(texto, ConstantesCorreo.correoAdmin, publi.getCorreo());
-//        } catch (MessagingException ex) {
-//            Logger.getLogger(PersistenceFacede.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-            
 
-       return transaccion;
+        texto = "Se le informa que se ha sido escogido como empleado en la/n";
+        texto += "oferta " + of.getDescripcion() +"("+ of.getId() +")/n";
+        Publicante publi = of.getPublicante();
+
+        try {
+            correo.sender(texto, ConstantesCorreo.correoAdmin, po.getCorreo());
+
+
+
+            texto = "Se le informa que se ha asociado el empleado "+ po.getNombre() + "/n";
+            texto += "identificado con la cédula de ciudadanía" + po.getIdentificacion()+"/n";
+            texto += "a la oferta " + of.getDescripcion() +"("+ of.getId() +")/n";
+    //            
+
+            correo.sender(texto, "Eleccion empleado", publi.getCorreo());
+        } catch (Exception ex) {
+            throw new tserviceExceptions(String.format("El correo %s no es valido por favor verifique.", publi.getCorreo()));
+        }
     }  
     
     public void RealizarPAgo(Publicante publi, Licencias licencia)
     {
-        MockPago pago = new MockPago();
         String referenciaPAgo = pago.PagoElectronico();
         Date fecha = new Date();
         Factura factu = new Factura(licencia, publi, referenciaPAgo, (int)licencia.getValor(), fecha);
@@ -462,6 +375,8 @@ public class PersistenceFacede {
                 
         return postulantes;
     }
+    
+    
     
     /*
     *@obj: traer postulante especifico

@@ -10,10 +10,13 @@ import com.tservice.Model.Oferta;
 import com.tservice.Model.*;
 import com.tservice.Model.Publicante;
 import com.tservice.Persistencia.*;
+import com.tservice.exceptions.tserviceExceptions;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -90,11 +93,11 @@ public class TestOferta {
         
         or.save(o);
         
-        String resultado=lo.addOferta(pu, o).trim();
-        
-        System.out.println("Resultado "+resultado);
-        
-        assertTrue(resultado.equals("OK"));
+        try {
+            lo.addOferta(pu, o);
+        } catch (tserviceExceptions ex) {
+            Logger.getLogger(TestOferta.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     @Test
@@ -116,13 +119,12 @@ public class TestOferta {
         
         or.save(o);
         
-        String resultado=lo.addOferta(pu, o).trim();
-        
-        System.out.println("Resultado "+resultado);
-        
-        Boolean LicenciaValida = !resultado.equals("OK");
-        
-        assertTrue(!resultado.equals(LicenciaValida));
+        try {
+            lo.addOferta(pu, o);
+        } catch (tserviceExceptions ex) {
+            Logger.getLogger(TestOferta.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
    
     
@@ -157,17 +159,16 @@ public class TestOferta {
         
         or.save(o);
         
-        String resultado=lo.addOferta(pu, o).trim();
-        
-        System.out.println("Resultado "+resultado);
-      
-        if(resultado.equals("OK")){
-            o.setDescripcion("cuidar motos");
-            or.save(o);
-            assertEquals("cuidar motos", or.findOne(o.getId()).getDescripcion());
-        }else{
-            assertTrue(false);
+        try {
+            lo.addOferta(pu, o);
+        } catch (tserviceExceptions ex) {
+            Logger.getLogger(TestOferta.class.getName()).log(Level.SEVERE, null, ex);
         }
+      
+        o.setDescripcion("cuidar motos");
+        or.save(o);
+        assertEquals("cuidar motos", or.findOne(o.getId()).getDescripcion());
+
         
     }
     
@@ -203,20 +204,17 @@ public class TestOferta {
         
         or.save(o);
         
-        String resultado=lo.addOferta(pu, o).trim();
-        
-        System.out.println("Resultado "+resultado);
-      
-        if(resultado.equals("OK")){
-            if(lo.aplicarOferta(po, o).trim().equals("OK")){
-                num = po.getIdentificacion();
-                assertEquals(num, o.getPostulante().getIdentificacion());
-            }else{
-                assertEquals(false,true);
-            }
-        }else{
-            assertEquals(false,true);
+
+        try {
+            lo.addOferta(pu, o);
+            lo.aplicarOferta(po, o);
+        } catch (tserviceExceptions ex) {
+            Logger.getLogger(TestOferta.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        num = po.getIdentificacion();
+        assertEquals(num, o.getPostulante().getIdentificacion());
+
         
         
     }
@@ -252,19 +250,14 @@ public class TestOferta {
         
         or.save(o);
         
-        String resultado=lo.addOferta(pu, o).trim();
-        
-        System.out.println("Resultado "+resultado);
-      
-        if(resultado.equals("OK")){
-        
-            if(lo.addEmpleadoOferta(po, o)){
-                assertEquals(po.getIdentificacion(), o.getPostulante().getIdentificacion());
-            }
-        }else{
-            assertEquals(true,false);
-        
+        try {
+            lo.addOferta(pu, o);
+        } catch (tserviceExceptions ex) {
+            Logger.getLogger(TestOferta.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        assertEquals(po.getIdentificacion(), o.getPostulante().getIdentificacion());
+
                 
     }
     

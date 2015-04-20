@@ -30,7 +30,7 @@ public class Gmail implements Sender {
 	public boolean sender(String mensaje, String subject, String Destinatario) throws MessagingException {
 
 		Properties props = new Properties();
-		boolean conect=false;
+		boolean conect = false;
 		props.put("mail.transport.protocol", "smtps");
 		props.put("mail.smtps.host", SMTP_HOST_NAME);
 		props.put("mail.smtps.auth", "true");

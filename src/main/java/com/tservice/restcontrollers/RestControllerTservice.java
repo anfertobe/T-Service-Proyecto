@@ -4,19 +4,20 @@ package com.tservice.restcontrollers;
 import com.tservice.Logica.PersistenceFacede;
 import com.tservice.Model.*;
 import com.tservice.Persistencia.*;
+import com.tservice.exceptions.tserviceExceptions;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-//
+
 /**
- *
  * @author Andres Torres y Luis Gomez
  */
 @RestController
@@ -44,13 +45,13 @@ public class RestControllerTservice {
     
     @RequestMapping(value="/Postulantes/",method = RequestMethod.PUT)        
     public ResponseEntity<?> agregarPostulante(@RequestBody Postulante postulante){ 
-       String sRpta = persistenci.addPostulante(postulante);
-       
-       if (sRpta.trim().equals("OK")){
-            return new ResponseEntity<>(sRpta,HttpStatus.ACCEPTED);
-       }else{
-           return new ResponseEntity<>(sRpta, HttpStatus.INTERNAL_SERVER_ERROR);
-       }
+        
+        try {
+            persistenci.addPostulante(postulante);
+        } catch (tserviceExceptions ex) {
+                       return new ResponseEntity<>(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
        
         @RequestMapping(value="/Publicantes",method = RequestMethod.GET)        
@@ -66,13 +67,12 @@ public class RestControllerTservice {
     @RequestMapping(value="/Publicantes/",method = RequestMethod.PUT)        
     public ResponseEntity<?> agregarPublicante(@RequestBody Publicante publicante)  throws ResourceNotFoundException{ 
      
-       String sRpta = persistenci.addPublicante(publicante);
-       
-       if (sRpta.trim().equals("OK")){
-            return new ResponseEntity<>(sRpta, HttpStatus.ACCEPTED);
-       }else{
-           return new ResponseEntity<>(sRpta, HttpStatus.INTERNAL_SERVER_ERROR);
-       }
+        try {
+            persistenci.addPublicante(publicante);
+        } catch (tserviceExceptions ex) {
+            return new ResponseEntity<>(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+       return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
   
     
@@ -88,21 +88,17 @@ public class RestControllerTservice {
     
     @RequestMapping(value="/Ofertas/{id}",method = RequestMethod.PUT)        
     public ResponseEntity<?> agregarOferta(@RequestBody Oferta oferta, @PathVariable("id") int id){ 
-     
-        
        Publicante publi = publicru.findOne(id);
        
        if(publi == null)
            return new ResponseEntity<>("El Publicante No Existe", HttpStatus.INTERNAL_SERVER_ERROR);
        
-       String sRpta = persistenci.addOferta(publi,oferta);
-       
-            
-       if (sRpta.trim().equals("OK")){
-            return new ResponseEntity<>(sRpta, HttpStatus.ACCEPTED);
-       }else{
-           return new ResponseEntity<>(sRpta, HttpStatus.INTERNAL_SERVER_ERROR);
-       }
+        try {
+            persistenci.addOferta(publi,oferta);
+        } catch (tserviceExceptions ex) {
+            return new ResponseEntity<>(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+       return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
     
     @RequestMapping(value="/Ofertas/aplicarOferta/{idpostulante}/{idoferta}",method = RequestMethod.PUT)        
@@ -119,13 +115,14 @@ public class RestControllerTservice {
               return new ResponseEntity<>("El postulante no existe",HttpStatus.INTERNAL_SERVER_ERROR);
           
           
-       String sRpta = persistenci.aplicarOferta(post,ofer);
+        try {
+            persistenci.aplicarOferta(post,ofer);
+        } catch (tserviceExceptions ex) {
+            return new ResponseEntity<>(ex.getMessage(), HttpStatus.EXPECTATION_FAILED);
+        }
        
-       if (sRpta.trim().equals("OK")){
-            return new ResponseEntity<>(sRpta, HttpStatus.ACCEPTED);
-       }else{
-           return new ResponseEntity<>(sRpta, HttpStatus.INTERNAL_SERVER_ERROR);
-       }
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+
     }
   
     @RequestMapping(value="/Ofertas/agregarEmpleadoOferta/{idpostulante}/{idoferta}",method = RequestMethod.PUT)        
@@ -141,13 +138,12 @@ public class RestControllerTservice {
         if(post == null)
             return new ResponseEntity<>("El postulante no existe",HttpStatus.INTERNAL_SERVER_ERROR);
           
-        Boolean resultado = persistenci.addEmpleadoOferta(post,ofer);
+        try {
+            persistenci.addEmpleadoOferta(post,ofer);
+        }catch (tserviceExceptions ex) {
+            return new ResponseEntity<>(ex.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
+        }
         
-       if (resultado){
-            return new ResponseEntity<>("Ok", HttpStatus.ACCEPTED);
-       }else{
-           return new ResponseEntity<>("Fallo el agregar un empleado a una oferta",HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>("Ok", HttpStatus.ACCEPTED);
        }
-    }
-      
 }

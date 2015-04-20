@@ -8,7 +8,10 @@
 import com.tservice.Logica.PersistenceFacede;
 import com.tservice.Model.Publicante;
 import com.tservice.Persistencia.PublicanteCrudRepository;
+import com.tservice.exceptions.tserviceExceptions;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import org.junit.Test;
@@ -37,8 +40,11 @@ public class TestPublicante {
         Publicante pu = new Publicante(22, "experiencia en mecanica", new Date(System.currentTimeMillis()), "Andres", new Date(System.currentTimeMillis()), "dir", "2345678", "Colombia", "bbbb", "Bogota");      
         pu.setCorreo("a");
         
-       
-        assertTrue(lp.addPublicante(pu).trim().equals("OK"));
+        try {
+            lp.addPublicante(pu);
+        } catch (tserviceExceptions ex) {
+            Logger.getLogger(TestPublicante.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     @Test
     public void testModificarPublicante(){
@@ -46,15 +52,16 @@ public class TestPublicante {
         Publicante pu = new Publicante(24, "experiencia en mecanica", new Date(System.currentTimeMillis()), "Andres", new Date(System.currentTimeMillis()), "dir", "2345678", "Colombia", "bbbb", "Bogota");      
         pu.setCorreo("a");
         
-        
-       if(lp.addPublicante(pu).trim().equals("OK")){
-            pu.setNombre("Andrea");
-            pur.save(pu);
-            assertEquals("Andrea", pur.findOne(pu.getIdentificacion()).getNombre());
-        
-        }else{
-                assertEquals(true,false);
+        try {
+            lp.addPublicante(pu);
+        } catch (tserviceExceptions ex) {
+            Logger.getLogger(TestPublicante.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        pu.setNombre("Andrea");
+        pur.save(pu);
+        assertEquals("Andrea", pur.findOne(pu.getIdentificacion()).getNombre());
+
         
         
     
