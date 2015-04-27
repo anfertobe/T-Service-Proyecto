@@ -1,11 +1,34 @@
-<div>
-    <h1> Registro de nuevos productos </h1>
-    <div  ng-controller= "controlregistro as reg">
-        <form>
-            Nombre: <input type="text" name="fname" ng-model="reg.producto.nombre"><br>
-            Id <input type="number" name="lprice" ng-model="reg.producto.idproducto"><br>
-            Precio <input type="number" name="lcant" ng-model="reg.producto.precio"><br>
-        </form>
-        <button  ng-click="reg.registrar()" class="btn btn-primary">Registrar</button>
-    </div>
+<div class="container">
+    <h1> Pago de licencias </h1>
+        <div class="container">
+            <div class="panel, well-sm">
+                <form class="form-inline">      
+                    <div>
+                        <label>
+                            Numero tarjeta credito: 
+                        </label>
+                        <input type="text" name="fname" class="form-control" ng-model="reg.producto.nombre"><br>
+                    </div><br>
+                    <div>
+                        <label>
+                            Tipo Tarjeta 
+                        </label>
+                        <input type="text" name="lprice" class="form-control" ng-model="reg.producto.idproducto"><br>
+                    </div><br>
+                    <div>
+                        <label>
+                            Codigo de Seguridad 
+                        </label>
+                        <input type="text" name="lcant" class="form-control" ng-model="reg.producto.precio"><br>
+                    </div><br>
+                    <div>
+                        <label>
+                            Tipo de Licencia 
+                        </label>
+                        <input type="text" name="fname" class="form-control" ng-model="reg.producto.nombre"><br>
+                    </div><br>
+                    <button  ng-click="reg.registrar()" class="btn btn-primary">Registrar</button>
+                </form>
+            </div>
+        </div>
 </div>

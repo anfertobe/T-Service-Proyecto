@@ -1,6 +1,8 @@
 (function () {
     var app = angular.module('modone', ['ngRoute']);
-
+    var idInscrito = '2';
+    var nombreInscrito = 'TService';
+    
     app.config(function ($routeProvider) {
         $routeProvider
 
@@ -35,9 +37,6 @@
                     templateUrl: 'home.html'
 
                 });
-                
-                
-
     });
 
     app.controller('controlregistro',
@@ -68,8 +67,7 @@
                    alert('error!');
                 });
             };
-        }
-    );
+        });
 
      
 })();
