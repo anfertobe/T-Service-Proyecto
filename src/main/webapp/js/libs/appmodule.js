@@ -3,9 +3,9 @@
     var idInscrito = '2';
     var nombreInscrito = 'TService';
     
-    app.config(function ($routeProvider) {
-        $routeProvider
-
+    app.config(['$routeProvider',
+  function($routeProvider) {
+    $routeProvider
                 // route for the about page
                 .when('/new', {
                     templateUrl: 'registro.html'
@@ -36,8 +36,11 @@
                 .when('/home', {
                     templateUrl: 'home.html'
 
-                });
-    });
+                })
+                .otherwise({
+                    redirectTo: '/home'
+                  });
+    }]);
 
     app.controller('controlregistro',
      function($scope,$http){
