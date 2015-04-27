@@ -1,0 +1,11 @@
+<div>
+    <h1> Registro de nuevos productos </h1>
+    <div  ng-controller= "controlregistro as reg">
+        <form>
+            Nombre: <input type="text" name="fname" ng-model="reg.producto.nombre"><br>
+            Id <input type="number" name="lprice" ng-model="reg.producto.idproducto"><br>
+            Precio <input type="number" name="lcant" ng-model="reg.producto.precio"><br>
+        </form>
+        <button  ng-click="reg.registrar()" class="btn btn-primary">Registrar</button>
+    </div>
+</div>
