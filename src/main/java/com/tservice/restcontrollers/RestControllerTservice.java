@@ -32,6 +32,8 @@ public class RestControllerTservice {
     PostulanteCrudRepository poscru;
     @Autowired
     OfertaCrudRepository oferCru;
+    @Autowired
+    HojaDeVidaCrudRepository hojadevidacrud;
     
     @RequestMapping(value="/Postulantes",method = RequestMethod.GET)        
     public List<Postulante> consultarPostulantes()  throws ResourceNotFoundException { 
@@ -43,12 +45,14 @@ public class RestControllerTservice {
         return persistenci.consultarPostulante(idPosultante);
     }
     
-    @RequestMapping(value="/Postulantes/",method = RequestMethod.PUT)        
+    @RequestMapping(value="/Postulantes",method = RequestMethod.PUT)        
     public ResponseEntity<?> agregarPostulante(@RequestBody Postulante postulante){ 
         
         try {
+            hojadevidacrud.save(postulante.getHojaDeVida());
             persistenci.addPostulante(postulante);
         } catch (tserviceExceptions ex) {
+                        hojadevidacrud.delete(postulante.getHojaDeVida());
                        return new ResponseEntity<>(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
