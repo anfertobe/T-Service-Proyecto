@@ -14,6 +14,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +45,7 @@ public class TestPostulante {
        HojaDeVida hdj = new HojaDeVida("HojaDeVidaPrueba", "FechaActualizacionPrueba", "FotoPrueba");
        hr.save(hdj);
          
-       Postulante po = new Postulante(22, hdj, 2000000, "Abdamir Saab", new Date(System.currentTimeMillis()), "spikoable@gmail.com", "dir", "1234567", "Colombia", "aaa", "Bogota");
+       Postulante po = new Postulante(123456789, hdj, 2000000, "Abdamir Saab", new Date(System.currentTimeMillis()), "spikoable@gmail.com", "dir", "1234567", "Colombia", "aaa", "Bogota");
        po.setCorreo("a");
        
           try {
@@ -62,7 +63,7 @@ public class TestPostulante {
        hr.save(hdj);
        
         
-        Postulante po = new Postulante(28, hdj, 2000000, "Luis Gomez", new Date(System.currentTimeMillis()), "lagcoronell@gmail.com", "dir", "1234467", "Colombia", "aaa", "Bogota");
+        Postulante po = new Postulante(12345678, hdj, 2000000, "Luis Gomez", new Date(System.currentTimeMillis()), "lagcoronell@gmail.com", "dir", "1234467", "Colombia", "aaa", "Bogota");
         po.setCorreo("a");
         
           try {
@@ -76,6 +77,39 @@ public class TestPostulante {
         assertEquals("Luisa Gomez", por.findOne(po.getIdentificacion()).getNombre());
 
             
+    }
+    
+    @Test
+    public void validacionPasadoJudicialSinantecedentes() throws tserviceExceptions
+    {
+        HojaDeVida hdj = new HojaDeVida("HojaDeVidaPrueba", "FechaActualizacionPrueba", "FotoPrueba");
+        hr.save(hdj);
+         
+        Postulante po = new Postulante(12345678, hdj, 2000000, "Abdamir Saab", new Date(System.currentTimeMillis()), "spikoable@gmail.com", "dir", "1234567", "Colombia", "aaa", "Bogota");
+        po.setCorreo("a");
+        
+        lpo.addPostulante(po);
+        
+        assertTrue(por.exists(po.getIdentificacion()));
+
+    }
+    
+    @Test
+    public void validacionPasadoJudicialConAntecedentes()
+    {
+        HojaDeVida hdj = new HojaDeVida("HojaDeVidaPrueba", "FechaActualizacionPrueba", "FotoPrueba");
+        hr.save(hdj);
+         
+        Postulante po = new Postulante(1074417758, hdj, 2000000, "Abdamir Saab", new Date(System.currentTimeMillis()), "spikoable@gmail.com", "dir", "1234567", "Colombia", "aaa", "Bogota");
+        po.setCorreo("a");
+        
+          try {
+              lpo.addPostulante(po);
+          } catch (tserviceExceptions ex) {
+              assertTrue(true);
+              return;
+          }
+          fail();
     }
     
 }

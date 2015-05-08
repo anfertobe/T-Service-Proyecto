@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 /**
  *
  * @author anfer_000
@@ -47,7 +48,7 @@ public class PersistenceFacede {
     MockPago pago;
     @Autowired
     InteresCrudRepository interCru;
-    
+    RestTemplate rest = new RestTemplate();
      /*
     @obj: agregar oferta a categoria
     *@param: publicante, oferta
@@ -217,14 +218,13 @@ public class PersistenceFacede {
     */
     public void addPostulante(Postulante po) throws tserviceExceptions 
     {
-        //Intanciar mock judicial
-        MockJudicial judicial = new MockJudicial();
-        PasadoJudicial pasadoJudicial=judicial.getAntecedentes(po.getIdentificacion());
-        
-        //Si la persona tiene antecedentes se válida que sean menores a 1 para pasar el primer filtro
-        if(pasadoJudicial.getAntecedentes()!= null && pasadoJudicial.getAntecedentes().size()>1)
+        PasadoJudicial pasadojudicial =  new PasadoJudicial();
+        for(int i = 1; i<4; i++){
+            pasadojudicial = rest.getForObject("http://serviciosrest.cloudhub.io//rest/ANTECEDENTES/certificadoJudicial/entidad/" + i + "/documento/" + po.getIdentificacion() + "?servicio=certificacion",PasadoJudicial.class);
+            if(pasadojudicial.getAntecedentes().size() > 0)
                 throw new tserviceExceptions("Usted actualmente tiene asuntos pendientes con la justicia por lo tento no tiene permiso de inscribirse en el sistema.");
-        
+        }
+   
         //Si no tiene problemas penales se agrega al sistema
         postCru.save(po);
     }  
@@ -240,13 +240,12 @@ public class PersistenceFacede {
     public void addPublicante(Publicante po) throws tserviceExceptions
     {
         //Intanciar mock judicial
-        MockJudicial judicial = new MockJudicial();
-        PasadoJudicial pasadoJudicial=judicial.getAntecedentes(po.getIdentificacion());
-        
-        //Si la persona tiene antecedentes se válida que sean menores a 1 para pasar el primer filtro
-        if(pasadoJudicial.getAntecedentes()!= null && pasadoJudicial.getAntecedentes().size()>1)
-            throw new tserviceExceptions("Usted actualmente tiene asuntos pendientes con la justicia por lo tento no tiene permiso de inscribirse en el sistema.");
-        
+        PasadoJudicial pasadojudicial =  new PasadoJudicial();
+        for(int i = 1; i<4; i++){
+            pasadojudicial = rest.getForObject("http://serviciosrest.cloudhub.io//rest/ANTECEDENTES/certificadoJudicial/entidad/" + i + "/documento/" + po.getIdentificacion() + "?servicio=certificacion",PasadoJudicial.class);
+            if(pasadojudicial.getAntecedentes().size() > 0)
+                throw new tserviceExceptions("Usted actualmente tiene asuntos pendientes con la justicia por lo tento no tiene permiso de inscribirse en el sistema.");
+        }
         //Si no tiene problemas penales se agrega al sistema
         publicru.save(po);
         

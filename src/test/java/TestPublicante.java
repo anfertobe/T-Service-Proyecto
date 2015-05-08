@@ -6,6 +6,8 @@
 
 
 import com.tservice.Logica.PersistenceFacede;
+import com.tservice.Model.HojaDeVida;
+import com.tservice.Model.Postulante;
 import com.tservice.Model.Publicante;
 import com.tservice.Persistencia.PublicanteCrudRepository;
 import com.tservice.exceptions.tserviceExceptions;
@@ -14,6 +16,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,9 +64,34 @@ public class TestPublicante {
         pu.setNombre("Andrea");
         pur.save(pu);
         assertEquals("Andrea", pur.findOne(pu.getIdentificacion()).getNombre());
-
-        
-        
-    
     }
+    
+    @Test
+    public void testPublicanteConAntecedentes()
+    {
+                Publicante pu = new Publicante(1074417758, "experiencia en mecanica", new Date(System.currentTimeMillis()), "Andres", new Date(System.currentTimeMillis()), "dir", "2345678", "Colombia", "bbbb", "Bogota");      
+        pu.setCorreo("a");
+        
+        try {
+            lp.addPublicante(pu);
+          } catch (tserviceExceptions ex) {
+              assertTrue(true);
+              return;
+          }
+          fail();
+    }
+    
+        @Test
+    public void validacionPasadoJudicialSinantecedentes() throws tserviceExceptions
+    {
+        Publicante pu = new Publicante(12345678, "experiencia en mecanica", new Date(System.currentTimeMillis()), "Andres", new Date(System.currentTimeMillis()), "dir", "2345678", "Colombia", "bbbb", "Bogota");      
+        pu.setCorreo("a");
+        
+        lp.addPublicante(pu);
+        
+        assertTrue(pur.exists(pu.getIdentificacion()));
+
+    }
+    
+    
 }

@@ -7,6 +7,8 @@ package com.tservice.Logica.pasadoJudicial;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  *
@@ -14,25 +16,44 @@ import java.util.Date;
  */
 public class PasadoJudicial {
  
+    private int idPersona;
+    
+    private String documento;
+    
     private String descripcion;
     
-    private Date fechaAntecedente;
+    private List<Antecedente> antecedentes = new LinkedList<>();
+
+    public PasadoJudicial(){
+        
+    }
     
-    private ArrayList<Antecedente> antecedentes;
-    
-    public PasadoJudicial(String descripcion,Date fechaAntecedente,ArrayList<Antecedente> antecedentes){
+    public PasadoJudicial(String descripcion,Date fechaAntecedente,List<Antecedente> antecedentes){
         this.descripcion=descripcion;
-        this.fechaAntecedente=fechaAntecedente;
         this.antecedentes=antecedentes;
     }
     
     public PasadoJudicial(String descripcion,Date fechaAntecedente){
         this.descripcion=descripcion;
-        this.fechaAntecedente=fechaAntecedente;
     }
     
-    
-    public ArrayList<Antecedente> getAntecedentes(){
+    public int getIdPersona() {
+        return idPersona;
+    }
+
+    public void setIdPersona(int idPersona) {
+        this.idPersona = idPersona;
+    }
+
+    public String getDocumento() {
+        return documento;
+    }
+
+    public void setDocumento(String documento) {
+        this.documento = documento;
+    }
+      
+    public List<Antecedente> getAntecedentes(){
         return antecedentes;
     }
     
@@ -46,14 +67,5 @@ public class PasadoJudicial {
     
     public void setDescripcion(String descripcion){
         this.descripcion=descripcion;
-    }
-    
-    
-    public Date getFechaAntecedente(){
-        return fechaAntecedente;
-    }
-    
-    public void setFechaAntecedente(Date fechaAntecedente){
-        this.fechaAntecedente=fechaAntecedente;
     }
 }

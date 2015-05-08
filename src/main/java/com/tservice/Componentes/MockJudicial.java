@@ -53,7 +53,7 @@ public class MockJudicial implements IMockJudicial {
                     descripcion="Homicidio culposo suba/n";
                     descripcion+="direccion : "+valorP+"/n";
                 }
-                antecedentes.add(new Antecedente(descripcion, fecha, valorP));
+//                antecedentes.add(new Antecedente(descripcion, fecha, valorP));
             
             }
             
