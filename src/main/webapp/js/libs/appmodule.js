@@ -32,12 +32,12 @@
                         templateUrl: 'singup.html'
                     })
 
-                    .when('/home', {
-                        templateUrl: 'home.html'
+                    .when('/MNOferta', {
+                        templateUrl: 'MNOferta.html'
 
                     })
                     .otherwise({
-                        redirectTo: '/home'
+                        redirectTo: '/MNOferta'
                     });
         }]);
 
