@@ -124,5 +124,56 @@
                 };
             }
     );
+    
+        app.controller('Oferta',
+            function ($scope, $http) {
+                           
+                 this.Oferta = {
+                       id:'',
+                       calificacion: {rango: '',comentario: '', valor: 0},
+                       postulante:{identificacion: 0,hojaDeVida: {hojaDeVida: '',
+                                fechaActualizacion: new Date(),foto: ''},
+                                aspiracionSalarial: 0,
+                                nombre: '',
+                                fechaNacimiento: new Date(),
+                                correo: '',
+                                direccion: '',
+                                telefono: '',
+                                pais: '',
+                                region: '',
+                                ciudad: '',
+                                ofertas: [],
+                                ofertas_1: [],
+                                intereses: [],
+                                experienciaLaborals: []
+                       },
+                       publicante:{ identificacion:0,experiencia:'',fechaUltimaLicecia: new Date(),
+                                    nombre:'',fechaNacimiento:new Date(),direccion:'',telefono:'',
+                                    pais:'',ragion:'',ciudad:'',correo:'',facturas:[],ofertas:[]
+                                                    
+                       },
+                       fechaCreacion:new Date(),
+                       fechaFinalizacion:new Date(),
+                       valor:0,
+                       descripcion:'',
+                       estado:'',
+                       categorias: [],
+                       postulantes: []
+                };
+                
+                $scope.postulantes = [];
+                
+                this.registro = function () {
+                    $http.put('rest/tservice/Ofertas', this.Oferta).
+                                success(function (data, status, headers, config) {
+                                    alert('success!');
+                                }).
+                                error(function (data, status, headers, config) {
+                                    alert('error: ' + status + " - " + data );
+                                });
+                };
+            }
+    );
+
 
 })();

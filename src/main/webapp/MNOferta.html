@@ -1,7 +1,8 @@
 <nav class="navbar navbar-default">
+    
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
+    <div class="navbar-left">
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
         <span class="sr-only">Toggle navigation</span>
         <span class="icon-bar"></span>
@@ -46,48 +47,114 @@
     </div>
    <!-- /.navbar-collapse -->
   </div>
-    <div class="container" >
+    
+</nav>
+<table width="100%">
+    <tr>
+        <td colspan="2">
+            <div class="container-fluid" >
             <h1>Ofertas</h1>
-            <div  class="container" >
-                <ul class="nav nav-pills">
-                    <li role="presentation" class="active"><a href="#">Adicionar</a></li>
+            <br>
+            <div class="container-fluid" >
+                <ul class="nav nav-tabs">
+                    <li role="presentation"><a href="#">Adicionar</a></li>
                     <li role="presentation"><a href="#">Modificar</a></li>
                     <li role="presentation"><a href="#">Seleccionar empleado</a></li>
             </ul>
-    </div>
-            <div class="container">
-                <table width="100%">
+            <br>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2" width="100%">
+            <div class="container-fluid">
+                    <table width="100%">
                     <tr>
-                        <td width="50%">
-                            
-                   <div class="panel-heading">Postulantes</div>
-    <div class="panel-body"></div>
-    <!--
-
-     Table 
-
-    -->
-    <table class="table">
-        <thead>
-        <th>NDoc</th>
-        <th>Nombre</th>
-        <th>Rol</th>
-            
-        </thead>
-        <tbody>
-            <tr>
-                <th scope="row">1</th>
-                <td>a</td>
-                <td>a</td>
-            </tr>
-        </tbody>
-    </table>
-
-                            
+                        <td style="aling:right" width="50%">
+                            Ofertas
                         </td>
-                        
-                        <td width="50%">
-                            
+                        <td  style="aling:left" width="50%" >
+                        <ul class="nav navbar-nav">
+                            <li class="dropdown">
+                            <a data-toggle="dropdown" role="button">Prueba <span class="caret">                </span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li class="divider"></li>
+                                <li><a href="#">Action</a></li>
+                            </ul>
+                        </li>
+                        </ul>
+                    <td>
+                    </tr>
+                 </table>   
+            </div>        
+          </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                        <div class="container-fluid">
+                            <table width="100%">
+                                <tr>
+                                    <td width="45%">
+
+                                            <div class="panel-heading">Postulantes</div>
+                                     <table class="table" ng-controller="Oferta as of">
+                                 <thead>
+                                 <th></th>
+                                 <th>NDoc</th>
+                                 <th>Nombre</th>
+                                 <th>Rol</th>
+
+                                 </thead>
+                                 <tbody>
+                                     <tr ng-repeat="oft in of.postulantes">
+                                         <th><input type="radio" name="" value="0" /> </th>
+                                         <td>of.identificacion</td>
+                                         <td>of.nombre</td>
+                                         <td>of.rol</td>
+                                     </tr>
+                                 </tbody>
+                             </table>
+                       </td>
+                       <td width="10%">
+                           
+                       </td>
+                        <td width="45%">
+                            <table width="100%">
+                                <tr>
+                                    <td>Fecha Creación</td>
+                                    <td><input type="date" required></td>
+                                </tr>
+                                <tr>
+                                    <td>Fecha Finalización</td>
+                                    <td><input type="date" required></td>
+                                </tr>
+                                <tr>
+                                    <td>Descripción</td>
+                                    <td><textarea name="Descripcion" rows="4" cols="20">
+                                        </textarea></td>
+                                </tr>
+                                <tr>
+                                    <td>Categoría</td>
+                                    <td><select name="Categorias">
+                                            <option>P</option>
+                                            <option>p</option>
+                                        </select></td>
+                                </tr>
+                                <tr>
+                                    <td>Valor</td>
+                                    <td><input type="number" name="Valor" value="0" /></td>
+                                </tr>
+                                <tr>
+                                    <td>Estado</td>
+                                    <td><select name="Estados">
+                                            <option>Activo</option>
+                                            <option>Terminado</option>
+                                            <option>Pausado</option>
+                                        </select></td>
+                                </tr>
+                                
+                                
+                            </table>
                             
                         </td>
                     </tr>
@@ -95,7 +162,8 @@
                     
                 </table>
                 
-                
-</div>
             </div>
-</nav>
+          </td>
+               
+    </tr>
+    </table>
