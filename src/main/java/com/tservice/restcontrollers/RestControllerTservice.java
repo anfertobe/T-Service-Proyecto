@@ -70,7 +70,7 @@ public class RestControllerTservice {
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
     
-    
+       
     @RequestMapping(value="/Categorias",method = RequestMethod.PUT)        
     public ResponseEntity<?> agregarCategoria(@RequestBody Categoria categoria){ 
         
