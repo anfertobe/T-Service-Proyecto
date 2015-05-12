@@ -68,7 +68,7 @@ public class RestControllerTservice {
         return persistenci.consultarPublicante(idPublicante);
     }
     
-    @RequestMapping(value="/Publicantes/",method = RequestMethod.PUT)        
+    @RequestMapping(value="/Publicantes",method = RequestMethod.PUT)        
     public ResponseEntity<?> agregarPublicante(@RequestBody Publicante publicante)  throws ResourceNotFoundException{ 
      
         try {

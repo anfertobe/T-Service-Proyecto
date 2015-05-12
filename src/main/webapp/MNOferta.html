@@ -39,7 +39,6 @@
             <li><a href="#">Action</a></li>
             <li><a href="#">Another action</a></li>
             <li><a href="#">Something else here</a></li>
-            <li class="divider"></li>
             <li><a href="#">Separated link</a></li>
           </ul>
         </li>
@@ -49,7 +48,7 @@
   </div>
     
 </nav>
-<table width="100%">
+<table width="100%" ng-app ng-controller="Oferta as of" ng-init="of.consultar()">
     <tr>
         <td colspan="2">
             <div class="container-fluid" >
@@ -57,8 +56,7 @@
             <br>
             <div class="container-fluid" >
                 <ul class="nav nav-tabs">
-                    <li role="presentation"><a href="#">Adicionar</a></li>
-                    <li role="presentation"><a href="#">Modificar</a></li>
+                    <li role="presentation"  ng-click="of.registro()" ><a>Adicionar</a></li>
                     <li role="presentation"><a href="#">Seleccionar empleado</a></li>
             </ul>
             <br>
@@ -67,22 +65,17 @@
     </tr>
     <tr>
         <td colspan="2" width="100%">
-            <div class="container-fluid">
+            <div class="container-fluid" >
                     <table width="100%">
                     <tr>
                         <td style="aling:right" width="50%">
                             Ofertas
                         </td>
                         <td  style="aling:left" width="50%" >
-                        <ul class="nav navbar-nav">
-                            <li class="dropdown">
-                            <a data-toggle="dropdown" role="button">Prueba <span class="caret">                </span></a>
-                            <ul class="dropdown-menu" role="menu">
-                                <li class="divider"></li>
-                                <li><a href="#">Action</a></li>
-                            </ul>
-                        </li>
-                        </ul>
+                        <select id="referenceslist" class="input-large" ng-model="OptionOf" ng-change="of.cargarOferta()" >
+                            <option ng-repeat="ofer in ofertasG">{{ofer.id}}-({{ofer.descripcion}})</option>
+                        </select>
+                        
                     <td>
                     </tr>
                  </table>   
@@ -96,8 +89,8 @@
                                 <tr>
                                     <td width="45%">
 
-                                            <div class="panel-heading">Postulantes</div>
-                                     <table class="table" ng-controller="Oferta as of">
+                                  <div class="panel-heading" >Postulantes</div>
+                                     <table class="table" >
                                  <thead>
                                  <th></th>
                                  <th>NDoc</th>
@@ -106,11 +99,11 @@
 
                                  </thead>
                                  <tbody>
-                                     <tr ng-repeat="oft in of.postulantes">
-                                         <th><input type="radio" name="" value="0" /> </th>
-                                         <td>of.identificacion</td>
-                                         <td>of.nombre</td>
-                                         <td>of.rol</td>
+                                     <tr ng-repeat="oft in of.Oferta.postulantes">
+                                         <td><input type="radio" name="" value="0" /> </td>
+                                         <td>{{oft.identificacion}}</td>
+                                         <td>{{oft.nombre}}</td>
+                                         <td>a</td>
                                      </tr>
                                  </tbody>
                              </table>
@@ -119,41 +112,48 @@
                            
                        </td>
                         <td width="45%">
-                            <table width="100%">
+                            <table width="100%" >
                                 <tr>
                                     <td>Fecha Creación</td>
-                                    <td><input type="date" required></td>
+                                    <td><input type="date" ng-model="of.Oferta.fechaCreacion" required></td>
                                 </tr>
                                 <tr>
                                     <td>Fecha Finalización</td>
-                                    <td><input type="date" required></td>
+                                    <td><input type="date" ng-model="of.Oferta.fechaFinalizacion" required></td>
                                 </tr>
                                 <tr>
                                     <td>Descripción</td>
-                                    <td><textarea name="Descripcion" rows="4" cols="20">
+                                    <td><textarea name="Descripcion" ng-model="of.Oferta.descripcion" rows="4" cols="20">
                                         </textarea></td>
                                 </tr>
                                 <tr>
                                     <td>Categoría</td>
-                                    <td><select name="Categorias">
-                                            <option>P</option>
-                                            <option>p</option>
-                                        </select></td>
+                                    <td><select name="Categorias" >
+                                            <option ng-repeat="cat in of.Categorias">
+                                                {{ cat.nombre }}
+                                            </option>
+                                         </select></td>
                                 </tr>
                                 <tr>
                                     <td>Valor</td>
-                                    <td><input type="number" name="Valor" value="0" /></td>
+                                    <td><input type="number" name="Valor" ng-model="of.Oferta.valor" /></td>
                                 </tr>
                                 <tr>
                                     <td>Estado</td>
-                                    <td><select name="Estados">
-                                            <option>Activo</option>
+                                    <td><select name="Estados" id="ofEstado" ng-model="of.Oferta.estado" >
+                                            <option>Disponible</option>
                                             <option>Terminado</option>
                                             <option>Pausado</option>
                                         </select></td>
                                 </tr>
-                                
-                                
+                                <tr>
+                                    <td>Publicante</td>
+                                    <td><select name="Publicante"  ng-model="OptionPub" >
+                                            <option ng-repeat="cat in Publicantes">{{cat.identificacion}}-({{cat.nombre}})</option>
+                                         </select></td>
+                                </tr>
+                  
+                                    
                             </table>
                             
                         </td>
