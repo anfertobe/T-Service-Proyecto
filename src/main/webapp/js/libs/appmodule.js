@@ -36,8 +36,11 @@
                     .when('/MNPersona', {
                         templateUrl: 'MNPersona.html'
                     })
+                    .when('/MNCategoria', {
+                        templateUrl: 'MNCategoria.html'
+                    })
                     .otherwise({
-                        redirectTo: '/MNPersona'
+                        redirectTo: '/MNCategoria'
                     });
         }]);
 
@@ -278,7 +281,87 @@
            }
     );
     
-        app.controller('Oferta',
+    
+    app.controller('Categoria',
+            function ($scope, $http) {
+                       
+                    $scope.Categorias=[];    
+                    $scope.OptionOf=null;
+                
+                    this.Interes={
+                        id:0,
+                        experiencia:[],
+                        categorias:[]
+                    }
+                    
+                    this.Categoria={
+                        id:0,
+                        interes:[],
+                        nombre:'',
+                        ofertas:[]
+                    }
+                    
+                    this.agregarInteres=function () {
+            
+                            this.Categoria.interes[this.Categoria.interes.length]=this.Interes;
+                            
+                            this.Interes={
+                                id:0,
+                                experiencia:[],
+                                categorias:[]
+                            }
+                    }
+                
+                
+                    this.consultar = function () {
+                     $http.get("rest/tservice/Categorias").
+                            success(function (response) {
+                                $scope.Categorias = response;
+                            }).
+                            error(function (data, status, headers, config) {
+                                alert('error!');
+                            });
+                            
+                    };
+            
+                    this.cargarCategoria= function () {
+                        var ofertaT = null;
+ 
+                        
+ 
+                        for (var i = 0; i < $scope.Categorias.length; i++) {
+                              if ($scope.Categorias[i].id == $scope.OptionOf.split('-')[0] && $scope.Categorias[i].nombre == $scope.OptionOf.split('-')[1].replace('(', '').replace(')', '')) {
+                                  alert('Find');
+                                  ofertaT = $scope.Categorias[i];
+                             }
+                        }
+
+                       alert('Value');
+
+                       this.Categoria=ofertaT;
+                    };
+            
+                    this.registro = function () {
+                        
+                        $http.put('rest/tservice/Categorias', this.Categoria).
+                                success(function (data, status, headers, config) {
+                                    alert('success!');
+                                }).
+                                error(function (data, status, headers, config) {
+                                    alert('error: ' + status + " - " + data );
+                                });
+                };
+                
+            
+            
+            
+            }
+    
+    );
+    
+    
+    
+    app.controller('Oferta',
             function ($scope, $http) {
                        
                 $scope.OptionOf=null;
