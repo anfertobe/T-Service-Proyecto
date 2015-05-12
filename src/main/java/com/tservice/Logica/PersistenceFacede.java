@@ -88,7 +88,7 @@ public class PersistenceFacede {
     *@pre: 
     *@return: comentario al agregar categoria
     */
-    public void addCategoria(Categoria ca)
+    public void addCategoria(Categoria ca) throws tserviceExceptions
     {
         cateCru.save(ca);        
     }
@@ -206,8 +206,7 @@ public class PersistenceFacede {
     
     }
     
-    
-    
+     
     
     /*
     *@obj: agregar postulante 
@@ -359,6 +358,25 @@ public class PersistenceFacede {
         publicru.save(publi);
     }
     
+
+    /*
+    *@obj: traer todos las categorias
+    *@param: 
+    *@pre: Hay catergorias en BD
+    *@return: lista de catergorias
+    */
+    public List<Categoria> traerCategorias()
+    {
+        List<Categoria> postulantes = new LinkedList<Categoria>();
+                
+        for(Categoria cat : cateCru.findAll())
+            postulantes.add(cat);
+                
+        return postulantes;
+    }
+        
+    
+    
     /*
     *@obj: traer todos los postulantes
     *@param: 
@@ -373,6 +391,18 @@ public class PersistenceFacede {
             postulantes.add(post);
                 
         return postulantes;
+    }
+    
+    
+    /*
+    *@obj: traer categoria especifico
+    *@param: 
+    *@pre: la categoria existe en BD
+    *@return: categoria
+    */
+    public Categoria consultarCategoria(int identificacion)
+    {
+        return cateCru.findOne(identificacion);
     }
     
     

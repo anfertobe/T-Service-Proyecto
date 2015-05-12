@@ -358,8 +358,7 @@
                 var ofertaT = null;
  
                 for (var i = 0; i < $scope.Publicantes.length; i++) {
-                        alert($scope.Publicantes[i].identificacion);
-                         if ($scope.Publicantes[i].identificacion == $scope.OptionPub.split('-')[0] && $scope.Publicantes[i].nombre == $scope.OptionPub.split('-')[1].replace('(', '').replace(')', '')) {
+                        if ($scope.Publicantes[i].identificacion == $scope.OptionPub.split('-')[0] && $scope.Publicantes[i].nombre == $scope.OptionPub.split('-')[1].replace('(', '').replace(')', '')) {
                              ofertaT = $scope.Publicantes[i];
                         }
                 }
@@ -377,8 +376,7 @@
                 
                 
             this.modificar = function () {
-                    alert(this.Oferta);
-                    $http.put('rest/tservice/Ofertas/0', this.Oferta).
+                   $http.put('rest/tservice/Ofertas/0', this.Oferta).
                                 success(function (data, status, headers, config) {
                                     alert('success!');
                                 }).

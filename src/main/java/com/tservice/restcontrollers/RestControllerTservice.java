@@ -40,6 +40,18 @@ public class RestControllerTservice {
           return persistenci.traerPostulantes();
     }
     
+    @RequestMapping(value="/Categorias",method = RequestMethod.GET)        
+    public List<Categoria> consultarCategorias()  throws ResourceNotFoundException { 
+          return persistenci.traerCategorias();
+    }
+    
+    
+    
+    @RequestMapping(value="Categorias/{idCategoria}",method = RequestMethod.GET)
+    public Categoria consultarCategoria(@PathVariable("idCategoria") int idCategoria) throws ResourceNotFoundException {
+        return persistenci.consultarCategoria(idCategoria);
+    }
+    
     @RequestMapping(value="Postulantes/{idPostulante}",method = RequestMethod.GET)
     public Postulante consultarPostulante(@PathVariable("idPostulante") int idPosultante) throws ResourceNotFoundException {
         return persistenci.consultarPostulante(idPosultante);
@@ -57,7 +69,19 @@ public class RestControllerTservice {
         }
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
-       
+    
+    
+    @RequestMapping(value="/Categorias",method = RequestMethod.PUT)        
+    public ResponseEntity<?> agregarCategoria(@RequestBody Categoria categoria){ 
+        
+        try {
+            persistenci.addCategoria(categoria);
+        } catch (tserviceExceptions ex) {
+                     return new ResponseEntity<>(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+    }
+    
         @RequestMapping(value="/Publicantes",method = RequestMethod.GET)        
     public List<Publicante> consultarPublicantes()  throws ResourceNotFoundException { 
           return persistenci.traerPublicantes();
