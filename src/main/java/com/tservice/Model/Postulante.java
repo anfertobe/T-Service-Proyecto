@@ -227,7 +227,7 @@ public class Postulante  implements java.io.Serializable {
         this.ofertas_1 = ofertas_1;
     }
 
-    @OneToMany(fetch=FetchType.LAZY, cascade = CascadeType.ALL)
+@OneToMany(fetch=FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name="Identificacion", nullable=false)
     public Set<Interes> getIntereses() {
         return this.intereses;

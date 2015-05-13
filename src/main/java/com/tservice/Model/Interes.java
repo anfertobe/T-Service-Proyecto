@@ -13,7 +13,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
@@ -26,7 +25,6 @@ public class Interes  implements java.io.Serializable {
 
      private Integer id;
      private String experiencia;
-     private Postulante identificacion;
      private Set<Categoria> categorias = new HashSet(0);
 
     public Interes() {
@@ -41,17 +39,9 @@ public class Interes  implements java.io.Serializable {
        this.categorias = categorias;
     }
    
-    @OneToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="identificacion")
-    public Postulante getIdentificacion() {
-        return this.identificacion;
-    }
- 
-    public void setIdentificacion(Postulante identificacion) {
-        this.identificacion=identificacion;
-    }
+     @Id @GeneratedValue(strategy=IDENTITY)
+
     
-    @Id @GeneratedValue(strategy=IDENTITY)
     @Column(name="id", unique=true, nullable=false)
     public Integer getId() {
         return this.id;
@@ -70,7 +60,7 @@ public class Interes  implements java.io.Serializable {
         this.experiencia = experiencia;
     }
 
-    @OneToMany(fetch=FetchType.LAZY, mappedBy="interes")
+@OneToMany(fetch=FetchType.EAGER, mappedBy="interes")
     public Set<Categoria> getCategorias() {
         return this.categorias;
     }
@@ -78,6 +68,10 @@ public class Interes  implements java.io.Serializable {
     public void setCategorias(Set<Categoria> categorias) {
         this.categorias = categorias;
     }
+
+
+
+
 }
 
 
