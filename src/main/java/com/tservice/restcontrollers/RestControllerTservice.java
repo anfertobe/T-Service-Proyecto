@@ -34,6 +34,8 @@ public class RestControllerTservice {
     OfertaCrudRepository oferCru;
     @Autowired
     HojaDeVidaCrudRepository hojadevidacrud;
+    @Autowired
+    LicenciasCrudRepository licenciaCrud;
     
     @RequestMapping(value="/Postulantes",method = RequestMethod.GET)        
     public List<Postulante> consultarPostulantes()  throws ResourceNotFoundException { 
@@ -43,9 +45,7 @@ public class RestControllerTservice {
     @RequestMapping(value="/Categorias",method = RequestMethod.GET)        
     public List<Categoria> consultarCategorias()  throws ResourceNotFoundException { 
           return persistenci.traerCategorias();
-    }
-    
-    
+    }    
     
     @RequestMapping(value="Categorias/{idCategoria}",method = RequestMethod.GET)
     public Categoria consultarCategoria(@PathVariable("idCategoria") int idCategoria) throws ResourceNotFoundException {
@@ -174,4 +174,14 @@ public class RestControllerTservice {
         
         return new ResponseEntity<>("Ok", HttpStatus.ACCEPTED);
        }
+      
+        @RequestMapping(value="/licencias",method = RequestMethod.GET)
+        public List<Licencias> consultarCategoria() throws ResourceNotFoundException {
+            return persistenci.traerLicencias();
+        }
+        
+        @RequestMapping(value="/licencias",method = RequestMethod.GET)
+        public List<Licencias> pagarLicencia() throws ResourceNotFoundException {
+            return persistenci.traerLicencias();
+        }
 }

@@ -32,6 +32,7 @@ public class Publicante  implements java.io.Serializable {
      private String ragion;
      private String ciudad;
      private String correo;
+     private String contraseña;
      private List<Factura> facturas = new LinkedList();
      private Set<Oferta> ofertas = new HashSet(0);
 
@@ -39,7 +40,7 @@ public class Publicante  implements java.io.Serializable {
     }
 
 	
-    public Publicante(int identificacion, String experiencia, Date fechaUltimaLicecia, String nombre, Date fechaNacimiento, String direccion, String telefono, String pais, String ragion, String ciudad) {
+    public Publicante(int identificacion, String experiencia, Date fechaUltimaLicecia, String nombre, Date fechaNacimiento, String direccion, String telefono, String pais, String ragion, String ciudad, String contraseña) {
         this.identificacion = identificacion;
         this.experiencia = experiencia;
         this.fechaUltimaLicecia = fechaUltimaLicecia;
@@ -50,6 +51,7 @@ public class Publicante  implements java.io.Serializable {
         this.pais = pais;
         this.ragion = ragion;
         this.ciudad = ciudad;
+        this.contraseña = contraseña;
     }
     public Publicante(int identificacion, String experiencia, Date fechaUltimaLicecia, String nombre, Date fechaNacimiento, String direccion, String telefono, String pais, String ragion, String ciudad, List<Factura> facturas, Set<Oferta> ofertas) {
        this.identificacion = identificacion;
@@ -175,6 +177,15 @@ public class Publicante  implements java.io.Serializable {
 
     public void setCorreo(String correo) {
         this.correo = correo;
+    }
+    
+        @Column(name="contraseña", nullable=false, length=16)
+    public String getContraseña() {
+        return contraseña;
+    }
+
+    public void setContraseña(String contraseña) {
+        this.contraseña = contraseña;
     }
 
 @OneToMany(fetch=FetchType.EAGER,cascade = CascadeType.ALL, mappedBy="publicante")

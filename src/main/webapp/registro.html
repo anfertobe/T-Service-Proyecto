@@ -1,34 +1,36 @@
 <div class="container">
     <h1> Pago de licencias </h1>
         <div class="container">
-            <div class="panel, well-sm">
+            <div class="panel, well-sm" ng-controller="PagoLicencia as pago" ng-init="pago.TraerLicencias()">
                 <form class="form-inline">      
                     <div>
                         <label>
                             Numero tarjeta credito: 
                         </label>
-                        <input type="text" name="fname" class="form-control" ng-model="reg.producto.nombre"><br>
+                        <input type="text" name="fname" class="form-control"><br>
                     </div><br>
                     <div>
                         <label>
                             Tipo Tarjeta 
                         </label>
-                        <input type="text" name="lprice" class="form-control" ng-model="reg.producto.idproducto"><br>
+                        <input type="text" name="lprice" class="form-control" ><br>
                     </div><br>
                     <div>
                         <label>
                             Codigo de Seguridad 
                         </label>
-                        <input type="text" name="lcant" class="form-control" ng-model="reg.producto.precio"><br>
+                        <input type="text" name="lcant" class="form-control" ><br>
                     </div><br>
                     <div>
                         <label>
                             Tipo de Licencia 
                         </label>
-                        <input type="text" name="fname" class="form-control" ng-model="reg.producto.nombre"><br>
+                            <select ng-model="licencia" >
+                                <option ng-repeat="lic in licencias">{{ lic.descripcion }})</option>
+                            </select>
                     </div><br>
-                    <button  ng-click="reg.registrar()" class="btn btn-primary">Registrar</button>
                 </form>
+                <button ng-click="pago.pagarLicencia()" class="btn btn-default" type="submit">pagar</button>
             </div>
         </div>
 </div>

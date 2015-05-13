@@ -40,7 +40,7 @@ public class TestPublicante {
     @Test
     public void testAgregarPublicante(){
         
-        Publicante pu = new Publicante(22, "experiencia en mecanica", new Date(System.currentTimeMillis()), "Andres", new Date(System.currentTimeMillis()), "dir", "2345678", "Colombia", "bbbb", "Bogota");      
+        Publicante pu = new Publicante(22, "experiencia en mecanica", new Date(System.currentTimeMillis()), "Andres", new Date(System.currentTimeMillis()), "dir", "2345678", "Colombia", "bbbb", "Bogota","12345");      
         pu.setCorreo("a");
         
         try {
@@ -52,7 +52,7 @@ public class TestPublicante {
     @Test
     public void testModificarPublicante(){
         
-        Publicante pu = new Publicante(24, "experiencia en mecanica", new Date(System.currentTimeMillis()), "Andres", new Date(System.currentTimeMillis()), "dir", "2345678", "Colombia", "bbbb", "Bogota");      
+        Publicante pu = new Publicante(24, "experiencia en mecanica", new Date(System.currentTimeMillis()), "Andres", new Date(System.currentTimeMillis()), "dir", "2345678", "Colombia", "bbbb", "Bogota","12345");      
         pu.setCorreo("a");
         
         try {
@@ -69,7 +69,7 @@ public class TestPublicante {
     @Test
     public void testPublicanteConAntecedentes()
     {
-                Publicante pu = new Publicante(1074417758, "experiencia en mecanica", new Date(System.currentTimeMillis()), "Andres", new Date(System.currentTimeMillis()), "dir", "2345678", "Colombia", "bbbb", "Bogota");      
+                Publicante pu = new Publicante(1074417758, "experiencia en mecanica", new Date(System.currentTimeMillis()), "Andres", new Date(System.currentTimeMillis()), "dir", "2345678", "Colombia", "bbbb", "Bogota","12345");      
         pu.setCorreo("a");
         
         try {
@@ -84,7 +84,7 @@ public class TestPublicante {
         @Test
     public void validacionPasadoJudicialSinantecedentes() throws tserviceExceptions
     {
-        Publicante pu = new Publicante(12345678, "experiencia en mecanica", new Date(System.currentTimeMillis()), "Andres", new Date(System.currentTimeMillis()), "dir", "2345678", "Colombia", "bbbb", "Bogota");      
+        Publicante pu = new Publicante(12345678, "experiencia en mecanica", new Date(System.currentTimeMillis()), "Andres", new Date(System.currentTimeMillis()), "dir", "2345678", "Colombia", "bbbb", "Bogota","12345");      
         pu.setCorreo("a");
         
         lp.addPublicante(pu);

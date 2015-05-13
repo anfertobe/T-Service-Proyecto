@@ -38,6 +38,7 @@ public class Postulante  implements java.io.Serializable {
      private String pais;
      private String region;
      private String ciudad;
+     private String contraseña;
      private Set<Oferta> ofertas = new HashSet(0);
      private Set<Oferta> ofertas_1 = new HashSet(0);
      private Set<Interes> intereses = new HashSet(0);
@@ -52,7 +53,7 @@ public class Postulante  implements java.io.Serializable {
         this.aspiracionSalarial = aspiracionSalarial;
     }
     
-    public Postulante(int identificacion, HojaDeVida hojaDeVida, int aspiracionSalarial, String nombre, Date fechaNacimiento, String correo, String direccion, String telefono, String pais, String region, String ciudad) {
+    public Postulante(int identificacion, HojaDeVida hojaDeVida, int aspiracionSalarial, String nombre, Date fechaNacimiento, String correo, String direccion, String telefono, String pais, String region, String ciudad, String contraseña) {
         this.identificacion = identificacion;
         this.hojaDeVida = hojaDeVida;
         this.aspiracionSalarial = aspiracionSalarial;
@@ -64,6 +65,7 @@ public class Postulante  implements java.io.Serializable {
         this.pais = pais;
         this.region = region;
         this.ciudad = ciudad;
+        this.contraseña = contraseña;
     }
     public Postulante(int identificacion, HojaDeVida hojaDeVida, int aspiracionSalarial, String nombre, Date fechaNacimiento, String correo, String direccion, String telefono, String pais, String region, String ciudad, Set<Oferta> ofertas, Set<Oferta> ofertas_1, Set<Interes> intereses, Set<ExperienciaLaboral> experienciaLaborals) {
        this.identificacion = identificacion;
@@ -193,6 +195,15 @@ public class Postulante  implements java.io.Serializable {
     
     public void setCiudad(String ciudad) {
         this.ciudad = ciudad;
+    }
+    
+            @Column(name="contraseña", nullable=false, length=16)
+    public String getContraseña() {
+        return contraseña;
+    }
+
+    public void setContraseña(String contraseña) {
+        this.contraseña = contraseña;
     }
 
 @OneToMany(fetch=FetchType.LAZY, mappedBy="postulante")

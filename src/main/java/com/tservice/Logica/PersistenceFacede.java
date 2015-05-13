@@ -5,9 +5,10 @@
  */
 package com.tservice.Logica;
 
-import com.tservice.Componentes.MockJudicial;
 import com.tservice.Componentes.MockPago;
 import com.tservice.Logica.correo.Gmail;
+import com.tservice.Logica.pagos.ConsultaTransaccion;
+import com.tservice.Logica.pagos.ResultadoTransaccion;
 import com.tservice.Logica.pasadoJudicial.PasadoJudicial;
 import com.tservice.Model.*;
 import com.tservice.Persistencia.*;
@@ -16,6 +17,9 @@ import java.util.*;
 import java.util.List;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 /**
@@ -251,6 +255,19 @@ public class PersistenceFacede {
     }  
     
   
+    
+    public void realizarPago(int monto,String correo, String codigoSeguridad, String nombreTarjeta, String numeroTarjeta){
+        ResponseEntity<ResultadoTransaccion> resultado = rest.exchange("http://serviciosrest.cloudhub.io/rest/PAYPAL/pago/tarjeta/"+ numeroTarjeta +"/"+ nombreTarjeta +"/Credito/"+ codigoSeguridad +"/"+ correo +"/monto/"+ monto +"/seguridad/2/TService?servicio=pagos", HttpMethod.PUT, HttpEntity.EMPTY, ResultadoTransaccion.class);
+        
+        ResultadoTransaccion result = resultado.getBody();
+    }
+    
+    public void resultadoTransaccion(int codigoTransaccion){
+        
+        ConsultaTransaccion consulta;
+        consulta = rest.getForObject("https://pasarelacosw.herokuapp.com/rest/PAYPAL/consultaTransaccion/"+ codigoTransaccion +"?consultaPago", ConsultaTransaccion.class);
+
+    }
        
     /*
     *@obj: aplicar a oferta postulante
@@ -471,6 +488,17 @@ public class PersistenceFacede {
             ofertas.add(ofer);
                 
         return ofertas;
+    }
+   
+    
+        public List<Licencias> traerLicencias()
+    {
+        List<Licencias> licencias = new LinkedList<>();
+                
+        for(Licencias licen : licenCru.findAll())
+            licencias.add(licen);
+                
+        return licencias;
     }
     
 }

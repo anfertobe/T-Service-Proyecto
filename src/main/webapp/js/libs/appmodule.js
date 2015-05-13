@@ -1,6 +1,6 @@
 (function () {
     var app = angular.module('modone', ['ngRoute']);
-
+   
     app.config(['$routeProvider',
         function ($routeProvider) {
             $routeProvider
@@ -278,6 +278,28 @@
            }
     );
     
+    app.controller('PagoLicencia',
+    function($scope,$http){
+       $scope.licencia = null;
+       
+       this.TraerLicencias = function(){
+            $http.get("rest/tservice/licencias").success(function (response) {
+                $scope.licencias = response;
+            }).error(function (data, status, headers, config) {
+                alert('error!');
+            });  
+       };
+       
+       this.pagarLicencia = function(){
+           $http.get("rest/tservice/licencias").success(function (response) {
+                $scope.licencias = response;
+            }).error(function (data, status, headers, config) {
+                alert('error!');
+            });
+       };
+    });
+    
+
         app.controller('Oferta',
             function ($scope, $http) {
                        
