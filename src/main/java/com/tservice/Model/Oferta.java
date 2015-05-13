@@ -168,7 +168,7 @@ public class Oferta  implements java.io.Serializable {
         this.categorias = categorias;
     }
 
-@ManyToMany(fetch=FetchType.EAGER)
+    @ManyToMany(fetch=FetchType.EAGER)
     @JoinTable(name="Oferta_has_Postulante", joinColumns = { 
         @JoinColumn(name="Oferta_id", nullable=false, updatable=false) }, inverseJoinColumns = { 
         @JoinColumn(name="Identificacion", nullable=false, updatable=false) })

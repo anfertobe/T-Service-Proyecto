@@ -93,6 +93,19 @@ public class PersistenceFacede {
         cateCru.save(ca);        
     }
     
+    
+     /*
+    *@obj: agregar categoria
+    *@param: categoria
+    *@pre: 
+    *@return: comentario al agregar categoria
+    */
+    public void addInteres(Interes ca) throws tserviceExceptions
+    {
+        interCrud.save(ca);        
+    }
+    
+    
         /*
     *@obj: agregar Interes
     *@param: Interes
@@ -375,7 +388,22 @@ public class PersistenceFacede {
         return postulantes;
     }
         
-    
+    /*
+    *@obj: traer todos las categorias
+    *@param: 
+    *@pre: Hay catergorias en BD
+    *@return: lista de catergorias
+    */
+    public List<Interes> traerIntereses()
+    {
+        List<Interes> postulantes = new LinkedList<Interes>();
+                
+        for(Interes cat : interCrud.findAll())
+            postulantes.add(cat);
+                
+        return postulantes;
+    }
+        
     
     /*
     *@obj: traer todos los postulantes

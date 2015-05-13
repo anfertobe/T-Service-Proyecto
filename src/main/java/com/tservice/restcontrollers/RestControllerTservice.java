@@ -45,6 +45,29 @@ public class RestControllerTservice {
           return persistenci.traerCategorias();
     }
     
+    @RequestMapping(value="/Interes",method = RequestMethod.GET)        
+    public List<Interes> consultarIntereses()  throws ResourceNotFoundException { 
+          return persistenci.traerIntereses();
+    }
+    
+    @RequestMapping(value="/Interes",method = RequestMethod.PUT)        
+    public ResponseEntity<?> agregarInteres(@RequestBody Interes interes){ 
+        
+        try {
+            try{
+                System.out.println("Este es el postulante: "+interes.getIdentificacion().getNombre());
+            
+            }catch(Exception e){
+                System.out.println("No sirvio");
+            }
+            persistenci.addInteres(interes);
+        } catch (tserviceExceptions ex) {
+                        return new ResponseEntity<>(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+    }
+    
+    
     
     
     @RequestMapping(value="Categorias/{idCategoria}",method = RequestMethod.GET)

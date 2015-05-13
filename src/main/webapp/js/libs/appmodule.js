@@ -287,11 +287,30 @@
                        
                     $scope.Categorias=[];    
                     $scope.OptionOf=null;
-                
+                    $scope.Postulantes=null;
+                    
+                    
                     this.Interes={
                         id:0,
                         experiencia:[],
-                        categorias:[]
+                        categorias:[],
+                        identificacion:{
+                                identificacion: 0,hojaDeVida: {hojaDeVida: '',
+                                fechaActualizacion: new Date(),foto: ''},
+                                aspiracionSalarial: 0,
+                                nombre: '',
+                                fechaNacimiento: new Date(),
+                                correo: '',
+                                direccion: '',
+                                telefono: '',
+                                pais: '',
+                                region: '',
+                                ciudad: '',
+                                ofertas: [],
+                                ofertas_1: [],
+                                intereses: [],
+                                experienciaLaborals: []
+                        }
                     }
                     
                     this.Categoria={
@@ -304,17 +323,54 @@
                     this.agregarInteres=function () {
             
                             this.Categoria.interes[this.Categoria.interes.length]=this.Interes;
+                             
+                            var persona=null;
+                        
+                            for (var i = 0; i < $scope.Postulantes.length; i++) {
+                                if ($scope.Postulantes[i].identificacion == $scope.OptionPub.split('-')[0] && $scope.Postulantes[i].nombre == $scope.OptionPub.split('-')[1].replace('(', '').replace(')', '')) {
+                                    persona = $scope.Postulantes[i];
+                                 }
+                            }
+     
+                           this.Interes.identificacion=persona;
+                            
+                           $http.put('rest/tservice/Interes', this.Interes).
+                                success(function (data, status, headers, config) {
+                                    alert('success!');
+                                }).
+                                error(function (data, status, headers, config) {
+                                    alert('error: ' + status + " - " + data );
+                            });
+ 
                             
                             this.Interes={
                                 id:0,
                                 experiencia:[],
-                                categorias:[]
-                            }
+                                categorias:[],
+                                identificacion:{
+                                identificacion: 0,hojaDeVida: {hojaDeVida: '',
+                                fechaActualizacion: new Date(),foto: ''},
+                                aspiracionSalarial: 0,
+                                nombre: '',
+                                fechaNacimiento: new Date(),
+                                correo: '',
+                                direccion: '',
+                                telefono: '',
+                                pais: '',
+                                region: '',
+                                ciudad: '',
+                                ofertas: [],
+                                ofertas_1: [],
+                                intereses: [],
+                                experienciaLaborals: []
+                        }
+                                
+                      }
                     }
                 
                 
                     this.consultar = function () {
-                     $http.get("rest/tservice/Categorias").
+                            $http.get("rest/tservice/Categorias").
                             success(function (response) {
                                 $scope.Categorias = response;
                             }).
@@ -322,12 +378,20 @@
                                 alert('error!');
                             });
                             
+                            $http.get("rest/tservice/Postulantes").
+                            success(function (response) {
+                                $scope.Postulantes = response;
+                            }).
+                            error(function (data, status, headers, config) {
+                                alert('error!');
+                     });
+                            
                     };
             
                     this.cargarCategoria= function () {
                         var ofertaT = null;
  
-                        
+                
  
                         for (var i = 0; i < $scope.Categorias.length; i++) {
                               if ($scope.Categorias[i].id == $scope.OptionOf.split('-')[0] && $scope.Categorias[i].nombre == $scope.OptionOf.split('-')[1].replace('(', '').replace(')', '')) {
@@ -336,13 +400,11 @@
                              }
                         }
 
-                       alert('Value');
-
-                       this.Categoria=ofertaT;
+                      this.Categoria=ofertaT;
                     };
             
                     this.registro = function () {
-                        
+                       
                         $http.put('rest/tservice/Categorias', this.Categoria).
                                 success(function (data, status, headers, config) {
                                     alert('success!');
