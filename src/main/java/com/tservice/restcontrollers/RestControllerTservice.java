@@ -45,7 +45,36 @@ public class RestControllerTservice {
     @RequestMapping(value="/Categorias",method = RequestMethod.GET)        
     public List<Categoria> consultarCategorias()  throws ResourceNotFoundException { 
           return persistenci.traerCategorias();
+<<<<<<< HEAD
     }    
+=======
+    }
+    
+    @RequestMapping(value="/Interes",method = RequestMethod.GET)        
+    public List<Interes> consultarIntereses()  throws ResourceNotFoundException { 
+          return persistenci.traerIntereses();
+    }
+    
+    @RequestMapping(value="/Interes",method = RequestMethod.PUT)        
+    public ResponseEntity<?> agregarInteres(@RequestBody Interes interes){ 
+        
+        try {
+            try{
+                System.out.println("Este es el postulante: "+interes.getIdentificacion().getNombre());
+            
+            }catch(Exception e){
+                System.out.println("No sirvio");
+            }
+            persistenci.addInteres(interes);
+        } catch (tserviceExceptions ex) {
+                        return new ResponseEntity<>(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+    }
+    
+    
+    
+>>>>>>> 77351b9b08fd09877ed9f796bb1e928366edafcd
     
     @RequestMapping(value="Categorias/{idCategoria}",method = RequestMethod.GET)
     public Categoria consultarCategoria(@PathVariable("idCategoria") int idCategoria) throws ResourceNotFoundException {
@@ -70,7 +99,7 @@ public class RestControllerTservice {
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
     
-    
+       
     @RequestMapping(value="/Categorias",method = RequestMethod.PUT)        
     public ResponseEntity<?> agregarCategoria(@RequestBody Categoria categoria){ 
         
