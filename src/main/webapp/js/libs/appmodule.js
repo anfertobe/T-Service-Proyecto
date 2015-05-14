@@ -1,6 +1,6 @@
 (function () {
     var app = angular.module('modone', ['ngRoute']);
-
+   
     app.config(['$routeProvider',
         function ($routeProvider) {
             $routeProvider
@@ -281,12 +281,38 @@
            }
     );
     
+<<<<<<< HEAD
+    app.controller('PagoLicencia',
+    function($scope,$http){
+       $scope.licencia = null;
+       
+       this.TraerLicencias = function(){
+            $http.get("rest/tservice/licencias").success(function (response) {
+                $scope.licencias = response;
+            }).error(function (data, status, headers, config) {
+                alert('error!');
+            });  
+       };
+       
+       this.pagarLicencia = function(){
+           $http.get("rest/tservice/licencias").success(function (response) {
+                $scope.licencias = response;
+            }).error(function (data, status, headers, config) {
+                alert('error!');
+            });
+       };
+    });
+    
+
+        app.controller('Oferta',
+=======
     
     app.controller('Categoria',
             function ($scope, $http) {
                        
                     $scope.Categorias=[];    
                     $scope.OptionOf=null;
+<<<<<<< HEAD
                     $scope.Postulantes=null;
          
                            
@@ -314,6 +340,13 @@
                         id:0,
                         experiencia:[],
                         categorias:[],
+=======
+                
+                    this.Interes={
+                        id:0,
+                        experiencia:[],
+                        categorias:[]
+>>>>>>> origin/master
                     }
                     
                     this.Categoria={
@@ -340,6 +373,7 @@
                     this.agregarInteres=function () {
             
                             this.Categoria.interes[this.Categoria.interes.length]=this.Interes;
+<<<<<<< HEAD
                              
                             var persona=null;
                         
@@ -359,17 +393,23 @@
                                     alert('error: ' + status + " - " + data );
                             });
  
+=======
+>>>>>>> origin/master
                             
                             this.Interes={
                                 id:0,
                                 experiencia:[],
+<<<<<<< HEAD
                                 categorias:[],
+=======
+                                categorias:[]
+>>>>>>> origin/master
                             }
                     }
                 
                 
                     this.consultar = function () {
-                            $http.get("rest/tservice/Categorias").
+                     $http.get("rest/tservice/Categorias").
                             success(function (response) {
                                 $scope.Categorias = response;
                             }).
@@ -377,20 +417,12 @@
                                 alert('error!');
                             });
                             
-                            $http.get("rest/tservice/Postulantes").
-                            success(function (response) {
-                                $scope.Postulantes = response;
-                            }).
-                            error(function (data, status, headers, config) {
-                                alert('error!');
-                     });
-                            
                     };
             
                     this.cargarCategoria= function () {
                         var ofertaT = null;
  
-                
+                        
  
                         for (var i = 0; i < $scope.Categorias.length; i++) {
                               if ($scope.Categorias[i].id == $scope.OptionOf.split('-')[0] && $scope.Categorias[i].nombre == $scope.OptionOf.split('-')[1].replace('(', '').replace(')', '')) {
@@ -399,11 +431,13 @@
                              }
                         }
 
-                      this.Categoria=ofertaT;
+                       alert('Value');
+
+                       this.Categoria=ofertaT;
                     };
             
                     this.registro = function () {
-                       
+                        
                         $http.put('rest/tservice/Categorias', this.Categoria).
                                 success(function (data, status, headers, config) {
                                     alert('success!');
@@ -423,6 +457,7 @@
     
     
     app.controller('Oferta',
+>>>>>>> 77351b9b08fd09877ed9f796bb1e928366edafcd
             function ($scope, $http) {
                        
                 $scope.OptionOf=null;
