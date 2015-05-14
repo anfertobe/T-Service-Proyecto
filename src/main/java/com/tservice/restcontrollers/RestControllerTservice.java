@@ -45,12 +45,8 @@ public class RestControllerTservice {
     @RequestMapping(value="/Categorias",method = RequestMethod.GET)        
     public List<Categoria> consultarCategorias()  throws ResourceNotFoundException { 
           return persistenci.traerCategorias();
-<<<<<<< HEAD
-    }    
-=======
     }
     
-<<<<<<< HEAD
     @RequestMapping(value="/Interes",method = RequestMethod.GET)        
     public List<Interes> consultarIntereses()  throws ResourceNotFoundException { 
           return persistenci.traerIntereses();
@@ -68,11 +64,7 @@ public class RestControllerTservice {
     }
     
     
-=======
->>>>>>> origin/master
-    
->>>>>>> 77351b9b08fd09877ed9f796bb1e928366edafcd
-    
+   
     @RequestMapping(value="Categorias/{idCategoria}",method = RequestMethod.GET)
     public Categoria consultarCategoria(@PathVariable("idCategoria") int idCategoria) throws ResourceNotFoundException {
         return persistenci.consultarCategoria(idCategoria);

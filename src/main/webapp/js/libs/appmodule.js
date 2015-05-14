@@ -281,7 +281,6 @@
            }
     );
     
-<<<<<<< HEAD
     app.controller('PagoLicencia',
     function($scope,$http){
        $scope.licencia = null;
@@ -303,16 +302,13 @@
        };
     });
     
-
-        app.controller('Oferta',
-=======
     
     app.controller('Categoria',
             function ($scope, $http) {
                        
                     $scope.Categorias=[];    
                     $scope.OptionOf=null;
-<<<<<<< HEAD
+
                     $scope.Postulantes=null;
          
                            
@@ -340,13 +336,6 @@
                         id:0,
                         experiencia:[],
                         categorias:[],
-=======
-                
-                    this.Interes={
-                        id:0,
-                        experiencia:[],
-                        categorias:[]
->>>>>>> origin/master
                     }
                     
                     this.Categoria={
@@ -373,9 +362,8 @@
                     this.agregarInteres=function () {
             
                             this.Categoria.interes[this.Categoria.interes.length]=this.Interes;
-<<<<<<< HEAD
-                             
-                            var persona=null;
+
+                        var persona=null;
                         
                             for (var i = 0; i < $scope.Postulantes.length; i++) {
                                 if ($scope.Postulantes[i].identificacion == $scope.OptionPub.split('-')[0] && $scope.Postulantes[i].nombre == $scope.OptionPub.split('-')[1].replace('(', '').replace(')', '')) {
@@ -393,17 +381,10 @@
                                     alert('error: ' + status + " - " + data );
                             });
  
-=======
->>>>>>> origin/master
-                            
                             this.Interes={
                                 id:0,
                                 experiencia:[],
-<<<<<<< HEAD
-                                categorias:[],
-=======
                                 categorias:[]
->>>>>>> origin/master
                             }
                     }
                 
@@ -457,7 +438,6 @@
     
     
     app.controller('Oferta',
->>>>>>> 77351b9b08fd09877ed9f796bb1e928366edafcd
             function ($scope, $http) {
                        
                 $scope.OptionOf=null;

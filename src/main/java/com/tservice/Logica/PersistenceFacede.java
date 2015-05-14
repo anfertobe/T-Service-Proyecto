@@ -14,6 +14,11 @@ import com.tservice.Persistencia.*;
 import com.tservice.exceptions.tserviceExceptions;
 import java.util.*;
 import java.util.List;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
+import com.tservice.Logica.pagos.ConsultaTransaccion;
+import com.tservice.Logica.pagos.ResultadoTransaccion;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -47,6 +52,32 @@ public class PersistenceFacede {
     @Autowired
     MockPago pago;
     RestTemplate rest = new RestTemplate();
+    
+       
+    public void realizarPago(int monto,String correo, String codigoSeguridad, String nombreTarjeta, String numeroTarjeta){
+        ResponseEntity<ResultadoTransaccion> resultado = rest.exchange("http://serviciosrest.cloudhub.io/rest/PAYPAL/pago/tarjeta/"+ numeroTarjeta +"/"+ nombreTarjeta +"/Credito/"+ codigoSeguridad +"/"+ correo +"/monto/"+ monto +"/seguridad/2/TService?servicio=pagos", HttpMethod.PUT, HttpEntity.EMPTY, ResultadoTransaccion.class);
+        
+        ResultadoTransaccion result = resultado.getBody();
+    }
+    
+    public void resultadoTransaccion(int codigoTransaccion){
+        
+        ConsultaTransaccion consulta;
+        consulta = rest.getForObject("https://pasarelacosw.herokuapp.com/rest/PAYPAL/consultaTransaccion/"+ codigoTransaccion +"?consultaPago", ConsultaTransaccion.class);
+
+    }
+    
+    
+        public List<Licencias> traerLicencias()
+    {
+        List<Licencias> licencias = new LinkedList<>();
+                
+        for(Licencias licen : licenCru.findAll())
+            licencias.add(licen);
+                
+        return licencias;
+    }
+    
      /*
     @obj: agregar oferta a categoria
     *@param: publicante, oferta
