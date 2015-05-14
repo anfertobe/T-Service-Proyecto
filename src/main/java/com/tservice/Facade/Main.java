@@ -7,7 +7,12 @@ package com.tservice.Facade;
 
 
 import com.tservice.Logica.PersistenceFacede;
+import com.tservice.Model.Categoria;
 import com.tservice.Model.Interes;
+import com.tservice.Model.Postulante;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.mail.MessagingException;
@@ -34,7 +39,7 @@ public class Main {
           // TODO code application logic here
             ApplicationContext ap = new ClassPathXmlApplicationContext("/applicationContext.xml");
             PersistenceFacede l = (PersistenceFacede) ap.getBean(PersistenceFacede.class);
-
+                        
     }
     
 }

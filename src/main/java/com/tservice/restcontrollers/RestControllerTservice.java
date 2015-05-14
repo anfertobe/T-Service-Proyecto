@@ -51,16 +51,10 @@ public class RestControllerTservice {
     }
     
     @RequestMapping(value="/Interes",method = RequestMethod.PUT)        
-    public ResponseEntity<?> agregarInteres(@RequestBody Interes interes){ 
+    public ResponseEntity<?> updateInteres(@RequestBody Postulante postulante){ 
         
         try {
-            try{
-                System.out.println("Este es el postulante: "+interes.getIdentificacion().getNombre());
-            
-            }catch(Exception e){
-                System.out.println("No sirvio");
-            }
-            persistenci.addInteres(interes);
+            persistenci.updPostulante(postulante);
         } catch (tserviceExceptions ex) {
                         return new ResponseEntity<>(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }

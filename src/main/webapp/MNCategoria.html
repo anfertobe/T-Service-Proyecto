@@ -97,7 +97,7 @@
                                  
                                  </thead>
                                  <tbody>
-                                     <tr ng-repeat="oft in of.Categoria.interes">
+                                     <tr ng-repeat="oft in of.Postulante.intereses" >
                                          <td>{{oft.experiencia}}</td>
                                      </tr>
                                  </tbody>
@@ -131,7 +131,7 @@
                                 </tr>
                                  <tr>
                             <td>Publicante</td>
-                                <td><select name="Publicante"  ng-model="OptionPub" >
+                                <td><select name="Publicante"  ng-model="OptionPub" ng-change="of.cargarPostulante()" >
                                      <option ng-repeat="cat in Postulantes">{{cat.identificacion}}-({{cat.nombre}})</option>
                                 </select></td>
                                 </tr>
