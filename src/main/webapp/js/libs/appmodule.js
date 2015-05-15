@@ -386,8 +386,8 @@
                                 experienciaLaborals: []
                         }
                                 
-                      }
-                  }
+                      };
+                  };
                 
                 
                     this.consultar = function () {
@@ -428,12 +428,7 @@
                                     alert('error: ' + status + " - " + data );
                                 });
                 };
-                
-            
-            
-            
-            }
-    
+            }    
     );
     
     
@@ -544,10 +539,7 @@
                                     alert('error: ' + status + " - " + data );
                                 });
                 };
-            }
-             
-            
-                    
+            }     
                     
                     
     );
