@@ -310,32 +310,29 @@
                     $scope.OptionOf=null;
 
                     $scope.Postulantes=null;
-         
-                           
-                this.Postulante = {
-                        identificacion: 0,hojaDeVida: {hojaDeVida: '',
-                        fechaActualizacion: new Date(),foto: ''},
-                        aspiracionSalarial: 0,
-                        nombre: '',
-                        fechaNacimiento: new Date(),
-                        correo: '',
-                        direccion: '',
-                        telefono: '',
-                        pais: '',
-                        region: '',
-                        ciudad: '',
-                        ofertas: [],
-                        ofertas_1: [],
-                        intereses: [],
-                        experienciaLaborals: []
-                   }
-         
-                
+                    
                     
                     this.Interes={
                         id:0,
                         experiencia:[],
                         categorias:[],
+                        identificacion:{
+                                identificacion: 0,hojaDeVida: {hojaDeVida: '',
+                                fechaActualizacion: new Date(),foto: ''},
+                                aspiracionSalarial: 0,
+                                nombre: '',
+                                fechaNacimiento: new Date(),
+                                correo: '',
+                                direccion: '',
+                                telefono: '',
+                                pais: '',
+                                region: '',
+                                ciudad: '',
+                                ofertas: [],
+                                ofertas_1: [],
+                                intereses: [],
+                                experienciaLaborals: []
+                        }
                     }
                     
                     this.Categoria={
@@ -343,20 +340,6 @@
                         interes:[],
                         nombre:'',
                         ofertas:[]
-                    }
-                    
-                    this.cargarPostulante=function () {
-                            var persona=null;
-                        
-                            for (var i = 0; i < $scope.Postulantes.length; i++) {
-                                if ($scope.Postulantes[i].identificacion == $scope.OptionPub.split('-')[0] && $scope.Postulantes[i].nombre == $scope.OptionPub.split('-')[1].replace('(', '').replace(')', '')) {
-                                    persona = $scope.Postulantes[i];
-                                    
-                                 }
-                            }
-                            
-                            this.Postulante=persona;
-     
                     }
                     
                     this.agregarInteres=function () {
@@ -371,9 +354,9 @@
                                  }
                             }
      
-                           persona.intereses[persona.intereses.length]=this.Interes;
+                           this.Interes.identificacion=persona;
                             
-                            $http.put('rest/tservice/Interes', persona).
+                           $http.put('rest/tservice/Interes', this.Interes).
                                 success(function (data, status, headers, config) {
                                     alert('success!');
                                 }).
@@ -384,9 +367,27 @@
                             this.Interes={
                                 id:0,
                                 experiencia:[],
-                                categorias:[]
-                            }
-                    }
+                                categorias:[],
+                                identificacion:{
+                                identificacion: 0,hojaDeVida: {hojaDeVida: '',
+                                fechaActualizacion: new Date(),foto: ''},
+                                aspiracionSalarial: 0,
+                                nombre: '',
+                                fechaNacimiento: new Date(),
+                                correo: '',
+                                direccion: '',
+                                telefono: '',
+                                pais: '',
+                                region: '',
+                                ciudad: '',
+                                ofertas: [],
+                                ofertas_1: [],
+                                intereses: [],
+                                experienciaLaborals: []
+                        }
+                                
+                      }
+                  }
                 
                 
                     this.consultar = function () {

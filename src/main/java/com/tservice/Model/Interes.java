@@ -4,7 +4,6 @@ package com.tservice.Model;
 
 import java.util.HashSet;
 import java.util.Set;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -25,10 +24,10 @@ import javax.persistence.Table;
 public class Interes  implements java.io.Serializable {
 
 
-   private Integer id;
-   private String experiencia;
-   private Postulante identificacion;
-   private Set<Categoria> categorias = new HashSet(0);
+     private Integer id;
+     private String experiencia;
+     private Postulante identificacion;
+     private Set<Categoria> categorias = new HashSet(0);
 
     public Interes() {
     }
@@ -37,28 +36,20 @@ public class Interes  implements java.io.Serializable {
     public Interes(String experiencia) {
         this.experiencia = experiencia;
     }
-    
-    
-    public Interes(Postulante identificacion) {
-        this.identificacion=identificacion;
-    }	
-    
-    public Interes(String experiencia,Postulante identificacion) {
-        this.experiencia = experiencia;
-        this.identificacion=identificacion;
-    }
-    
     public Interes(String experiencia, Set<Categoria> categorias) {
        this.experiencia = experiencia;
        this.categorias = categorias;
     }
    
-    public Interes(String experiencia, Set<Categoria> categorias,Postulante identificacion ) {
-       this.experiencia = experiencia;
-       this.categorias = categorias;
-       this.identificacion=identificacion;
+    @OneToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="identificacion")
+    public Postulante getIdentificacion() {
+        return this.identificacion;
     }
-   
+ 
+    public void setIdentificacion(Postulante identificacion) {
+        this.identificacion=identificacion;
+    }
     
     @Id @GeneratedValue(strategy=IDENTITY)
     @Column(name="id", unique=true, nullable=false)
@@ -70,7 +61,6 @@ public class Interes  implements java.io.Serializable {
         this.id = id;
     }
     
-       
     @Column(name="Experiencia", nullable=false, length=45)
     public String getExperiencia() {
         return this.experiencia;

@@ -51,6 +51,8 @@ public class PersistenceFacede {
     LicenciasCrudRepository licenCru;
     @Autowired
     MockPago pago;
+    @Autowired
+    InteresCrudRepository interCru;
     RestTemplate rest = new RestTemplate();
     
        
@@ -122,6 +124,30 @@ public class PersistenceFacede {
         cateCru.save(ca);        
     }
     
+    
+     /*
+    *@obj: agregar categoria
+    *@param: categoria
+    *@pre: 
+    *@return: comentario al agregar categoria
+    */
+    public void addInteres(Interes ca) throws tserviceExceptions
+    {
+        interCrud.save(ca);        
+    }
+    
+    
+        /*
+    *@obj: agregar Interes
+    *@param: Interes
+    *@pre: 
+    *@return:
+    */
+    public void addCategoria(Interes interes)
+    {
+        interCru.save(interes);        
+    }
+       
     /*
     *@obj: agregar oferta a publicante
     *@param: publicante , oferta
@@ -224,19 +250,7 @@ public class PersistenceFacede {
     
     }
     
-    /*
-    *@obj: actualizar postulante 
-    *se validaran terceros para poder agregarlo
-    *@param: postulante
-    *@pre: El postulante no existe
-    *@return: Comentario para agregar postulante
-    */
-    public void updPostulante(Postulante po) throws tserviceExceptions 
-    {
-           postCru.save(po);
-    }
-    
-    
+     
     
     /*
     *@obj: agregar postulante 
