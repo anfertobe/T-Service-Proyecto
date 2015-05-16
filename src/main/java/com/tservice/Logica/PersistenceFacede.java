@@ -315,7 +315,7 @@ public class PersistenceFacede {
         Oferta ofBD=this.oferCru.findOne(of.getId());
 
         //Si el publicante existe
-        if(this.publicru.exists(ofBD.getPublicante().getIdentificacion()))
+        if(!this.publicru.exists(ofBD.getPublicante().getIdentificacion()))
             throw new tserviceExceptions("no existe el publicante de la oferta por favor verifique");
 
         //Traer publicante de BD
@@ -351,7 +351,7 @@ public class PersistenceFacede {
 
             correo.sender(texto, "Aplicacion a oferta", puBD.getCorreo());
         }catch(Exception e){
-            throw new tserviceExceptions(String.format("El correo %s no es valido por favor verifique.", puBD.getCorreo()));
+            throw new tserviceExceptions(String.format("El correo %s no es valido por favor verifique.", puBD.getCorreo()) + "Error "+e.getMessage());
 
         }
 }

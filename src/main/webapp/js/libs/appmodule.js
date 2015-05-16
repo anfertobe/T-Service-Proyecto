@@ -40,7 +40,7 @@
                         templateUrl: 'MNCategoria.html'
                     })
                     .otherwise({
-                        redirectTo: '/MNCategoria'
+                        redirectTo: '/MNPersona'
                     });
         }]);
 
@@ -143,7 +143,6 @@
                              persona = $scope.Publicantes[i];
                              this.Persona.region=persona.ragion;
                              $scope.OptionTipo="Publicante";
-                             alert('Find')
                              this.Publicante=persona;
                         }
                     }
@@ -154,7 +153,6 @@
                                 persona = $scope.Postulantes[i];
                                 this.Persona.region=persona.region;
                                 $scope.OptionTipo="Postulante";
-                                alert('Find2')
                                 this.Postulante=persona;
                            }
                         }
@@ -175,6 +173,51 @@
             
                     
                 };
+
+                this.aplicarOferta= function () {
+                   var radios = document.getElementsByName('radAnswer');
+
+                    var value;
+                    
+                    var find=false;
+
+                    for (var i = 0, length = radios.length; i < length; i++) {
+                        if (radios[i].checked) {
+                            value=radios[i].value;
+                          
+                            find=true;
+                            // only one radio can be logically checked, don't check the rest
+                            break;
+                        }
+                    }
+                    
+                    if($scope.OptionTipo=="Postulante" && find){
+                        
+                        alert(this.Persona.identificacion);
+                    
+                        $http.put('rest/tservice//Ofertas/aplicarOferta/'+ this.Persona.identificacion +'/'+value+'/', this.Postulante).
+                                success(function (data, status, headers, config) {
+                                    alert('success!');
+                                }).
+                                error(function (data, status, headers, config) {
+                                    alert('error: ' + status + " - " + data );
+                                });
+                    
+                    
+                    
+                    }else{
+                        if(!find){
+                            alert('No se ha seleccionado ninguna oferta');
+                            
+                        }else{
+                            alert('Solo los postulantes pueden aplicar a las ofertas');
+                        }
+                    }
+                    
+                };
+                
+
+
 
 
             this.habilitarControles =  function (){
@@ -476,6 +519,45 @@
             
            
             $scope.Publicantes = [];
+            
+            this.seleccionarEmpleado= function () {
+                   var radios = document.getElementsByName('radAnswer');
+
+                    var value;
+                    
+                    var find=false;
+
+                    for (var i = 0, length = radios.length; i < length; i++) {
+                        if (radios[i].checked) {
+                            value=radios[i].value;
+                          
+                            find=true;
+                            // only one radio can be logically checked, don't check the rest
+                            break;
+                        }
+                    }
+                    
+                    if(find){
+                        
+                    alert('AgregarEmpleado');    
+                    
+                    $http.put('rest/tservice//Ofertas/agregarEmpleadoOferta/'+ value +'/'+this.Oferta.id+'/', this.Postulante).
+                                success(function (data, status, headers, config) {
+                                    alert('success!');
+                                }).
+                                error(function (data, status, headers, config) {
+                                    alert('error: ' + status + " - " + data );
+                                });
+                    
+                    
+                }else{
+                    alert('Debe seleccionar un empleado');
+                    
+                }
+                    
+            };
+                
+
                 
             this.cargarOferta   = function () {
                var ofertaT = null;
@@ -487,6 +569,12 @@
                }
                
                this.Oferta=ofertaT;
+               
+               //Ya tiene empleado
+               if(this.Oferta.postulante!=null){
+                   this.Oferta.postulantes=null;
+               }
+                      
             };
             
             this.consultar = function () {
@@ -538,10 +626,14 @@
                                     alert('error: ' + status + " - " + data );
                                 });
                 };
-            }     
+               
                     
+                }
+                    
+        
                     
     );
+
 
 
 })();

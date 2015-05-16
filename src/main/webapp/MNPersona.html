@@ -57,7 +57,7 @@
             <div class="container-fluid" >
                 <ul class="nav nav-tabs">
                     <li role="presentation"  ng-click="of.registro()" ><a>Adicionar</a></li>
-                    <li role="presentation"><a href="#">Aplicar Oferta</a></li>
+                    <li role="presentation"  ng-click="of.aplicarOferta()" ><a>Aplicar Oferta</a></li>
             </ul>
             <br>
             </div>
@@ -106,7 +106,7 @@
                                  </thead>
                                  <tbody>
                                      <tr ng-repeat="oft in ofertasG">
-                                         <td><input type="radio" name="" value="0" /> </td>
+                                         <td><input type="radio" name="radAnswer" value={{oft.id}} /> </td>
                                          <td>{{oft.id}}</td>
                                          <td>{{oft.descripcion}}</td>
                                          <td>{{oft.valor}}</td>

@@ -57,7 +57,7 @@
             <div class="container-fluid" >
                 <ul class="nav nav-tabs">
                     <li role="presentation"  ng-click="of.registro()" ><a>Adicionar</a></li>
-                    <li role="presentation"><a href="#">Seleccionar empleado</a></li>
+                    <li role="presentation" ng-click="of.seleccionarEmpleado()"><a>Seleccionar empleado</a></li>
             </ul>
             <br>
             </div>
@@ -95,15 +95,13 @@
                                  <th></th>
                                  <th>NDoc</th>
                                  <th>Nombre</th>
-                                 <th>Rol</th>
-
+                                
                                  </thead>
                                  <tbody>
                                      <tr ng-repeat="oft in of.Oferta.postulantes">
-                                         <td><input type="radio" name="" value="0" /> </td>
+                                         <td><input type="radio" name="radAnswer" value={{oft.identificacion}} /> </td>
                                          <td>{{oft.identificacion}}</td>
                                          <td>{{oft.nombre}}</td>
-                                         <td>a</td>
                                      </tr>
                                  </tbody>
                              </table>

@@ -86,7 +86,7 @@ public class Oferta  implements java.io.Serializable {
         this.calificacion = calificacion;
     }
 
-@ManyToOne(fetch=FetchType.LAZY, cascade = CascadeType.MERGE)
+@ManyToOne(fetch=FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinColumn(name="Trabajador_Identificacion")
     public Postulante getPostulante() {
         return this.postulante;
@@ -96,7 +96,7 @@ public class Oferta  implements java.io.Serializable {
         this.postulante = postulante;
     }
 
-@ManyToOne(fetch=FetchType.LAZY)
+@ManyToOne(fetch=FetchType.EAGER)
     @JoinColumn(name="Publicante_Identificacion")
     public Publicante getPublicante() {
         return this.publicante;
