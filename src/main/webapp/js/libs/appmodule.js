@@ -137,14 +137,13 @@
                 this.Buscar=function(){
                
                     var persona=null;
-                    
-                    
+                  
                     for (var i = 0; i < $scope.Publicantes.length; i++) {
-                        
-                         if ($scope.Publicantes[i].identificacion == $scope.OptionFind || $scope.Publicantes[i].nombre.contains($scope.OptionFind)) {
+                        if ($scope.Publicantes[i].identificacion == $scope.OptionFind || $scope.Publicantes[i].nombre.contains($scope.OptionFind)) {
                              persona = $scope.Publicantes[i];
                              this.Persona.region=persona.ragion;
                              $scope.OptionTipo="Publicante";
+                             alert('Find')
                              this.Publicante=persona;
                         }
                     }
@@ -155,6 +154,7 @@
                                 persona = $scope.Postulantes[i];
                                 this.Persona.region=persona.region;
                                 $scope.OptionTipo="Postulante";
+                                alert('Find2')
                                 this.Postulante=persona;
                            }
                         }
@@ -333,14 +333,14 @@
                                 intereses: [],
                                 experienciaLaborals: []
                         }
-                    }
+                    };
                     
                     this.Categoria={
                         id:0,
                         interes:[],
                         nombre:'',
                         ofertas:[]
-                    }
+                    };
                     
                     this.agregarInteres=function () {
             
@@ -385,18 +385,17 @@
                                 intereses: [],
                                 experienciaLaborals: []
                         }
-                                
-                      };
+
                   };
-                
-                
+              };
+
                     this.consultar = function () {
                      $http.get("rest/tservice/Categorias").
                             success(function (response) {
                                 $scope.Categorias = response;
                             }).
                             error(function (data, status, headers, config) {
-                                alert('error!');
+                                alert('error!' + data);
                             });
                             
                     };

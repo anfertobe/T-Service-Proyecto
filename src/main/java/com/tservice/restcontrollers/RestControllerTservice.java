@@ -43,7 +43,7 @@ public class RestControllerTservice {
     }
     
     @RequestMapping(value="/Categorias",method = RequestMethod.GET)        
-    public List<Categoria> consultarCategorias()  throws ResourceNotFoundException { 
+    public List<Categoria> consultarCategorias() { 
           return persistenci.traerCategorias();
     }
     
@@ -200,11 +200,11 @@ public class RestControllerTservice {
        }
       
         @RequestMapping(value="/licencias",method = RequestMethod.GET)
-        public List<Licencias> consultarCategoria() throws ResourceNotFoundException {
+        public List<Licencias> consultarLicencias() throws ResourceNotFoundException {
             return persistenci.traerLicencias();
         }
         
-        @RequestMapping(value="/licencias",method = RequestMethod.GET)
+        @RequestMapping(value="/pagarlicencias",method = RequestMethod.GET)
         public List<Licencias> pagarLicencia() throws ResourceNotFoundException {
             return persistenci.traerLicencias();
         }
