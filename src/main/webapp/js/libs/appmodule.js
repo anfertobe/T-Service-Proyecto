@@ -195,7 +195,7 @@
                         
                         alert(this.Persona.identificacion);
                     
-                        $http.put('rest/tservice//Ofertas/aplicarOferta/'+ this.Persona.identificacion +'/'+value+'/', this.Postulante).
+                        $http.put('rest/tservice//Ofertas/aplicarOferta/'+ this.Persona.identificacion +'/'+value+'/').
                                 success(function (data, status, headers, config) {
                                     alert('success!');
                                 }).
@@ -539,9 +539,7 @@
                     
                     if(find){
                         
-                    alert('AgregarEmpleado');    
-                    
-                    $http.put('rest/tservice//Ofertas/agregarEmpleadoOferta/'+ value +'/'+this.Oferta.id+'/', this.Postulante).
+                    $http.put('rest/tservice//Ofertas/agregarEmpleadoOferta/'+ value +'/'+this.Oferta.id+'/').
                                 success(function (data, status, headers, config) {
                                     alert('success!');
                                 }).
