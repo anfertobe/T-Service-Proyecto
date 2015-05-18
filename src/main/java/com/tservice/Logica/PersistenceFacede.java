@@ -53,6 +53,8 @@ public class PersistenceFacede {
     MockPago pago;
     @Autowired
     InteresCrudRepository interCru;
+    @Autowired
+    CalificacionCrudRepository califCru;
     RestTemplate rest = new RestTemplate();
     
        
@@ -147,7 +149,33 @@ public class PersistenceFacede {
     {
         interCru.save(interes);        
     }
-       
+    
+    /*
+    *@obj: agregar calificacion. 
+    *@param: Oferta.
+    *@pre: La oferta existe y ya fue realizada.
+    *@return: Comentario para agregar calificacion
+    */
+    public void addCalificacion(Oferta of, Calificacion ca) throws tserviceExceptions
+    {
+        //Si la oferta existe se valida el estado de la misma.
+        if(!this.oferCru.exists(of.getId()))
+            throw new tserviceExceptions("La oferta que quiere calificar no existe, por favor verifique.");
+        
+        Oferta ofBD=this.oferCru.findOne(of.getId());
+                
+                //Validar estado oferta
+                if(!"terminada".equals(of.getEstado()))
+                    throw new tserviceExceptions("La oferta que quiere calificar aún no está terminada, por favor verifique.");
+                    
+                //Salvar oferta
+                of.setCalificacion(ca);
+                this.oferCru.save(of);
+                
+                //Actualizar calificacion
+                this.califCru.save(ca);
+    }
+    
     /*
     *@obj: agregar oferta a publicante
     *@param: publicante , oferta
@@ -249,7 +277,6 @@ public class PersistenceFacede {
         return fac;
     
     }
-    
      
     
     /*
@@ -409,6 +436,22 @@ public class PersistenceFacede {
     *@pre: Hay catergorias en BD
     *@return: lista de catergorias
     */
+    public List<Calificacion> traerCalificaciones()
+    {
+        List<Calificacion> calificaciones = new LinkedList<Calificacion>();
+                
+        for(Calificacion cal : califCru.findAll())
+            calificaciones.add(cal);
+                
+        return calificaciones;
+    }
+    
+    /*
+    *@obj: traer todos las categorias
+    *@param: 
+    *@pre: Hay catergorias en BD
+    *@return: lista de catergorias
+    */
     public List<Categoria> traerCategorias()
     {
         List<Categoria> postulantes = new LinkedList<Categoria>();
@@ -462,6 +505,17 @@ public class PersistenceFacede {
     public Categoria consultarCategoria(int identificacion)
     {
         return cateCru.findOne(identificacion);
+    }
+    
+     /*
+    *@obj: traer calificación especifica
+    *@param: 
+    *@pre: la calificación existe en BD
+    *@return: calificación
+    */
+    public Calificacion consultarCalificacion(int identificacion)
+    {
+        return califCru.findOne(identificacion);
     }
     
     

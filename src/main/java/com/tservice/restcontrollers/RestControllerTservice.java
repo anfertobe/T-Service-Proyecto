@@ -36,6 +36,15 @@ public class RestControllerTservice {
     HojaDeVidaCrudRepository hojadevidacrud;
     @Autowired
     LicenciasCrudRepository licenciaCrud;
+    @Autowired
+    CalificacionCrudRepository calificacionCrud;
+    
+    
+    
+    @RequestMapping(value="/Calificacion",method = RequestMethod.GET)        
+    public List<Calificacion> consultarCalificacion()  throws ResourceNotFoundException { 
+          return persistenci.traerCalificaciones();
+    }
     
     @RequestMapping(value="/Postulantes",method = RequestMethod.GET)        
     public List<Postulante> consultarPostulantes()  throws ResourceNotFoundException { 
@@ -67,6 +76,22 @@ public class RestControllerTservice {
                         return new ResponseEntity<>(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
+    }
+    
+    @RequestMapping(value="/Calificacion",method = RequestMethod.PUT)        
+    public ResponseEntity<?> agregarCalificacion(@RequestBody Calificacion calificacion, int idOferta){ 
+        
+        Oferta oferta = oferCru.findOne(idOferta);
+       
+       if(oferta == null)
+           return new ResponseEntity<>("La oferta No Existe", HttpStatus.INTERNAL_SERVER_ERROR);
+       
+       try {
+            persistenci.addCalificacion(oferta, calificacion);
+        } catch (tserviceExceptions ex) {
+            return new ResponseEntity<>(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+       return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
     
     

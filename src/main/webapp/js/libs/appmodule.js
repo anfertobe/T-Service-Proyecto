@@ -39,6 +39,9 @@
                     .when('/MNCategoria', {
                         templateUrl: 'MNCategoria.html'
                     })
+                    .when('/MNCalificacion', {
+                        templateUrl: 'MNCalificacion.html'
+                    })
                     .otherwise({
                         redirectTo: '/MNPersona'
                     });
