@@ -5,35 +5,41 @@
  */
 package com.tservice.Logica.pagos;
 
+
 /**
  *
  * @author andres
  */
-public class ResultadoTransaccion {
+public class ResultadoTransaccion implements java.io.Serializable{
 
-    private String resultado;
-    private int codigo;
+    private String Resultado;
+    private int codTransaccion;
 
-    public ResultadoTransaccion(String resultado, int codigo) {
-        this.resultado = resultado;
-        this.codigo = codigo;
+    public ResultadoTransaccion() {
     }
-    
+
+    public ResultadoTransaccion(String Resultado, int codTransaccion) {
+        this.Resultado = Resultado;
+        this.codTransaccion = codTransaccion;
+    }
+
     public String getResultado() {
-        return resultado;
+        return Resultado;
     }
 
-    public void setResultado(String resultado) {
-        this.resultado = resultado;
+    public void setResultado(String Resultado) {
+        this.Resultado = Resultado;
     }
 
-    public int getCodigo() {
-        return codigo;
+    public int getCodTransaccion() {
+        return codTransaccion;
     }
 
-    public void setCodigo(int codigo) {
-        this.codigo = codigo;
+    public void setCodTransaccion(int codTransaccion) {
+        this.codTransaccion = codTransaccion;
     }
+
+
  
 
     

@@ -16,9 +16,12 @@ public class ConsultaTransaccion {
     private int codigoTransaccion;
     private String estado;
     private int montoTransferido;
-    private Date fechaRealizacion;
+    private String fechaRealizacion;
 
-    public ConsultaTransaccion(int codigoTransaccion, String estado, int montoTransferido, Date fechaRealizacion) {
+    public ConsultaTransaccion() {
+    }
+
+    public ConsultaTransaccion(int codigoTransaccion, String estado, int montoTransferido, String fechaRealizacion) {
         this.codigoTransaccion = codigoTransaccion;
         this.estado = estado;
         this.montoTransferido = montoTransferido;
@@ -49,11 +52,11 @@ public class ConsultaTransaccion {
         this.montoTransferido = montoTransferido;
     }
 
-    public Date getFechaRealizacion() {
+    public String getFechaRealizacion() {
         return fechaRealizacion;
     }
 
-    public void setFechaRealizacion(Date fechaRealizacion) {
+    public void setFechaRealizacion(String fechaRealizacion) {
         this.fechaRealizacion = fechaRealizacion;
     }
     

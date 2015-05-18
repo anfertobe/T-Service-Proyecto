@@ -8,6 +8,7 @@ package com.tservice.Logica;
 import com.tservice.Componentes.MockJudicial;
 import com.tservice.Componentes.MockPago;
 import com.tservice.Logica.correo.Gmail;
+import com.tservice.Logica.factura.FacturaFisica;
 import com.tservice.Logica.pasadoJudicial.PasadoJudicial;
 import com.tservice.Model.*;
 import com.tservice.Persistencia.*;
@@ -18,9 +19,15 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import com.tservice.Logica.pagos.ConsultaTransaccion;
+import com.tservice.Logica.pagos.InformacionPago;
 import com.tservice.Logica.pagos.ResultadoTransaccion;
+import com.tservice.UsuariActivo.UsuarioActivo;
+import com.tservice.UsuariActivo.WrapperPostulanteActivo;
+import com.tservice.UsuariActivo.WrapperPublicanteActivo;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 /**
@@ -57,18 +64,44 @@ public class PersistenceFacede {
     CalificacionCrudRepository califCru;
     RestTemplate rest = new RestTemplate();
     
+    private static UsuarioActivo usuarioactivo;
+    
        
-    public void realizarPago(int monto,String correo, String codigoSeguridad, String nombreTarjeta, String numeroTarjeta){
-        ResponseEntity<ResultadoTransaccion> resultado = rest.exchange("http://serviciosrest.cloudhub.io/rest/PAYPAL/pago/tarjeta/"+ numeroTarjeta +"/"+ nombreTarjeta +"/Credito/"+ codigoSeguridad +"/"+ correo +"/monto/"+ monto +"/seguridad/2/TService?servicio=pagos", HttpMethod.PUT, HttpEntity.EMPTY, ResultadoTransaccion.class);
+        public void realizarPago(Licencias licencia, InformacionPago pago) throws tserviceExceptions, Exception{
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<String> entity = new HttpEntity<>(headers);
+        String url = "http://serviciosrest.cloudhub.io/rest/PAYPAL/pago/tarjeta/"+ pago.getNumeroTarjeta() +"/"+ pago.getNombreTarjeta() +"/Credito/"+ pago.getCodigoSeguridad() +"/"+ usuarioactivo.getCorreo() +"/monto/"+ (int)licencia.getValor() +"/seguridad/2/TService?servicio=pago";
+               //http://serviciosrest.cloudhub.io/rest/PAYPAL/pago/tarjeta/4916701440291035/Visa/Credito/9209/asd@asd.com/monto/1000/seguridad/2/TService?api=api2
+        ResponseEntity<Object> resultado = rest.exchange(url, HttpMethod.PUT, HttpEntity.EMPTY, Object.class);
+                                                                      //http://serviciosrest.cloudhub.io/rest/PAYPAL/pago/tarjeta/4916701440291035/Visa/Credito/9209/asd@asd.com/monto/30/seguridad/2/TService?servicio=pago
+        String resu = resultado.getBody().toString();
         
-        ResultadoTransaccion result = resultado.getBody();
+        resu = resu.replace("{", "");
+        resu = resu.replace("}", "");
+       
+        
+        ResultadoTransaccion result = new ResultadoTransaccion(resu.split(",")[0].split("=")[1], Integer.parseInt(resu.split(",")[1].split("=")[1]));
+        
+        if(result.getCodTransaccion()== 0){
+            throw new tserviceExceptions("La tarjeta es invalida o el saldo es insuficiente por favor verifique");
+        }else
+            resultadoTransaccion(result.getCodTransaccion(), licencia);
     }
     
-    public void resultadoTransaccion(int codigoTransaccion){
+    private void resultadoTransaccion(int codigoTransaccion, Licencias licencia) throws Exception{
         
         ConsultaTransaccion consulta;
-        consulta = rest.getForObject("https://pasarelacosw.herokuapp.com/rest/PAYPAL/consultaTransaccion/"+ codigoTransaccion +"?consultaPago", ConsultaTransaccion.class);
-
+            consulta = rest.getForObject("http://pasarelacosw.herokuapp.com/rest/PAYPAL/consultaTransaccion/"+ codigoTransaccion +"?servicio=pago", ConsultaTransaccion.class);
+        Calendar fecha = Calendar.getInstance();
+        Integer ref = consulta.getCodigoTransaccion();
+        Publicante publi = (Publicante)usuarioactivo.getObjectUsuario();
+        Factura factu = new Factura(licencia, publi, ref.toString(), (int)licencia.getValor(), fecha.getTime());
+ 
+        publi.getFacturas().add(factu);
+        
+        publicru.save(publi);
+        
     }
     
     
@@ -551,8 +584,7 @@ public class PersistenceFacede {
     public Oferta consultarOferta(int identificacion)
     {
         return oferCru.findOne(identificacion);
-    }
-    
+    }    
     
     /*
     *@obj: traer todos los publicantes
@@ -584,6 +616,16 @@ public class PersistenceFacede {
             ofertas.add(ofer);
                 
         return ofertas;
+    }
+   
+    public void login(Object usuario){
+        
+        if (usuario instanceof Publicante) {
+            usuarioactivo = new WrapperPublicanteActivo((Publicante)usuario);
+            
+        }else if(usuario instanceof Postulante){
+            usuarioactivo = new WrapperPostulanteActivo((Postulante)usuario);
+        }
     }
     
 }

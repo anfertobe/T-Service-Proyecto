@@ -329,25 +329,35 @@
     
     app.controller('PagoLicencia',
     function($scope,$http){
-       $scope.licencia = null;
+        this.pago={
+         codigoSeguridad:'',
+         nombreTarjeta:'',
+         numeroTarjeta:''
+       };
+        
+       this.licencia=null;
        
        this.TraerLicencias = function(){
             $http.get("rest/tservice/licencias").success(function (response) {
                 $scope.licencias = response;
-            }).error(function (data, status, headers, config) {
-                alert('error!');
+                }).error(function (data, status, headers, config) {
+                alert('error!' + data);
             });  
        };
        
        this.pagarLicencia = function(){
-           $http.get("rest/tservice/licencias").success(function (response) {
-                $scope.licencias = response;
-            }).error(function (data, status, headers, config) {
-                alert('error!');
+           this.licencia = this.licencia.split('-')[0];
+           
+           $http.post("rest/tservice/pagarlicencias/"+this.licencia, this.pago).
+            success(function (data, status, headers, config) {
+                alert('success!');
+            }).
+            error(function (data, status, headers, config) {
+                alert('error: ' + status + " - " + data );
             });
+
        };
     });
-    
     
     app.controller('Categoria',
             function ($scope, $http) {

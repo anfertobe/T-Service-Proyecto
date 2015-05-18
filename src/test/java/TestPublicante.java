@@ -6,7 +6,9 @@
 
 
 import com.tservice.Logica.PersistenceFacede;
+import com.tservice.Logica.pagos.InformacionPago;
 import com.tservice.Model.HojaDeVida;
+import com.tservice.Model.Licencias;
 import com.tservice.Model.Postulante;
 import com.tservice.Model.Publicante;
 import com.tservice.Persistencia.PublicanteCrudRepository;
@@ -93,5 +95,17 @@ public class TestPublicante {
 
     }
     
-    
+    @Test
+    public void PruebaPAgos() throws Exception
+    {
+        Publicante pu = new Publicante(12345678, "experiencia en mecanica", new Date(System.currentTimeMillis()), "Andres", new Date(System.currentTimeMillis()), "dir", "2345678", "Colombia", "bbbb", "Bogota");      
+        pu.setCorreo("asd@asd.asd");
+        lp.login(pu);
+        
+        Licencias licencia = new Licencias(1, "licencia basica vigencia 30 dias", 30);
+        licencia.setValor(1000);
+        InformacionPago pago = new InformacionPago("9209", "Visa", "4916701440291035");
+        lp.realizarPago(licencia, pago);
+        
+    }
 }

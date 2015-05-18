@@ -2,6 +2,7 @@
 package com.tservice.restcontrollers;
 
 import com.tservice.Logica.PersistenceFacede;
+import com.tservice.Logica.pagos.InformacionPago;
 import com.tservice.Model.*;
 import com.tservice.Persistencia.*;
 import com.tservice.exceptions.tserviceExceptions;
@@ -229,8 +230,15 @@ public class RestControllerTservice {
             return persistenci.traerLicencias();
         }
         
-        @RequestMapping(value="/pagarlicencias",method = RequestMethod.GET)
-        public List<Licencias> pagarLicencia() throws ResourceNotFoundException {
-            return persistenci.traerLicencias();
+        @RequestMapping(value="/pagarlicencias/{idLicencia}",method = RequestMethod.POST)
+        public ResponseEntity<?> pagarLicencia(@PathVariable("idLicencia") String idLicencia, @RequestBody InformacionPago pago) {
+            Licencias licencia = licenciaCrud.findOne(Integer.parseInt(idLicencia));
+            try{
+                persistenci.realizarPago(licencia, pago);
+            }catch(Exception e){
+                return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+            
+            return new ResponseEntity<>("Ok", HttpStatus.ACCEPTED); 
         }
 }
