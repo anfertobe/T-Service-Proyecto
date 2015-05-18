@@ -42,10 +42,93 @@
                     .when('/MNCalificacion', {
                         templateUrl: 'MNCalificacion.html'
                     })
+                    .when('/MNLogin', {
+                        templateUrl: 'MNLogin.html'
+                    })
                     .otherwise({
-                        redirectTo: '/MNPersona'
+                        redirectTo: '/MNLogin'
                     });
         }]);
+
+
+    
+    app.controller('login',
+            function ($scope, $http) {
+            
+                    $scope.Publicantes = [];
+                    $scope.Postulantes = [];
+            
+                    this.Usuario={
+                        identificacion: 0,
+                        Clave: 0
+                    }
+            
+                    this.login= function () {
+                        
+                        var persona=null;
+                        var tipo='';
+                        
+                        for (var i = 0; i < $scope.Publicantes.length; i++) {
+                            if ($scope.Publicantes[i].identificacion == this.Usuario.identificacion &&  $scope.Publicantes[i].identificacion == this.Usuario.Clave) {
+                                 persona = $scope.Publicantes[i];
+                                 tipo='Publicante';
+                            }
+                        }
+                    
+                        if(persona==null){
+                           for (var i = 0; i < $scope.Postulantes.length; i++) {
+                               if ($scope.Postulantes[i].identificacion == this.Usuario.identificacion  &&  $scope.Postulantes[i].identificacion == this.Usuario.Clave) {
+                                    persona = $scope.Postulantes[i];
+                                    tipo='Postulante';
+                               }
+                            }
+                        }
+                        
+                        
+                        if(persona==null){
+                            alert('La persona no se encuentra en el sistema o los datos son incorrectos');
+                        }else{
+                            if(typeof(Storage) !== "undefined") {
+                                if (sessionStorage.registro) {
+                                    alert('Es necesario abrir una nueva sesión en el browser');
+                                } else {
+                                    sessionStorage.registro =  this.Usuario.identificacion ;
+                                    sessionStorage.tipo =  tipo ;
+                                    alert('Login Éxitoso!!');
+                                    window.location='#/MNPersona';
+                                }                  
+                            } else {
+                                alert('Sorry! No Web Storage support..');
+                            }
+                            
+                        }
+                        
+     
+                    }
+                    
+                                
+                    this.consultar = function () {
+                        $http.get("rest/tservice/Publicantes").
+                                success(function (response) {
+                                    $scope.Publicantes = response;
+                                }).
+                                error(function (data, status, headers, config) {
+                                    alert('error!');
+                                });
+                         $http.get("rest/tservice/Postulantes").
+                            success(function (response) {
+                                $scope.Postulantes = response;
+                            }).
+                            error(function (data, status, headers, config) {
+                                alert('error!');
+                        });        
+                    };
+            
+            
+            }
+    );
+
+
 
     app.controller('controlregistro',
             function ($scope, $http) {
@@ -302,6 +385,17 @@
             };
                 
             this.consultar = function () {
+                    if(typeof(Storage) !== "undefined") {
+                                if (sessionStorage.registro) {
+                                   
+                                }                  
+                            } else {
+                                alert('Sorry! No Web Storage support..');
+                            }
+                    
+                            
+                
+                
                    $http.get("rest/tservice/Ofertas").
                             success(function (response) {
                                 $scope.ofertasG = response;
