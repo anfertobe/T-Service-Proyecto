@@ -56,10 +56,10 @@
             <br>
             <div class="container-fluid" >
                 <ul class="nav nav-tabs">
-                    <li role="presentation"  ng-click="of.registro()" ><a>Adicionar</a></li>
-                    <li role="presentation"  ng-click="of.aplicarOferta()" ><a>Aplicar Oferta</a></li>
-            </ul>
-            <br>
+                    <li role="presentation" id="adicionar" ng-hide="of.habilitar.hideAdicionar" ng-click="of.registro()" ><a>Adicionar</a></li>
+                    <li role="presentation" id="aplicarOferta" ng-hide="of.habilitar.hideAplicar"  ng-click="of.aplicarOferta()" ><a>Aplicar Oferta</a></li>
+                </ul>
+                <br>
             </div>
         </td>
     </tr>

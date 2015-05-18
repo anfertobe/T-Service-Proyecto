@@ -172,6 +172,11 @@
                 $scope.Publicantes = [];
                 $scope.Postulantes = [];
             
+            
+                this.habilitar={
+                    hideAdicionar:true,
+                    hideAplicar:true
+                }
 
                 this.Persona={
                     identificacion: 0,
@@ -245,7 +250,6 @@
      
                     }
                     
-                    
                     this.Persona.identificacion=persona.identificacion;
                     this.Persona.nombre=persona.nombre;
                     this.Persona.fechaNacimiento=persona.fechaNacimiento;
@@ -279,7 +283,6 @@
                     
                     if($scope.OptionTipo=="Postulante" && find){
                         
-                        alert(this.Persona.identificacion);
                     
                         $http.put('rest/tservice//Ofertas/aplicarOferta/'+ this.Persona.identificacion +'/'+value+'/').
                                 success(function (data, status, headers, config) {
@@ -315,7 +318,6 @@
                         document.getElementById("fechaActualizacion").disabled = false;
                         document.getElementById("foto").disabled = false;
                         document.getElementById("aspiracionSalarial").disabled = false;
-                        
                     }else{
                         document.getElementById("experiencia").disabled = false;
                         this.Postulante.hojaDeVida.hojaDeVida="";
@@ -326,8 +328,26 @@
                         this.Postulante.aspiracionSalarial="";
                         document.getElementById("fechaActualizacion").disabled = true;
                         this.Postulante.hojaDeVida.fechaActualizacion="";
-                
+                        //document.getElementById("adicionar").disabled = true;
                     }
+                    
+                    if(typeof(Storage) !== "undefined") {
+                         if (sessionStorage.registro) {
+                             if(sessionStorage.registro==this.Persona.identificacion && sessionStorage.tipo=="Postulante"){
+                                 //alert('Habilitar aplicar');
+                                 this.habilitar.hideAplicar=false;
+                             }else{
+                                 //alert('Desabilitar aplicar1');
+                                 this.habilitar.hideAplicar=true;
+                                 //alert(this.habilitar.hideAplicar);
+                             }
+                         }                  
+                    }else {
+                         this.habilitar.hideAdicionar=true;
+                         this.habilitar.hideAplicar=true;
+                         alert('Sorry! No Web Storage support..');
+                    }
+                   
             };
 
 
@@ -385,15 +405,7 @@
             };
                 
             this.consultar = function () {
-                    if(typeof(Storage) !== "undefined") {
-                                if (sessionStorage.registro) {
-                                   
-                                }                  
-                            } else {
-                                alert('Sorry! No Web Storage support..');
-                            }
-                    
-                            
+                
                 
                 
                    $http.get("rest/tservice/Ofertas").
@@ -413,10 +425,30 @@
                      $http.get("rest/tservice/Postulantes").
                             success(function (response) {
                                 $scope.Postulantes = response;
+                    
                             }).
                             error(function (data, status, headers, config) {
                                 alert('error!');
-                     });        
+                     });
+                     
+                     
+                   if(typeof(Storage) !== "undefined") {
+                         if (sessionStorage.registro) {
+                             if(sessionStorage.tipo=="Postulante"){
+                                 this.habilitar.hideAplicar=false;
+                                 this.habilitar.hideAdicionar=true;
+                              }else{
+                                 this.habilitar.hideAplicar=true;
+                                 this.habilitar.hideAdicionar=true;
+                              }
+                           $scope.OptionFind=sessionStorage.registro;
+                         }                  
+                    }else {
+                         this.habilitar.hideAplicar=true;
+                         this.habilitar.hideAdicionar=true;
+                         alert('Sorry! No Web Storage support..');
+                    }
+                    
              };
            }
     );
