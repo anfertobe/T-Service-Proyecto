@@ -453,13 +453,23 @@
            }
     );
     
-    app.controller('PagoLicencia',
+ app.controller('PagoLicencia',
     function($scope,$http){
         this.pago={
          codigoSeguridad:'',
          nombreTarjeta:'',
          numeroTarjeta:''
        };
+       
+       this.usuario=0;
+        
+        if(typeof(Storage) !== "undefined") {
+                         if (sessionStorage.registro) {
+                             if(sessionStorage.tipo=="Publicante"){
+                                 this.usuario=sessionStorage.registro;
+                              }
+                         }                  
+                    }
         
        this.licencia=null;
        
@@ -474,9 +484,9 @@
        this.pagarLicencia = function(){
            this.licencia = this.licencia.split('-')[0];
            
-           $http.post("rest/tservice/pagarlicencias/"+this.licencia, this.pago).
+           $http.post("rest/tservice/pagarlicencias/"+this.licencia+"/usuario/"+this.usuario, this.pago).
             success(function (data, status, headers, config) {
-                alert('success!');
+                alert('Pago realizado Satisfactoriamente.');
             }).
             error(function (data, status, headers, config) {
                 alert('error: ' + status + " - " + data );
@@ -761,13 +771,23 @@
                 
             this.registro = function () {
                 var ofertaT = null;
+                
+                if(typeof(Storage) !== "undefined") {
+                         if (sessionStorage.registro) {
+
+                           $scope.OptionPub=sessionStorage.registro;
+                         }                  
+                    }else {
+                         this.habilitar.hideAplicar=true;
+                         this.habilitar.hideAdicionar=true;
+                         alert('Sorry! No Web Storage support..');
+                    }
  
                 for (var i = 0; i < $scope.Publicantes.length; i++) {
-                        if ($scope.Publicantes[i].identificacion == $scope.OptionPub.split('-')[0] && $scope.Publicantes[i].nombre == $scope.OptionPub.split('-')[1].replace('(', '').replace(')', '')) {
+                        if ($scope.Publicantes[i].identificacion == $scope.OptionPub) {
                              ofertaT = $scope.Publicantes[i];
                         }
                 }
-                           
                 this.Oferta.publicante=ofertaT;
                
                  $http.put('rest/tservice/Ofertas/'+this.Oferta.publicante.identificacion, this.Oferta).

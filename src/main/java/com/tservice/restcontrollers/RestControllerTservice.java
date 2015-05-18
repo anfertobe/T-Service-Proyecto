@@ -7,8 +7,6 @@ import com.tservice.Model.*;
 import com.tservice.Persistencia.*;
 import com.tservice.exceptions.tserviceExceptions;
 import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -226,8 +224,12 @@ public class RestControllerTservice {
             return persistenci.traerLicencias();
         }
         
-        @RequestMapping(value="/pagarlicencias/{idLicencia}",method = RequestMethod.POST)
-        public ResponseEntity<?> pagarLicencia(@PathVariable("idLicencia") String idLicencia, @RequestBody InformacionPago pago) {
+        @RequestMapping(value="/pagarlicencias/{idLicencia}/usuario/{usuario}",method = RequestMethod.POST)
+        public ResponseEntity<?> pagarLicencia(@PathVariable("usuario") int usuario, @PathVariable("idLicencia") String idLicencia, @RequestBody InformacionPago pago) {
+            Publicante publi = publicru.findOne(usuario);
+            
+            persistenci.login(publi);
+            
             Licencias licencia = licenciaCrud.findOne(Integer.parseInt(idLicencia));
             try{
                 persistenci.realizarPago(licencia, pago);

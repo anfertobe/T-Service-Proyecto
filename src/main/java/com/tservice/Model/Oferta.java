@@ -76,7 +76,7 @@ public class Oferta  implements java.io.Serializable {
         this.id = id;
     }
 
-@ManyToOne(fetch=FetchType.EAGER)
+@ManyToOne(fetch=FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name="Calificacion_Id")
     public Calificacion getCalificacion() {
         return this.calificacion;

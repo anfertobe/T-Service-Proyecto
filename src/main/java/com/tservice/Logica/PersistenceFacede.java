@@ -218,14 +218,13 @@ public class PersistenceFacede {
     {      
         //Si el publicante existe se valida la vigencia de la licencia 
         if(!this.publicru.exists(pu.getIdentificacion()))
-            throw new tserviceExceptions("El publicante al cual se hace referencia noexiste por favor verifique.");
+            throw new tserviceExceptions("El publicante al cual se hace referencia no existe por favor verifique.");
         
         Publicante puBD=this.publicru.findOne(pu.getIdentificacion());
             
                 //Validar vigencia
                 if(!licenciaVigente(puBD))
                     throw new tserviceExceptions("Actual menten no tiene una licencia o esta vencida, por favor adquiera una nueva.");
-               
                     //Salvar oferta
                     of.setPublicante(puBD);
                     this.oferCru.save(of);

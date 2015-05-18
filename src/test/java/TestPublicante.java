@@ -11,6 +11,7 @@ import com.tservice.Model.HojaDeVida;
 import com.tservice.Model.Licencias;
 import com.tservice.Model.Postulante;
 import com.tservice.Model.Publicante;
+import com.tservice.Persistencia.LicenciasCrudRepository;
 import com.tservice.Persistencia.PublicanteCrudRepository;
 import com.tservice.exceptions.tserviceExceptions;
 import java.util.Date;
@@ -37,6 +38,9 @@ public class TestPublicante {
     
     @Autowired
     PersistenceFacede lp;
+   
+    @Autowired
+    LicenciasCrudRepository licencrud;
     
     
     @Test
@@ -104,6 +108,8 @@ public class TestPublicante {
         
         Licencias licencia = new Licencias(1, "licencia basica vigencia 30 dias", 30);
         licencia.setValor(1000);
+        licencrud.save(licencia);
+        
         InformacionPago pago = new InformacionPago("9209", "Visa", "4916701440291035");
         lp.realizarPago(licencia, pago);
         
