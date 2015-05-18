@@ -8,7 +8,6 @@ package com.tservice.Logica;
 import com.tservice.Componentes.MockJudicial;
 import com.tservice.Componentes.MockPago;
 import com.tservice.Logica.correo.Gmail;
-import com.tservice.Logica.factura.FacturaFisica;
 import com.tservice.Logica.pasadoJudicial.PasadoJudicial;
 import com.tservice.Model.*;
 import com.tservice.Persistencia.*;
