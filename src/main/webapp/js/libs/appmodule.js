@@ -36,8 +36,8 @@
                     .when('/MNPersona', {
                         templateUrl: 'MNPersona.html'
                     })
-                    .when('/MNCategoria', {
-                        templateUrl: 'MNCategoria.html'
+                    .when('/MNInteres', {
+                        templateUrl: 'MNInteres.html'
                     })
                     .when('/MNCalificacion', {
                         templateUrl: 'MNCalificacion.html'
@@ -494,27 +494,29 @@
                     $scope.Postulantes=null;
                     
                     
+                    this.Postulante = {
+                        identificacion: 0,hojaDeVida: {hojaDeVida: '',
+                        fechaActualizacion: new Date(),foto: ''},
+                        aspiracionSalarial: 0,
+                        nombre: '',
+                        fechaNacimiento: new Date(),
+                        correo: '',
+                        direccion: '',
+                        telefono: '',
+                        pais: '',
+                        region: '',
+                        ciudad: '',
+                        ofertas: [],
+                        ofertas_1: [],
+                        intereses: [],
+                        experienciaLaborals: []
+                }
+                    
                     this.Interes={
                         id:0,
                         experiencia:[],
-                        categorias:[],
-                        identificacion:{
-                                identificacion: 0,hojaDeVida: {hojaDeVida: '',
-                                fechaActualizacion: new Date(),foto: ''},
-                                aspiracionSalarial: 0,
-                                nombre: '',
-                                fechaNacimiento: new Date(),
-                                correo: '',
-                                direccion: '',
-                                telefono: '',
-                                pais: '',
-                                region: '',
-                                ciudad: '',
-                                ofertas: [],
-                                ofertas_1: [],
-                                intereses: [],
-                                experienciaLaborals: []
-                        }
+                        categorias:[]
+                        
                     };
                     
                     this.Categoria={
@@ -525,53 +527,71 @@
                     };
                     
                     this.agregarInteres=function () {
+                        
+                        var idPersona=null;
+                        
+                        if(typeof(Storage) !== "undefined") {
+                                if (sessionStorage.registro) {
+                                    idPersona=sessionStorage.registro  ;
+                                } else {
+              
+                                    alert('Es necesario abrir una nueva sesión en el browser');
+                                    
+                                }                  
+                            } else {
+                                alert('Sorry! No Web Storage support..');
+                        }
+                     
             
-                            this.Categoria.interes[this.Categoria.interes.length]=this.Interes;
-
+                     
                         var persona=null;
                         
                             for (var i = 0; i < $scope.Postulantes.length; i++) {
-                                if ($scope.Postulantes[i].identificacion == $scope.OptionPub.split('-')[0] && $scope.Postulantes[i].nombre == $scope.OptionPub.split('-')[1].replace('(', '').replace(')', '')) {
+                                if ($scope.Postulantes[i].identificacion == idPersona) {
                                     persona = $scope.Postulantes[i];
                                  }
                             }
      
-                           this.Interes.identificacion=persona;
+                           if(persona!=null){
+     
+                           this.Postulante=persona;
+                          
+                           
+                           if (persona.intereses.length==0){
                             
-                           $http.put('rest/tservice/Interes', this.Interes).
-                                success(function (data, status, headers, config) {
-                                    alert('success!');
-                                }).
-                                error(function (data, status, headers, config) {
-                                    alert('error: ' + status + " - " + data );
-                            });
- 
-                            this.Interes={
-                                id:0,
-                                experiencia:[],
-                                categorias:[],
-                                identificacion:{
-                                identificacion: 0,hojaDeVida: {hojaDeVida: '',
-                                fechaActualizacion: new Date(),foto: ''},
-                                aspiracionSalarial: 0,
-                                nombre: '',
-                                fechaNacimiento: new Date(),
-                                correo: '',
-                                direccion: '',
-                                telefono: '',
-                                pais: '',
-                                region: '',
-                                ciudad: '',
-                                ofertas: [],
-                                ofertas_1: [],
-                                intereses: [],
-                                experienciaLaborals: []
+                                    this.Categoria.interes[this.Categoria.interes.length]=this.Interes;
+                          
+                                    persona.intereses[persona.intereses.length]=this.Interes;
+                            
+                                    $http.put('rest/tservice/Interes',persona).
+                                         success(function (data, status, headers, config) {
+                                             alert('success!');
+                                             window.location='#/MNPersona';
+                                         }).
+                                         error(function (data, status, headers, config) {
+                                             alert('error: ' + status + " - " + data );
+                                     });
+
+                                    this.Interes={
+                                        id:0,
+                                        experiencia:[],
+                                        categorias:[]
+                                    }
+                            }else{
+                                alert('La persona ya posee un interes asociado');
+                                
+                            }
+                        }else{
+                             alert('No es posible encontrar la persona');
+                             
                         }
+                        
 
                   };
-              };
+              
 
                     this.consultar = function () {
+                        
                      $http.get("rest/tservice/Categorias").
                             success(function (response) {
                                 $scope.Categorias = response;
@@ -579,7 +599,13 @@
                             error(function (data, status, headers, config) {
                                 alert('error!' + data);
                             });
-                            
+                     $http.get("rest/tservice/Postulantes").
+                            success(function (response) {
+                                $scope.Postulantes = response;
+                            }).
+                            error(function (data, status, headers, config) {
+                                alert('error!' + data);
+                            });
                     };
             
                     this.cargarCategoria= function () {

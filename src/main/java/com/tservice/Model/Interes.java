@@ -40,17 +40,7 @@ public class Interes  implements java.io.Serializable {
        this.experiencia = experiencia;
        this.categorias = categorias;
     }
-   
-    @OneToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="identificacion")
-    public Postulante getIdentificacion() {
-        return this.identificacion;
-    }
  
-    public void setIdentificacion(Postulante identificacion) {
-        this.identificacion=identificacion;
-    }
-    
     @Id @GeneratedValue(strategy=IDENTITY)
     @Column(name="id", unique=true, nullable=false)
     public Integer getId() {

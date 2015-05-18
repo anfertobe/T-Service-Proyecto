@@ -251,6 +251,7 @@ public class PersistenceFacede {
             boolean vigente = false;
             List<Factura> facturas = new LinkedList<>();
             
+                        
             for(Factura fac:pu.getFacturas()){
                 facturas.add(fac);
             
@@ -310,6 +311,19 @@ public class PersistenceFacede {
     
     }
      
+    
+     /*
+    *@obj: agregar postulante 
+    *se validaran terceros para poder agregarlo
+    *@param: postulante
+    *@pre: El postulante no existe
+    *@return: Comentario para agregar postulante
+    */
+    public void uddPostulante(Postulante po) throws tserviceExceptions 
+    {
+        postCru.save(po);
+    }  
+    
     
     /*
     *@obj: agregar postulante 
@@ -595,8 +609,10 @@ public class PersistenceFacede {
     {
         List<Publicante> publicante = new LinkedList<Publicante>();
                 
-        for(Publicante pub : publicru.findAll())
+        for(Publicante pub : publicru.findAll()){
+            pub.setFacturas(new ArrayList<Factura>());
             publicante.add(pub);
+        }
                 
         return publicante;
     }
@@ -611,8 +627,13 @@ public class PersistenceFacede {
     {
         List<Oferta> ofertas = new LinkedList<Oferta>();
                 
-        for(Oferta ofer : oferCru.findAll())
+        for(Oferta ofer : oferCru.findAll()){
+            Publicante pub = ofer.getPublicante();
+            pub.setFacturas(new ArrayList<Factura>());
+            ofer.setPublicante(pub);
             ofertas.add(ofer);
+            
+        }
                 
         return ofertas;
     }

@@ -63,7 +63,7 @@ public class Factura  implements java.io.Serializable {
         this.licencias = licencias;
     }
 
-@ManyToOne(fetch=FetchType.LAZY)
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="Identificacion")
     public Publicante getPublicante() {
         return this.publicante;

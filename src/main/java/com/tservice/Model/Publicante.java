@@ -177,7 +177,7 @@ public class Publicante  implements java.io.Serializable {
         this.correo = correo;
     }
 
-@OneToMany(fetch=FetchType.EAGER,cascade = CascadeType.ALL, mappedBy="publicante")
+    @OneToMany(fetch=FetchType.EAGER,cascade = CascadeType.ALL, mappedBy="publicante")
     public List<Factura> getFacturas() {
         return this.facturas;
     }
