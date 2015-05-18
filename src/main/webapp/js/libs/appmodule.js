@@ -175,7 +175,8 @@
             
                 this.habilitar={
                     hideAdicionar:true,
-                    hideAplicar:true
+                    hideAplicar:true,
+                    hideIntereses:true
                 }
 
                 this.Persona={
@@ -266,9 +267,10 @@
 
                 this.aplicarOferta= function () {
                    var radios = document.getElementsByName('radAnswer');
-
-                    var value;
-                    
+          
+                      $('#myPleaseWait').modal('show');
+          
+            
                     var find=false;
 
                     for (var i = 0, length = radios.length; i < length; i++) {
@@ -283,14 +285,15 @@
                     
                     if($scope.OptionTipo=="Postulante" && find){
                         
-                    
-                        $http.put('rest/tservice//Ofertas/aplicarOferta/'+ this.Persona.identificacion +'/'+value+'/').
+                      $http.put('rest/tservice//Ofertas/aplicarOferta/'+ this.Persona.identificacion +'/'+value+'/').
                                 success(function (data, status, headers, config) {
-                                    alert('success!');
+                                   $('#myPleaseWait').modal('hide');
+                                   alert('success!');
                                 }).
                                 error(function (data, status, headers, config) {
-                                    alert('error: ' + status + " - " + data );
-                                });
+                                   $('#myPleaseWait').modal('hide');
+                                   alert('error: ' + status + " - " + data );
+                       });      
                     
                     
                     
@@ -302,6 +305,7 @@
                             alert('Solo los postulantes pueden aplicar a las ofertas');
                         }
                     }
+                    
                     
                 };
                 
@@ -336,15 +340,19 @@
                              if(sessionStorage.registro==this.Persona.identificacion && sessionStorage.tipo=="Postulante"){
                                  //alert('Habilitar aplicar');
                                  this.habilitar.hideAplicar=false;
+                                 this.habilitar.hideIntereses=false;
+                                 
                              }else{
                                  //alert('Desabilitar aplicar1');
                                  this.habilitar.hideAplicar=true;
+                                 this.habilitar.hideIntereses=false;
                                  //alert(this.habilitar.hideAplicar);
                              }
                          }                  
                     }else {
                          this.habilitar.hideAdicionar=true;
                          this.habilitar.hideAplicar=true;
+                         this.habilitar.hideIntereses=true;
                          alert('Sorry! No Web Storage support..');
                     }
                    
@@ -353,6 +361,9 @@
 
             this.registro = function () {
                  
+                $('#myPleaseWait').modal('show');
+          
+            
                                 
                 if($scope.OptionTipo!= null){
                 
@@ -370,10 +381,14 @@
                     
                     $http.put('rest/tservice/Postulantes', this.Postulante).
                                 success(function (data, status, headers, config) {
+                                    $('#myPleaseWait').modal('hide');
                                     alert('success!');
+                                       
                                 }).
                                 error(function (data, status, headers, config) {
+                                    $('#myPleaseWait').modal('hide');
                                     alert('error: ' + status + " - " + data );
+                                    
                                 });
                     
                 }else{
@@ -390,9 +405,12 @@
                     
                     $http.put('rest/tservice/Publicantes', this.Publicante).
                                 success(function (data, status, headers, config) {
+                                    $('#myPleaseWait').modal('hide');
                                     alert('success!');
+                                    
                                 }).
                                 error(function (data, status, headers, config) {
+                                    $('#myPleaseWait').modal('hide');
                                     alert('error: ' + status + " - " + data );
                     });
                 }
@@ -403,10 +421,15 @@
             }
                     
             };
+            
+                
+            this.MNInteres = function () {
+                window.location='#/MNInteres';
+            };
                 
             this.consultar = function () {
                 
-                
+                $('#myPleaseWait').modal('hide');
                 
                    $http.get("rest/tservice/Ofertas").
                             success(function (response) {
@@ -437,15 +460,18 @@
                              if(sessionStorage.tipo=="Postulante"){
                                  this.habilitar.hideAplicar=false;
                                  this.habilitar.hideAdicionar=true;
+                                 this.habilitar.hideIntereses=false;
                               }else{
                                  this.habilitar.hideAplicar=true;
                                  this.habilitar.hideAdicionar=true;
+                                 this.habilitar.hideIntereses=false;
                               }
                            $scope.OptionFind=sessionStorage.registro;
                          }                  
                     }else {
                          this.habilitar.hideAplicar=true;
                          this.habilitar.hideAdicionar=true;
+                         this.habilitar.hideIntereses=true;
                          alert('Sorry! No Web Storage support..');
                     }
                     
@@ -589,11 +615,11 @@
                                     }
                             }else{
                                 alert('La persona ya posee un interes asociado');
-                                
+                                 window.location='#/MNPersona';
                             }
                         }else{
                              alert('No es posible encontrar la persona');
-                             
+                              window.location='#/MNPersona';
                         }
                         
 

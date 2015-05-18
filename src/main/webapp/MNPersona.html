@@ -49,6 +49,27 @@
     
 </nav>
 <table width="100%" ng-app ng-controller="TipoRol as of" ng-init="of.consultar()">
+ <div class="modal fade bs-example-modal-sm" id="myPleaseWait" tabindex="-1"
+    role="dialog" aria-hidden="false" data-backdrop="static">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">
+                    <span class="glyphicon glyphicon-time">
+                    </span>Espere un momento
+                 </h4>
+            </div>
+            <div class="modal-body">
+                <div class="progress">
+                    <div  class="progress-bar progress-bar-striped active" role="progressbar"
+                    style="width: 100%">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    
     <tr>
         <td colspan="2">
             <div class="container-fluid" >
@@ -58,6 +79,7 @@
                 <ul class="nav nav-tabs">
                     <li role="presentation" id="adicionar" ng-hide="of.habilitar.hideAdicionar" ng-click="of.registro()" ><a>Adicionar</a></li>
                     <li role="presentation" id="aplicarOferta" ng-hide="of.habilitar.hideAplicar"  ng-click="of.aplicarOferta()" ><a>Aplicar Oferta</a></li>
+                    <li role="presentation" id="aplicarOferta" ng-hide="of.habilitar.hideIntereses"  ng-click="of.MNInteres()" ><a>Intereses</a></li>
                 </ul>
                 <br>
             </div>
