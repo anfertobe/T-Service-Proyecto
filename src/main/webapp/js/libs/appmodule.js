@@ -16,8 +16,8 @@
 
                     })
 
-                    .when('/Author', {
-                        templateUrl: 'Autor.html'
+                    .when('/MNCategoria', {
+                        templateUrl: 'MNCategoria.html'
 
                     })
 
