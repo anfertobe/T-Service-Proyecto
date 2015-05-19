@@ -397,6 +397,11 @@
                                  this.habilitar.hideIntereses=false;
                                  //alert(this.habilitar.hideAplicar);
                              }
+                         }else{
+                             if(sessionStorage.tipo=="Registro"){
+                                 this.habilitar.hideAdicionar=true;
+                                 this.habilitar.hideIntereses=false;
+                             }
                          }                  
                     }else {
                          this.habilitar.hideAdicionar=true;
@@ -432,7 +437,10 @@
                                 success(function (data, status, headers, config) {
                                     $('#myPleaseWait').modal('hide');
                                     alert('success!');
-                                       
+                                    if(sessionStorage.tipo=="Registro"){
+                                         window.location='#/MNLogin';
+                                    }
+                                                              
                                 }).
                                 error(function (data, status, headers, config) {
                                     $('#myPleaseWait').modal('hide');
@@ -516,6 +524,11 @@
                                  this.habilitar.hideIntereses=false;
                               }
                            $scope.OptionFind=sessionStorage.registro;
+                         }else{
+                             if(sessionStorage.tipo=="Registro"){
+                                 this.habilitar.hideAdicionar=true;
+                                 this.habilitar.hideIntereses=false;
+                             }
                          }                  
                     }else {
                          this.habilitar.hideAplicar=true;
