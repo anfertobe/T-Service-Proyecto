@@ -192,13 +192,11 @@ public class PersistenceFacede {
     {
         //Si la oferta existe se valida el estado de la misma.
         if(!this.oferCru.exists(of.getId()))
-            throw new tserviceExceptions("La oferta que quiere calificar no existe, por favor verifique.");
+                throw new tserviceExceptions("La oferta que quiere calificar no existe, por favor verifique.");
         
-        Oferta ofBD=this.oferCru.findOne(of.getId());
+                Oferta ofBD=this.oferCru.findOne(of.getId());
                 
                 //Validar estado oferta
-                if(!"terminada".equals(of.getEstado()))
-                    throw new tserviceExceptions("La oferta que quiere calificar aún no está terminada, por favor verifique.");
                     
                 //Salvar oferta
                 of.setCalificacion(ca);

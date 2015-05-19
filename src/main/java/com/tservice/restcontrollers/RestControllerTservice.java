@@ -73,16 +73,15 @@ public class RestControllerTservice {
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
     
-    @RequestMapping(value="/Calificacion",method = RequestMethod.PUT)        
-    public ResponseEntity<?> agregarCalificacion(@RequestBody Calificacion calificacion, int idOferta){ 
+    @RequestMapping(value="/Calificacion/{IdOferta}",method = RequestMethod.PUT)        
+    public ResponseEntity<?> agregarCalificacion(@RequestBody Calificacion calificacion ,@PathVariable("IdOferta") int idOferta){ 
         
         Oferta oferta = oferCru.findOne(idOferta);
        
        if(oferta == null)
            return new ResponseEntity<>("La oferta No Existe", HttpStatus.INTERNAL_SERVER_ERROR);
-       
-       try {
-            persistenci.addCalificacion(oferta, calificacion);
+         try {
+            persistenci.addCalificacion(oferta,calificacion);
         } catch (tserviceExceptions ex) {
             return new ResponseEntity<>(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }

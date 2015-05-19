@@ -127,6 +127,51 @@
             
             }
     );
+    
+     
+    app.controller('Calificacion',
+            function ($scope, $http) {
+            
+                    $scope.ofertasG=null;
+                    
+                            $scope.ofertasT=null;
+            
+            
+            
+                    this.calificacion = {
+                       id:0,rango: '',comentario: '', valor: 0
+                   }
+                        
+          
+                
+                this.consultar = function () {
+                    
+            
+                    
+                };
+            
+                    this.registro = function () {
+                        
+                         $('#myPleaseWait').modal('show');
+          
+            
+                       $http.put('rest/tservice/Calificacion/'+sessionStorage.oferta, this.calificacion).
+                            success(function (data, status, headers, config) {
+                                 $('#myPleaseWait').modal('hide');
+                                alert('success!');
+                                 window.location='#/MNOferta';
+                            }).
+                            error(function (data, status, headers, config) {
+                                $('#myPleaseWait').modal('hide');
+                                alert('error: ' + status + " - " + data );
+                                window.location='#/MNOferta';
+                            });
+                      
+                    };
+            
+            
+            }
+    );
 
 
 
@@ -682,7 +727,15 @@
                 $scope.OptionOf=null;
                 $scope.OptionPub=null;
                  
-                 this.Oferta = {
+                this.habilitar = {
+                    hideAdicionar:true,
+                    hideSelecionarEmpleado:true,
+                    hideCalificar:true
+                }
+                
+                
+                 
+                this.Oferta = {
                        id:'',
                        calificacion: {rango: '',comentario: '', valor: 0},
                        postulante:{identificacion: 0,hojaDeVida: {hojaDeVida: '',
@@ -721,9 +774,24 @@
            
             $scope.Publicantes = [];
             
+            this.calificar= function () {
+
+                if(this.Oferta.id!=''){
+                    if(typeof(Storage) !== "undefined") {
+                          if (sessionStorage.registro) {
+                                sessionStorage.oferta=this.Oferta.id;
+                                window.location='#/MNCalificacion';
+                           }                  
+                    }
+                }else{
+                    alert('No ha seleccionado una oferta');
+                }
+             
+            };
             this.seleccionarEmpleado= function () {
                    var radios = document.getElementsByName('radAnswer');
 
+                    $('#myPleaseWait').modal('show');
                     var value;
                     
                     var find=false;
@@ -742,15 +810,18 @@
                         
                     $http.put('rest/tservice//Ofertas/agregarEmpleadoOferta/'+ value +'/'+this.Oferta.id+'/').
                                 success(function (data, status, headers, config) {
+                                    $('#myPleaseWait').modal('hide');
                                     alert('success!');
                                 }).
                                 error(function (data, status, headers, config) {
+                                    $('#myPleaseWait').modal('hide');
                                     alert('error: ' + status + " - " + data );
                                 });
                     
                     
                 }else{
                     alert('Debe seleccionar un empleado');
+                    $('#myPleaseWait').modal('hide');
                     
                 }
                     
@@ -769,6 +840,23 @@
                
                this.Oferta=ofertaT;
                
+               if(typeof(Storage) !== "undefined") {
+                      if (sessionStorage.registro) {
+                          if(sessionStorage.tipo=="Postulante"){
+                              this.habilitar.hideCalificar=true;
+                              this.habilitar.hideAdicionar=true;
+                              this.habilitar.hideSelecionarEmpleado=true;
+                          }else{
+                              this.habilitar.hideCalificar=false;
+                              this.habilitar.hideAdicionar=false;
+                              this.habilitar.hideSelecionarEmpleado=false;
+                          
+                          }
+                          
+                      }
+               }
+               
+               
                //Ya tiene empleado
                if(this.Oferta.postulante!=null){
                    this.Oferta.postulantes=null;
@@ -777,9 +865,22 @@
             };
             
             this.consultar = function () {
+                
+                    var OfertasFiltro=[];
+                
                      $http.get("rest/tservice/Ofertas").
                             success(function (response) {
                                 $scope.ofertasG = response;
+                                if (sessionStorage.registro) {
+                                    if(sessionStorage.tipo=="Publicante"){
+                                         for (var i = 0; i < $scope.ofertasG.length; i++) {
+                                              if($scope.ofertasG[i].publicante.identificacion==sessionStorage.registro){
+                                                  OfertasFiltro[OfertasFiltro.length]=$scope.ofertasG[i];
+                                              }
+                                          }
+                                        $scope.ofertasG=OfertasFiltro;
+                                    }
+                                }
                             }).
                             error(function (data, status, headers, config) {
                                 alert('error!');
@@ -793,10 +894,30 @@
                                 alert('error!');
                             });
                             
+                            if(typeof(Storage) !== "undefined") {
+               
+                      if (sessionStorage.registro) {
+                          if(sessionStorage.tipo=="Postulante"){
+                              this.habilitar.hideCalificar=true;
+                              this.habilitar.hideAdicionar=true;
+                              this.habilitar.hideSelecionarEmpleado=true;
+                          }else{
+                                                           
+                              this.habilitar.hideCalificar=false;
+                              this.habilitar.hideAdicionar=false;
+                              this.habilitar.hideSelecionarEmpleado=false;
+                          
+                          }
+                      }
+                      
+               }
+               
+                            
             };
                 
             this.registro = function () {
                 var ofertaT = null;
+                $('#myPleaseWait').modal('show');
                 
                 if(typeof(Storage) !== "undefined") {
                          if (sessionStorage.registro) {
@@ -818,10 +939,13 @@
                
                  $http.put('rest/tservice/Ofertas/'+this.Oferta.publicante.identificacion, this.Oferta).
                                 success(function (data, status, headers, config) {
+                                    $('#myPleaseWait').modal('hide');
                                     alert('success!');
                                 }).
                                 error(function (data, status, headers, config) {
+                                    $('#myPleaseWait').modal('hide');
                                     alert('error: ' + status + " - " + data );
+                                    
                                 });
                 };
                 
