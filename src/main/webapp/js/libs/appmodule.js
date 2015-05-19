@@ -46,7 +46,7 @@
                         templateUrl: 'MNLogin.html'
                     })
                     .otherwise({
-                        redirectTo: '/home'
+                        redirectTo: '/MNLogin'
                     });
         }]);
 
@@ -95,7 +95,7 @@
                                     sessionStorage.registro =  this.Usuario.identificacion ;
                                     sessionStorage.tipo =  tipo ;
                                     alert('Login Éxitoso!!');
-                                    window.location='#/MNPersona';
+                                    window.location='#/home';
                                 }                  
                             } else {
                                 alert('Sorry! No Web Storage support..');
