@@ -391,7 +391,7 @@ public class PersistenceFacede {
         //Traer publicante de BD
         Publicante puBD=this.publicru.findOne(ofBD.getPublicante().getIdentificacion());
                 
-        if(licenciaVigente(puBD))
+        if(!licenciaVigente(puBD))
             throw new tserviceExceptions("Actualmente la oferta es invalida debido a problemas de licenciamiento.");
 
 
