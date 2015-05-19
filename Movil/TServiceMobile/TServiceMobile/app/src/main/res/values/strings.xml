@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">TServiceMobile</string>
+    <string name="scan">Scan</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string-array name="planets_array">
+        <item>Postulante</item>
+        <item>Publicante</item>
+    </string-array>
+</resources>
