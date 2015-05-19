@@ -433,6 +433,7 @@
                         }else{
                             alert('Solo los postulantes pueden aplicar a las ofertas');
                         }
+                        $('#myPleaseWait').modal('hide');
                     }
                     
                     
