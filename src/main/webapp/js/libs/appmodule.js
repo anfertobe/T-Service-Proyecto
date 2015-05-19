@@ -399,8 +399,8 @@
                              }
                          }else{
                              if(sessionStorage.tipo=="Registro"){
-                                 this.habilitar.hideAdicionar=true;
-                                 this.habilitar.hideIntereses=false;
+                                 this.habilitar.hideAdicionar=false;
+                                 this.habilitar.hideIntereses=true;
                              }
                          }                  
                     }else {
@@ -526,8 +526,8 @@
                            $scope.OptionFind=sessionStorage.registro;
                          }else{
                              if(sessionStorage.tipo=="Registro"){
-                                 this.habilitar.hideAdicionar=true;
-                                 this.habilitar.hideIntereses=false;
+                                 this.habilitar.hideAdicionar=false;
+                                 this.habilitar.hideIntereses=true;
                              }
                          }                  
                     }else {
