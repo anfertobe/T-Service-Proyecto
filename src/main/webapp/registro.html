@@ -1,40 +1,41 @@
 <div class="container">
-    <h1> Pago de licencias </h1>
+    <h1>  </h1>
         <div class="container">
             <div class="panel, well-sm" ng-controller="PagoLicencia as pagos" ng-init="pagos.TraerLicencias()">
-                <form class="form-inline">      
-                    <div>
-                        <label>
-                            Numero tarjeta credito: 
-                        </label>
-                        <input type="text" name="fname" class="form-control" ng-model="pagos.pago.numeroTarjeta"><br>
-                    </div><br>
-                    <div>
-                        <label>
-                            Tipo Tarjeta 
-                        </label>
-                        <select name="TipoTarjeta" ng-model="pagos.pago.nombreTarjeta">
-                            <option>Visa</option>
-                            <option>Mastecard</option>
-                        </select>
-
-                    </div><br>
-                    <div>
-                        <label>
-                            Codigo de Seguridad 
-                        </label>
-                        <input type="text" name="lcant" class="form-control" ng-model="pagos.pago.codigoSeguridad"><br>
-                    </div><br>
-                    <div>
-                        <label>
-                            Tipo de Licencia 
-                        </label>
-                            <select ng-model="pagos.licencia" >
+                    <div class="panel panel-default">
+                                <div class="panel-heading">Pago de licencias
+                                 <table class="table">
+                              
+                                <tr>
+                                    <td width="50%"><b>Número tarjeta crédito: </b></td>
+                                    <td width="50%"><input type="text" name="fname" class="form-control" ng-model="pagos.pago.numeroTarjeta"><br></td>
+                                </tr>    
+                                <tr>
+                                    <td width="50%"><b>Tipo Tarjeta</b></td>
+                                    <td width="50%"><select name="TipoTarjeta" ng-model="pagos.pago.nombreTarjeta">
+                                    <option>Visa</option>
+                                    <option>Mastecard</option>
+                                </select>
+                            <br></td>
+                                </tr>    
+                        <tr>
+                                    <td width="50%"><b>Codigo de Seguridad</b>  </td>
+                                    <td width="50%"><input type="text" name="lcant" class="form-control" ng-model="pagos.pago.codigoSeguridad"><br></td>
+                                </tr>    
+                        <tr>
+                                    <td width="50%"><b>Tipo de Licencia</b></td>
+                                    <td width="50%"><select ng-model="pagos.licencia" >
                                 <option ng-repeat="lic in licencias">{{lic.idLicencias}}-{{lic.descripcion}}</option>
-                            </select>
-                    </div><br>
-                </form>
-                <button ng-click="pagos.pagarLicencia()" class="btn btn-default" type="submit">pagar</button>
+                            </select></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" width="100%">
+                                        <button ng-click="pagos.pagarLicencia()" class="btn btn-default" type="submit">Pagar</button>
+                                    </td>
+                                </tr>
+                                </table>
+                        
             </div>
         </div>    
 </div>
+            </div>

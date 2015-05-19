@@ -50,10 +50,86 @@
                     });
         }]);
 
+     app.controller('perfilacion',
+            function ($scope, $http) {
+                this.Perfilacion={
+                    hiddenHome:false,
+                    hiddenOfertas:true,
+                    hiddenPersona:true,
+                    hiddenCalificar:true,
+                    hiddenInteres:true,
+                    hiddenComprar:true,
+                    usuario:'',
+                    nombre:'No hay usuario activo',
+                }
+                
+                  this.cerrrarCesion= function () {
+                      alert('Borrar');
+                       delete sessionStorage.registro;
+                       this.Perfilacion.usuario='';
+                       this.Perfilacion.nombre='No hay usuario activo';
+                                    
+                                    
+                  }
+                
+                    this.consultar= function () {
+                        
+                            if(typeof(Storage) !== "undefined") {
+                                if (sessionStorage.registro) {
+                                    this.Perfilacion.usuario=sessionStorage.registro;
+                                    this.Perfilacion.nombre=sessionStorage.nombre;
+                                    //alert('Es necesario abrir una nueva sesión en el browser');
+                                    if(sessionStorage.tipo=="Postulante"){
+                                       this.Perfilacion.hiddenOfertas=false; 
+                                       this.Perfilacion.hiddenPersona=false;
+                                       this.Perfilacion.hiddenCalificar=true;
+                                       this.Perfilacion.hiddenInteres=false;
+                                       this.Perfilacion.hiddenComprar=true;
+                                    }else if(sessionStorage.tipo=="Publicante"){
+                                       this.Perfilacion.hiddenOfertas=false; 
+                                       this.Perfilacion.hiddenPersona=false;
+                                       this.Perfilacion.hiddenCalificar=false;
+                                       this.Perfilacion.hiddenInteres=true;
+                                       this.Perfilacion.hiddenComprar=false;
+                                    }else{
+                                       this.Perfilacion.hiddenOfertas=true; 
+                                       this.Perfilacion.hiddenPersona=true;
+                                       this.Perfilacion.hiddenCalificar=true;
+                                       this.Perfilacion.hiddenInteres=true;
+                                       this.Perfilacion.hiddenComprar=true; 
+                                    }
+                                    
+                                    
+                                } else {
+                                    this.Perfilacion.hiddenOfertas=true; 
+                                       this.Perfilacion.hiddenPersona=true;
+                                       this.Perfilacion.hiddenCalificar=true;
+                                       this.Perfilacion.hiddenInteres=true;
+                                       this.Perfilacion.hiddenComprar=true; 
+                                }                  
+                            } else {
+                                alert('Sorry! No Web Storage support..');
+                                this.Perfilacion.hiddenOfertas=true; 
+                                this.Perfilacion.hiddenPersona=true;
+                                this.Perfilacion.hiddenCalificar=true;
+                                this.Perfilacion.hiddenInteres=true;
+                                this.Perfilacion.hiddenComprar=true; 
+                            }
+                            
+                    }
+                        
+     
+                    }
+                
+                
+            
+    );
+     
 
     
     app.controller('login',
             function ($scope, $http) {
+                    
             
                     $scope.Publicantes = [];
                     $scope.Postulantes = [];
@@ -67,10 +143,12 @@
                         
                         var persona=null;
                         var tipo='';
+                        var nombre='';
                         
                         for (var i = 0; i < $scope.Publicantes.length; i++) {
                             if ($scope.Publicantes[i].identificacion == this.Usuario.identificacion &&  $scope.Publicantes[i].identificacion == this.Usuario.Clave) {
                                  persona = $scope.Publicantes[i];
+                                 nombre=persona.nombre;
                                  tipo='Publicante';
                             }
                         }
@@ -79,6 +157,7 @@
                            for (var i = 0; i < $scope.Postulantes.length; i++) {
                                if ($scope.Postulantes[i].identificacion == this.Usuario.identificacion  &&  $scope.Postulantes[i].identificacion == this.Usuario.Clave) {
                                     persona = $scope.Postulantes[i];
+                                    nombre=persona.nombre;
                                     tipo='Postulante';
                                }
                             }
@@ -94,6 +173,7 @@
                                 } else {
                                     sessionStorage.registro =  this.Usuario.identificacion ;
                                     sessionStorage.tipo =  tipo ;
+                                    sessionStorage.nombre =  nombre ;
                                     alert('Login Éxitoso!!');
                                     window.location='#/home';
                                 }                  
