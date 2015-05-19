@@ -431,7 +431,11 @@
                             alert('No se ha seleccionado ninguna oferta');
                             
                         }else{
-                            alert('Solo los postulantes pueden aplicar a las ofertas');
+                            if($scope.OptionFind!=''){
+                                alert('Debe buscar primero a la persona');
+                            }else{
+                                alert('Solo los postulantes pueden aplicar a las ofertas');
+                            }
                         }
                         $('#myPleaseWait').modal('hide');
                     }
