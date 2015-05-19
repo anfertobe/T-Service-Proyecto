@@ -517,9 +517,7 @@
                                 success(function (data, status, headers, config) {
                                     $('#myPleaseWait').modal('hide');
                                     alert('success!');
-                                    if(sessionStorage.tipo=="Registro"){
-                                         window.location='#/MNLogin';
-                                    }
+                                    window.location='#/MNLogin';
                                                               
                                 }).
                                 error(function (data, status, headers, config) {
@@ -543,7 +541,7 @@
                     $http.put('rest/tservice/Publicantes', this.Publicante).
                                 success(function (data, status, headers, config) {
                                     $('#myPleaseWait').modal('hide');
-                                    alert('success!');
+                                    window.location='#/MNLogin';
                                     
                                 }).
                                 error(function (data, status, headers, config) {
@@ -651,13 +649,20 @@
        
        this.pagarLicencia = function(){
            this.licencia = this.licencia.split('-')[0];
+       
+            $('#myPleaseWait').modal('show');
+                
            
            $http.post("rest/tservice/pagarlicencias/"+this.licencia+"/usuario/"+this.usuario, this.pago).
             success(function (data, status, headers, config) {
                 alert('Pago realizado Satisfactoriamente.');
+                 $('#myPleaseWait').modal('hide');
+                
             }).
             error(function (data, status, headers, config) {
                 alert('error: ' + status + " - " + data );
+                 $('#myPleaseWait').modal('hide');
+                
             });
 
        };
