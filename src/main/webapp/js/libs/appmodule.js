@@ -1039,6 +1039,8 @@
                 }
                 this.Oferta.publicante=ofertaT;
                
+                this.Oferta.postulante=null;
+               
                  $http.put('rest/tservice/Ofertas/'+this.Oferta.publicante.identificacion, this.Oferta).
                                 success(function (data, status, headers, config) {
                                     $('#myPleaseWait').modal('hide');
