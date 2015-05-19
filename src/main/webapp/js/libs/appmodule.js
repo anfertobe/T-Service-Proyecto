@@ -106,6 +106,11 @@
      
                     }
                     
+                    this.registrarse = function(){
+                        sessionStorage.tipo =  "Registro" ;
+                        window.location='#/MNPersona';
+                        
+                    }
                                 
                     this.consultar = function () {
                         $http.get("rest/tservice/Publicantes").
@@ -382,6 +387,7 @@
                     
                     if(typeof(Storage) !== "undefined") {
                          if (sessionStorage.registro) {
+                                       
                              if(sessionStorage.registro==this.Persona.identificacion && sessionStorage.tipo=="Postulante"){
                                  //alert('Habilitar aplicar');
                                  this.habilitar.hideAplicar=false;
@@ -393,7 +399,13 @@
                                  this.habilitar.hideIntereses=false;
                                  //alert(this.habilitar.hideAplicar);
                              }
-                         }                  
+                         }else{
+                             if(sessionStorage.tipo=="Registro"){
+                                 this.habilitar.hideAdicionar=false;
+                                  this.habilitar.hideIntereses=true;
+                             }
+                  
+                         }                 
                     }else {
                          this.habilitar.hideAdicionar=true;
                          this.habilitar.hideAplicar=true;
@@ -464,6 +476,12 @@
                 alert('Debe escoger un tipo de persona');
                 
             }
+            
+            
+                 if(sessionStorage.tipo=="Registro"){
+                                 window.location='#/MNLogin';
+                 }
+                             
                     
             };
             
@@ -512,6 +530,12 @@
                                  this.habilitar.hideIntereses=false;
                               }
                            $scope.OptionFind=sessionStorage.registro;
+                         }else{
+                             if(sessionStorage.tipo=="Registro"){
+                                 this.habilitar.hideAdicionar=false;
+                                  this.habilitar.hideIntereses=true;
+                             }
+                  
                          }                  
                     }else {
                          this.habilitar.hideAplicar=true;
