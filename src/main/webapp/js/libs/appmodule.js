@@ -21,8 +21,8 @@
 
                     })
 
-                    .when('/home', {
-                        templateUrl: 'home.html'
+                    .when('/login', {
+                        templateUrl: 'login.html'
 
                     })
 
@@ -46,7 +46,7 @@
                         templateUrl: 'MNLogin.html'
                     })
                     .otherwise({
-                        redirectTo: '/home'
+                        redirectTo: '/MNLogin'
                     });
         }]);
 
