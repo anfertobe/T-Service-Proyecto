@@ -106,7 +106,11 @@
      
                     }
                     
-                                
+                    this.registrarse = function(){
+                        sessionStorage.tipo =  "Registro" ;
+                        window.location='#/MNPersona';
+                        
+                    }  
                     this.consultar = function () {
                         $http.get("rest/tservice/Publicantes").
                                 success(function (response) {

@@ -14,68 +14,41 @@
         </td>
     </tr>
     <tr>
-        <td width="82%" style="aling:left">
+        <td width="50%">
+            <table width="100%">
+                <tr>
+                    <td>
+                        <img src="img/ECI.jpg" height="300" width="400"> 
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                       <B>TService<BR>
+                        Escuela Colombiana de Ingeniería Julio Garavito
+                        </B>    
+                    </td>
+                </tr>
             <div class="container-fluid">
-                <table width="100%" >
-                    <tr>
-                        <td>Usuario</td>
-                    </tr>
-                    <tr>
-                        <td>Clave</td>
-                    </tr>
-                </table>
-            </div>
+               </table>
+             
         </td>
-        <td width="6%"></td>
-        <td width="82%" style="aling:left">
-            <div class="container-fluid">
-                <table width="100%" >
-                    <tr>
-                        <td><input type="text" ng-model="of.Usuario.identificacion" required></td>
-                    </tr>
-                    <tr>
-                        <td><input type="password" name="clave" ng-model="of.Usuario.Clave" required></td>
-                    </tr>
-                </table>
-            </div>
-        </td>
-            <td colspan="2">
-                        <div class="container-fluid">
-                            <table width="100%">
-                                <tr>
-                                  
-                       <td width="10%">
-                           
-                       </td>
-                        <td width="45%">
-                            <table width="100%" >
-                                <tr>
-                                    
-                                    <td></td>
-                                </tr>
-                                <tr>
-
-                                    <td>
-                                        </td>
-                                </tr>
-
-                                <tr>
-                                    <td colspan="2"><input type="submit" value="Login" ng-click="of.login()" /></td>
-                                </tr>
-                               
-                                <tr>
-                                    <td colspan="2"><input type="submit" value="Registrarse"/></td>
-                                </tr>
-                           </table>
-                            
-                        </td>
-                    </tr>
-                    
-                    
-                </table>
-                
-            </div>
-          </td>
+        <td width="50%" align="center">
+        <table  width="50%" align="center" border="0">
+            <tr>
+                <td>Usuario</td>
+                <td><input width="50%" type="text" ng-model="of.Usuario.identificacion" required></td>
+            </tr>
+            <tr>
+                <td>Clave</td>
+                <td><input type="password" name="clave" ng-model="of.Usuario.Clave" required></td>
+            </tr>
+             <tr>
+                <td><input type="submit" value="Login" ng-click="of.login()" /></td>
+                <td colspan="2"><input type="submit" value="Registrarse" ng-click="of.registrarse()" /></td>
+             </tr>
+       </table>
+         </td>
+          
     </tr>
     </table>
 </div>
