@@ -2,18 +2,13 @@
  * 
  */
 package com.tservice.Logica.correo;
-
-import java.awt.AlphaComposite;
 import java.util.Properties;
-
 import javax.mail.Message;
 import javax.mail.MessagingException;
-import javax.mail.NoSuchProviderException;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-import javax.swing.JTextField;
 import org.springframework.stereotype.Service;
 
 /**
@@ -47,7 +42,7 @@ public class Gmail implements Sender {
 					new InternetAddress(Destinatario));
 
 			transport.connect(SMTP_HOST_NAME, SMTP_HOST_PORT,
-					"tservicecosw2015@gmail.com", "t-service-cosw-20151");
+					"tservice201501@gmail.com", "tservice201501ala");
 			conect=transport.isConnected();
 			transport.sendMessage(message,
 					message.getRecipients(Message.RecipientType.TO));

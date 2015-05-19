@@ -1,10 +1,9 @@
 <div>
-<table width="100%" ng-app ng-controller="login as of" ng-init="of.consultar()">
+<table width="100%" ng-app ng-controller="login as of" ng-init="of.consultar()" >
     <tr>
-        <td colspan="2" style="aling:center">
+        <td colspan="2">
             <div class="container-fluid" >
                 <h1 class="text-center">Login</h1>
-            </div>
             <br>
             <div class="container-fluid" >
                 <ul class="nav nav-tabs">
@@ -13,62 +12,41 @@
             </div>
         </td>
     </tr>
-    <tr>
-        <td width="82%" style="aling:left">
-            <div class="container-fluid">
-                <table width="100%" >
-                    <tr>
-                        <td>Usuario</td>
-                    </tr>
-                    <tr>
-                        <td>Clave</td>
-                    </tr>
-                </table>
-            </div>
-        </td>
-        <td width="6%"></td>
-        <td width="82%" style="aling:left">
-            <div class="container-fluid">
-                <table width="100%" >
-                    <tr>
-                        <td><input type="text" ng-model="of.Usuario.identificacion" required></td>
-                    </tr>
-                    <tr>
-                        <td><input type="password" name="clave" ng-model="of.Usuario.Clave" required></td>
-                    </tr>
-                </table>
-            </div>
-        </td>
+  <tr>
             <td colspan="2">
                         <div class="container-fluid">
-                            <table width="100%">
+                            <table width="100%" >
                                 <tr>
                                   
                        <td width="10%">
-                           
-                       </td>
-                        <td width="45%">
-                            <table width="100%" >
+                           <div class="img-rounded"><img  src="img/logo2.png" /></div>
+                       </td >
+                       <td width="10%"></td>
+                        <td width="20%">
+                            <table width="100%">
                                 <tr>
-                                    
-                                    <td></td>
+                                    <td><h4 class="text-center">Usuario</h4></td>
+                                    <td><input type="text" ng-model="of.Usuario.identificacion" required></td>
                                 </tr>
                                 <tr>
-
                                     <td>
-                                        </td>
+                                        <h4 class="text-center">Clave</h4></td>
+                                    </td>
+                                    <td>
+                                        <input type="password" name="clave" ng-model="of.Usuario.Clave" required></td>
                                 </tr>
 
-                                <tr>
-                                    <td colspan="2"><input type="submit" value="Login" ng-click="of.login()" /></td>
-                                </tr>
-                               
-                                <tr>
-                                    <td colspan="2"><input type="submit" value="Registrarse"/></td>
+                                <tr >
+                                    <td colspan="2"><input type="submit" value="Login" ng-click="of.login()"/>
+                                    <input type="submit" value="Registrarse"/>
+                                    </td>
+                                    <td ></td>
+                                    <td width="20%"></td>
                                 </tr>
                            </table>
                             
                         </td>
+                        <td width="10%"></td>
                     </tr>
                     
                     
